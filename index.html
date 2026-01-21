@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>David Rubio</title>
+    <title>David Rubio - Portafolio Data Science</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
@@ -13,7 +13,7 @@
     <!-- Navegación -->
     <nav class="navbar">
         <div class="container">
-            <a href="#" class="logo">David Ernesto Rubio<span>DS</span></a>
+            <a href="#" class="logo">David Rubio<span>DS</span></a>
             <ul class="nav-links">
                 <li><a href="#inicio"><i class="fas fa-home"></i> Inicio</a></li>
                 <li><a href="#proyectos"><i class="fas fa-project-diagram"></i> Proyectos</a></li>
@@ -31,10 +31,13 @@
         <div class="container">
             <div class="hero-content">
                 <h1 class="title">Portafolio de <span class="highlight">Data Science</span></h1>
-                <p class="subtitle">Estudiante de economía, enfocado en econometría</p>
+                <p class="subtitle">Estudiante de economía, enfocado en econometría y análisis de datos</p>
                 <div class="hero-buttons">
                     <a href="#proyectos" class="btn btn-primary">
                         <i class="fas fa-rocket"></i> Ver Proyectos
+                    </a>
+                    <a href="#contacto" class="btn btn-secondary">
+                        <i class="fas fa-envelope"></i> Contactar
                     </a>
                 </div>
             </div>
@@ -60,8 +63,8 @@
     <!-- Proyectos -->
     <section id="proyectos" class="projects">
         <div class="container">
-            <h2 class="section-title">Mis Proyectos</h2>
-            <p class="section-subtitle">Explora mis trabajos en análisis de datos</p>
+            <h2 class="section-title">📊 Mis Proyectos</h2>
+            <p class="section-subtitle">Explora mis trabajos en análisis de datos y econometría</p>
             
             <div class="projects-grid">
                 <!-- Proyecto 1 -->
@@ -70,10 +73,20 @@
                         <div class="project-icon">
                             <i class="fas fa-chart-line"></i>
                         </div>
-                        <h3>Proyectos desarrollados</h3>
+                        <h3>Modelos Econométricos</h3>
                     </div>
                     <div class="project-body">
-                        <p>Mis proyectos tanto en modelos lineales como modelos no lineales predictivos.</p>
+                        <p>Análisis de series temporales y modelos predictivos en economía.</p>
+                        <div class="tech-stack">
+                            <span class="tech-tag python">R</span>
+                            <span class="tech-tag pandas">Stata</span>
+                            <span class="tech-tag sklearn">EViews</span>
+                        </div>
+                    </div>
+                    <div class="project-footer">
+                        <a href="#" class="project-link" onclick="alert('Próximamente disponible')">
+                            <i class="fas fa-external-link-alt"></i> Ver Detalles
+                        </a>
                     </div>
                 </div>
 
@@ -83,10 +96,19 @@
                         <div class="project-icon">
                             <i class="fas fa-chart-bar"></i>
                         </div>
-                        
+                        <h3>Análisis de Datos</h3>
+                    </div>
+                    <div class="project-body">
+                        <p>Visualización y análisis estadístico de datos económicos.</p>
+                        <div class="tech-stack">
+                            <span class="tech-tag plotly">Excel</span>
+                            <span class="tech-tag tableau">Python</span>
+                            <span class="tech-tag pandas">Pandas</span>
+                        </div>
+                    </div>
                     <div class="project-footer">
                         <a href="#" class="project-link" onclick="alert('Próximamente disponible')">
-                            <i class="fas fa-external-link-alt"></i> Ver Proyecto
+                            <i class="fas fa-external-link-alt"></i> Ver Detalles
                         </a>
                     </div>
                 </div>
@@ -95,44 +117,47 @@
                 <div class="project-card">
                     <div class="project-header">
                         <div class="project-icon">
-                            <i class="fas fa-robot"></i>
+                            <i class="fas fa-home"></i>
                         </div>
-                        <h3>Precio de viviendas en Boston</h3>
+                        <h3>Precio de Viviendas</h3>
                     </div>
-                   
+                    <div class="project-body">
+                        <p>Modelo predictivo para precios de viviendas en Boston.</p>
+                        <div class="tech-stack">
+                            <span class="tech-tag python">Python</span>
+                            <span class="tech-tag sklearn">Scikit-learn</span>
+                            <span class="tech-tag pandas">Regresión</span>
+                        </div>
+                    </div>
                     <div class="project-footer">
                         <a href="#" class="project-link" onclick="alert('Próximamente disponible')">
-                            <i class="fas fa-external-link-alt"></i> Ver Proyecto
+                            <i class="fas fa-external-link-alt"></i> Ver Detalles
                         </a>
                     </div>
                 </div>
             </div>
-
-        
         </div>
     </section>
 
     <!-- Habilidades -->
     <section id="habilidades" class="skills">
         <div class="container">
-            <h2 class="section-title">Habilidades Técnicas</h2>
+            <h2 class="section-title">🛠️ Habilidades Técnicas</h2>
             
             <div class="skills-categories">
                 <div class="skill-category">
-                    <h3><i class="fas fa-laptop-code"></i>Programación</h3>
+                    <h3><i class="fas fa-laptop-code"></i> Programación & Software</h3>
                     <div class="skill-list">
+                        <div class="skill-item">
+                            <span class="skill-name">R / RStudio</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 85%"></div>
+                            </div>
+                        </div>
                         <div class="skill-item">
                             <span class="skill-name">Python</span>
                             <div class="skill-bar">
                                 <div class="skill-level" style="width: 65%"></div>
-                            </div>
-                        </div>
-                        
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">R</span>
-                            <div class="skill-bar">
-                                <div class="skill-level" style="width: 80%"></div>
                             </div>
                         </div>
                         <div class="skill-item">
@@ -141,21 +166,83 @@
                                 <div class="skill-level" style="width: 50%"></div>
                             </div>
                         </div>
-                       
-                                <div class="skill-level" style="width: 60%"></div>
+                        <div class="skill-item">
+                            <span class="skill-name">Excel Avanzado</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 90%"></div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                
+                <div class="skill-category">
+                    <h3><i class="fas fa-chart-line"></i> Econometría & Estadística</h3>
+                    <div class="skill-list">
+                        <div class="skill-item">
+                            <span class="skill-name">Stata</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">EViews</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">SPSS</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 70%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Análisis Estadístico</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3><i class="fas fa-calculator"></i> Herramientas de Análisis</h3>
+                    <div class="skill-list">
+                        <div class="skill-item">
+                            <span class="skill-name">Pandas / NumPy</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 60%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Visualización de Datos</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Git / GitHub</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 60%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">LaTeX</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 70%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- Contacto -->
     <section id="contacto" class="contact">
         <div class="container">
-            <h2 class="section-title">Contacto</h2>
-            <p class="section-subtitle">Por si deseas contactarme:</p>
+            <h2 class="section-title">📞 Contacto</h2>
+            <p class="section-subtitle">¿Interesado en colaborar o tienes preguntas sobre econometría?</p>
             
             <div class="contact-content">
                 <div class="contact-info">
@@ -183,11 +270,11 @@
 
                     <div class="contact-card">
                         <div class="contact-icon">
-                            <i class="fas fa-lightbulb"></i>
+                            <i class="fas fa-graduation-cap"></i>
                         </div>
-                        <h3>Próximamente</h3>
-                        <p>LinkedIn, Email, etc.</p>
-                        <span class="contact-link coming-soon">Disponible pronto</span>
+                        <h3>Formación</h3>
+                        <p>Estudiante de Economía</p>
+                        <span class="contact-link">Enfoque en Econometría</span>
                     </div>
                 </div>
             </div>
@@ -199,8 +286,8 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
-                    <h3>David Ernesto Rubio</h3>
-                   
+                    <h3>📈 David Rubio</h3>
+                    <p>Estudiante de Economía | Enfoque en Econometría y Data Science</p>
                 </div>
                 
                 <div class="footer-links">
@@ -213,16 +300,20 @@
                 
                 <div class="footer-tech">
                     <h4>Tecnologías</h4>
+                    <span>R</span>
+                    <span>Python</span>
+                    <span>Stata</span>
                     <span>Excel</span>
-                      <span>RStudio</span>
-                  
-                   
+                    <span>SQL</span>
+                    <span>Econometría</span>
                 </div>
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; David Ernesto Rubio.</p>
-               
+                <p>&copy; 2023 David Rubio - Portafolio de Data Science y Econometría.</p>
+                <p class="footer-note">
+                    Hecho con <i class="fas fa-heart" style="color: #e74c3c;"></i> para la comunidad académica
+                </p>
             </div>
         </div>
     </footer>

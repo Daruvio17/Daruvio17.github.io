@@ -3,180 +3,713 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modelos Económicos - David Rubio</title>
-    <link rel="stylesheet" href="../../styles.css">
-    <link rel="stylesheet" href="../../proyectos/proyecto-styles.css">
+    <title>David Rubio - Data Science & Economics</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        .project-detail {
-            max-width: 1000px;
-            margin: 0 auto;
+        /* Estilos específicos para la navegación con pestañas */
+        .tab-container {
+            max-width: 1200px;
+            margin: 100px auto 50px;
+            padding: 0 20px;
         }
-        .project-hero {
+        
+        .tabs {
+            display: flex;
+            background: white;
+            border-radius: 10px 10px 0 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow-x: auto;
+            position: sticky;
+            top: 70px;
+            z-index: 100;
+        }
+        
+        .tab {
+            padding: 20px 30px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            white-space: nowrap;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .tab.active {
+            border-bottom: 3px solid #3498db;
+            color: #3498db;
+            background: #f8f9fa;
+        }
+        
+        .tab:hover:not(.active) {
+            background: #f8f9fa;
+        }
+        
+        .tab-content {
+            display: none;
+            background: white;
+            padding: 40px;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            animation: fadeIn 0.5s;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Estilos para la página de inicio */
+        .hero-main {
+            text-align: center;
+            padding: 60px 20px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 80px 0;
-            text-align: center;
-        }
-        .project-content {
-            padding: 40px 0;
-        }
-        .project-section {
+            border-radius: 15px;
             margin-bottom: 40px;
+        }
+        
+        .hero-main h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero-main p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+        
+        .profile-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            border: 5px solid rgba(255,255,255,0.2);
+        }
+        
+        /* Estilos para tarjetas de proyecto */
+        .project-card-detailed {
             background: white;
-            padding: 30px;
-            border-radius: 10px;
+            border-radius: 15px;
+            overflow: hidden;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            transition: transform 0.3s;
+            border: 1px solid #eee;
         }
-        .code-preview {
-            background: #282c34;
-            color: #abb2bf;
-            padding: 20px;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            overflow-x: auto;
+        
+        .project-card-detailed:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
         }
-        .back-button {
-            display: inline-block;
+        
+        .project-header-detailed {
+            padding: 30px;
+            background: linear-gradient(135deg, #3498db, #2c3e50);
+            color: white;
+        }
+        
+        .project-body-detailed {
+            padding: 30px;
+        }
+        
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
             margin: 20px 0;
+        }
+        
+        .tech-badge {
+            background: #e8f4fc;
             color: #3498db;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .project-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .project-btn {
+            padding: 12px 25px;
+            background: #3498db;
+            color: white;
             text-decoration: none;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        
+        .project-btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+        
+        .project-btn.secondary {
+            background: transparent;
+            color: #3498db;
+            border: 2px solid #3498db;
+        }
+        
+        .project-btn.secondary:hover {
+            background: #3498db;
+            color: white;
+        }
+        
+        /* Estilos para la sección de habilidades */
+        .skills-grid-detailed {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .skill-category-detailed {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        /* Estilos para la sección de contacto */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .contact-item-detailed {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+        
+        .contact-item-detailed:hover {
+            transform: translateY(-5px);
+        }
+        
+        .contact-icon-detailed {
+            font-size: 2.5rem;
+            color: #3498db;
+            margin-bottom: 15px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .tab {
+                justify-content: center;
+                border-right: none;
+                border-bottom: 1px solid #eee;
+            }
+            
+            .tab.active {
+                border-right: none;
+                border-bottom: 3px solid #3498db;
+            }
+            
+            .tab-content {
+                padding: 20px;
+            }
+            
+            .hero-main h1 {
+                font-size: 2.5rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Navegación principal -->
     <nav class="navbar">
         <div class="container">
-            <a href="../../index.html" class="logo">← Volver al Portafolio</a>
+            <a href="#" class="logo">David Rubio</a>
+            <div class="nav-links">
+                <a href="#inicio" onclick="showTab('inicio')">Inicio</a>
+                <a href="#proyectos" onclick="showTab('proyectos')">Proyectos</a>
+                <a href="#habilidades" onclick="showTab('habilidades')">Habilidades</a>
+                <a href="#contacto" onclick="showTab('contacto')">Contacto</a>
+                <a href="#sobre-mi" onclick="showTab('sobre-mi')">Sobre Mí</a>
+            </div>
+            <button class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
     </nav>
 
-    <div class="project-detail">
-        <section class="project-hero">
-            <div class="container">
-                <h1>Modelos Económicos</h1>
-                <p>Análisis de series temporales y modelos predictivos en economía</p>
-                <div class="tech-tags">
-                    <span class="tag">R</span>
-                    <span class="tag">Stata</span>
-                    <span class="tag">EViews</span>
-                    <span class="tag">Series Temporales</span>
+    <!-- Contenido Principal con Pestañas -->
+    <div class="tab-container">
+        <!-- Pestaña de Inicio -->
+        <div id="inicio" class="tab-content active">
+            <div class="hero-main">
+                <div class="profile-img">
+                    <i class="fas fa-user-graduate"></i>
+                </div>
+                <h1>David Ernesto Rubio</h1>
+                <p>Estudiante de Economía | Especializado en Econometría y Data Science</p>
+                <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                    <a href="#proyectos" onclick="showTab('proyectos')" class="btn btn-primary">
+                        <i class="fas fa-project-diagram"></i> Ver Mis Proyectos
+                    </a>
+                    <a href="#contacto" onclick="showTab('contacto')" class="btn btn-secondary">
+                        <i class="fas fa-envelope"></i> Contactarme
+                    </a>
                 </div>
             </div>
-        </section>
-
-        <div class="container project-content">
-            <a href="../../index.html#proyectos" class="back-button">
-                <i class="fas fa-arrow-left"></i> Volver a todos los proyectos
-            </a>
-
-            <!-- Resumen del proyecto -->
-            <div class="project-section">
-                <h2>📈 Descripción del Proyecto</h2>
-                <p>Este proyecto analiza series temporales económicas utilizando diversos modelos econométricos para predecir tendencias y hacer inferencias estadísticas.</p>
-                
-                <h3>Objetivos:</h3>
-                <ul>
-                    <li>Análisis de estacionalidad en datos económicos</li>
-                    <li>Predicción de indicadores macroeconómicos</li>
-                    <li>Validación de modelos ARIMA y VAR</li>
-                    <li>Pruebas de raíz unitaria (ADF, Phillips-Perron)</li>
-                </ul>
+            
+            <div style="text-align: center; margin-top: 50px;">
+                <h2>Bienvenido a mi Portafolio</h2>
+                <p style="max-width: 800px; margin: 20px auto; font-size: 1.1rem;">
+                    Soy estudiante de economía con enfoque en econometría y análisis de datos. 
+                    Aquí encontrarás mis proyectos, habilidades técnicas y formas de contactarme.
+                    Utiliza las pestañas de arriba para navegar por las diferentes secciones.
+                </p>
             </div>
+        </div>
 
-            <!-- Metodología -->
-            <div class="project-section">
-                <h2>🔬 Metodología</h2>
-                <p>Se utilizaron las siguientes técnicas:</p>
-                <ol>
-                    <li><strong>Recolección de datos:</strong> Series de tiempo de indicadores económicos</li>
-                    <li><strong>Preprocesamiento:</strong> Limpieza, transformación logarítmica, diferenciación</li>
-                    <li><strong>Análisis exploratorio:</strong> Gráficos de autocorrelación, descomposición</li>
-                    <li><strong>Modelado:</strong> ARIMA, VAR, modelos de espacio de estados</li>
-                    <li><strong>Validación:</strong> Backtesting, criterios de información (AIC, BIC)</li>
-                </ol>
-            </div>
-
-            <!-- Resultados -->
-            <div class="project-section">
-                <h2>📊 Resultados</h2>
-                <p>Los modelos implementados mostraron un buen desempeño predictivo:</p>
-                <ul>
-                    <li>Error cuadrático medio (RMSE) reducido en un 30% respecto a modelos naive</li>
-                    <li>Identificación de patrones estacionales significativos</li>
-                    <li>Coeficientes estadísticamente significativos en el 95% de los casos</li>
-                </ul>
-                
-                <!-- Aquí puedes agregar imágenes -->
-                <div style="text-align: center; margin: 20px 0;">
-                    <p><em>Aquí irían tus gráficos de resultados</em></p>
-                    <div style="background: #f0f0f0; padding: 30px; border-radius: 8px;">
-                        <p>📈 Gráfico 1: Predicción vs Valores Reales</p>
-                        <p>📉 Gráfico 2: Análisis de Residuales</p>
+        <!-- Pestaña de Proyectos -->
+        <div id="proyectos" class="tab-content">
+            <h2 style="margin-bottom: 30px;">Mis Proyectos de Data Science</h2>
+            <p style="margin-bottom: 40px; color: #666;">
+                Aquí están mis principales proyectos en econometría y análisis de datos. 
+                Haz clic en "Ver Detalles" para acceder a la información completa de cada proyecto.
+            </p>
+            
+            <!-- Proyecto 1 -->
+            <div class="project-card-detailed">
+                <div class="project-header-detailed">
+                    <h3>Modelos Económicos</h3>
+                    <p>Análisis de series temporales y modelos predictivos en economía</p>
+                </div>
+                <div class="project-body-detailed">
+                    <p><strong>Descripción:</strong> Proyecto de econometría aplicada donde se analizan series temporales económicas utilizando modelos ARIMA y VAR para predicción y análisis de políticas.</p>
+                    
+                    <div class="project-tech">
+                        <span class="tech-badge">R</span>
+                        <span class="tech-badge">Stata</span>
+                        <span class="tech-badge">EViews</span>
+                        <span class="tech-badge">Series Temporales</span>
+                        <span class="tech-badge">Econometría</span>
+                    </div>
+                    
+                    <div class="project-links">
+                        <a href="#proyecto1-detalle" onclick="showTab('proyecto1-detalle')" class="project-btn">
+                            <i class="fas fa-external-link-alt"></i> Ver Detalles Completos
+                        </a>
+                        <a href="#" class="project-btn secondary" onclick="alert('Descarga disponible próximamente')">
+                            <i class="fas fa-download"></i> Descargar Código
+                        </a>
                     </div>
                 </div>
             </div>
 
-            <!-- Código de ejemplo -->
-            <div class="project-section">
-                <h2>💻 Código de Ejemplo (R)</h2>
-                <div class="code-preview">
-                    <pre>
-# Análisis de series temporales en R
+            <!-- Proyecto 2 -->
+            <div class="project-card-detailed">
+                <div class="project-header-detailed" style="background: linear-gradient(135deg, #2ecc71, #27ae60);">
+                    <h3>Análisis de Datos Económicos</h3>
+                    <p>Visualización y análisis estadístico de datos económicos</p>
+                </div>
+                <div class="project-body-detailed">
+                    <p><strong>Descripción:</strong> Análisis exploratorio de datos económicos con visualización avanzada, limpieza de datos y generación de dashboards interactivos.</p>
+                    
+                    <div class="project-tech">
+                        <span class="tech-badge">Python</span>
+                        <span class="tech-badge">Pandas</span>
+                        <span class="tech-badge">Excel</span>
+                        <span class="tech-badge">Visualización</span>
+                        <span class="tech-badge">Estadística</span>
+                    </div>
+                    
+                    <div class="project-links">
+                        <a href="#proyecto2-detalle" onclick="showTab('proyecto2-detalle')" class="project-btn">
+                            <i class="fas fa-external-link-alt"></i> Ver Detalles Completos
+                        </a>
+                        <a href="#" class="project-btn secondary" onclick="alert('Descarga disponible próximamente')">
+                            <i class="fas fa-download"></i> Ver Notebook
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Proyecto 3 -->
+            <div class="project-card-detailed">
+                <div class="project-header-detailed" style="background: linear-gradient(135deg, #e74c3c, #c0392b);">
+                    <h3>Precio de Viviendas en Boston</h3>
+                    <p>Modelo predictivo para precios de viviendas</p>
+                </div>
+                <div class="project-body-detailed">
+                    <p><strong>Descripción:</strong> Implementación de modelos de regresión múltiple para predecir el precio de viviendas utilizando el dataset de Boston Housing.</p>
+                    
+                    <div class="project-tech">
+                        <span class="tech-badge">Python</span>
+                        <span class="tech-badge">Scikit-learn</span>
+                        <span class="tech-badge">Regresión</span>
+                        <span class="tech-badge">Machine Learning</span>
+                        <span class="tech-badge">Pandas</span>
+                    </div>
+                    
+                    <div class="project-links">
+                        <a href="#proyecto3-detalle" onclick="showTab('proyecto3-detalle')" class="project-btn">
+                            <i class="fas fa-external-link-alt"></i> Ver Detalles Completos
+                        </a>
+                        <a href="#" class="project-btn secondary" onclick="alert('Descarga disponible próximamente')">
+                            <i class="fas fa-download"></i> Descargar Dataset
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pestaña de Detalles del Proyecto 1 -->
+        <div id="proyecto1-detalle" class="tab-content">
+            <div style="margin-bottom: 30px;">
+                <a href="#proyectos" onclick="showTab('proyectos')" style="display: inline-flex; align-items: center; gap: 10px; color: #3498db; text-decoration: none;">
+                    <i class="fas fa-arrow-left"></i> Volver a Proyectos
+                </a>
+            </div>
+            
+            <h2>Modelos Económicos - Detalles Completos</h2>
+            
+            <div style="background: #f8f9fa; padding: 30px; border-radius: 10px; margin: 20px 0;">
+                <h3>📋 Información del Proyecto</h3>
+                <p><strong>Fecha:</strong> Octubre 2023</p>
+                <p><strong>Duración:</strong> 4 semanas</p>
+                <p><strong>Estado:</strong> Completado</p>
+            </div>
+            
+            <h3>🎯 Objetivos</h3>
+            <ul style="margin: 20px 0 30px 20px;">
+                <li>Analizar la estacionalidad de series económicas</li>
+                <li>Predecir indicadores macroeconómicos a 12 meses</li>
+                <li>Comparar el desempeño de diferentes modelos econométricos</li>
+                <li>Validar supuestos de los modelos</li>
+            </ul>
+            
+            <h3>🛠️ Metodología</h3>
+            <p>Se utilizaron las siguientes técnicas:</p>
+            <ol style="margin: 20px 0 30px 20px;">
+                <li><strong>Recolección de datos:</strong> Series de tiempo mensuales 2010-2023</li>
+                <li><strong>Preprocesamiento:</strong> Limpieza, transformación logarítmica</li>
+                <li><strong>Análisis exploratorio:</strong> ACF, PACF, descomposición estacional</li>
+                <li><strong>Modelado:</strong> ARIMA, VAR, modelos de espacio de estados</li>
+                <li><strong>Validación:</strong> Backtesting, criterios de información</li>
+            </ol>
+            
+            <h3>📊 Resultados</h3>
+            <div style="background: white; padding: 20px; border-radius: 8px; border: 1px solid #eee; margin: 20px 0;">
+                <p><strong>Métricas del modelo:</strong></p>
+                <ul>
+                    <li>RMSE: 0.045</li>
+                    <li>MAE: 0.032</li>
+                    <li>R²: 0.89</li>
+                    <li>AIC: -245.6</li>
+                </ul>
+            </div>
+            
+            <h3>💻 Código de Ejemplo</h3>
+            <pre style="background: #282c34; color: white; padding: 20px; border-radius: 8px; overflow-x: auto;">
+# Modelo ARIMA en R
 library(forecast)
 library(tseries)
 
 # Cargar datos
-data &lt;- read.csv("datos_economicos.csv")
-ts_data &lt;- ts(data$valor, start = c(2010, 1), frequency = 12)
+data <- read.csv("series_economicas.csv")
+ts_data <- ts(data$PIB, start=c(2010,1), frequency=12)
 
 # Prueba de estacionariedad
 adf.test(ts_data)
 
-# Modelo ARIMA
-modelo_arima &lt;- auto.arima(ts_data)
-summary(modelo_arima)
+# Ajustar modelo ARIMA
+modelo <- auto.arima(ts_data)
+summary(modelo)
 
 # Predicción
-prediccion &lt;- forecast(modelo_arima, h = 12)
-plot(prediccion, main = "Predicción 12 meses")
-                    </pre>
-                </div>
+pred <- forecast(modelo, h=12)
+plot(pred, main="Predicción del PIB")
+            </pre>
+            
+            <h3>📁 Archivos del Proyecto</h3>
+            <div style="display: flex; gap: 15px; flex-wrap: wrap; margin: 20px 0;">
+                <button onclick="alert('Descarga simulada')" style="padding: 10px 20px; background: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                    <i class="fas fa-download"></i> Código completo (.R)
+                </button>
+                <button onclick="alert('Descarga simulada')" style="padding: 10px 20px; background: #2ecc71; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                    <i class="fas fa-download"></i> Dataset (.csv)
+                </button>
+                <button onclick="alert('Descarga simulada')" style="padding: 10px 20px; background: #9b59b6; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                    <i class="fas fa-download"></i> Informe (.pdf)
+                </button>
             </div>
+        </div>
 
-            <!-- Archivos del proyecto -->
-            <div class="project-section">
-                <h2>📁 Archivos del Proyecto</h2>
-                <ul>
-                    <li><a href="codigo.R" download>📄 codigo.R</a> - Script principal en R</li>
-                    <li><a href="codigo.do" download>📄 codigo.do</a> - Archivo de comandos Stata</li>
-                    <li><a href="datos.csv" download>📄 datos.csv</a> - Dataset utilizado</li>
-                    <li><a href="presentacion.pdf" download>📄 presentacion.pdf</a> - Presentación de resultados</li>
-                </ul>
+        <!-- Pestaña de Habilidades -->
+        <div id="habilidades" class="tab-content">
+            <h2>Mis Habilidades Técnicas</h2>
+            <p style="margin-bottom: 30px; color: #666;">
+                Estas son las herramientas y tecnologías que utilizo en mis proyectos de data science y econometría.
+            </p>
+            
+            <div class="skills-grid-detailed">
+                <div class="skill-category-detailed">
+                    <h3><i class="fas fa-laptop-code" style="color: #3498db;"></i> Programación</h3>
+                    <div style="margin-top: 20px;">
+                        <div style="margin: 15px 0;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>R / RStudio</span>
+                                <span>85%</span>
+                            </div>
+                            <div style="height: 8px; background: #ecf0f1; border-radius: 4px; margin-top: 5px;">
+                                <div style="width: 85%; height: 100%; background: #3498db; border-radius: 4px;"></div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin: 15px 0;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>Python</span>
+                                <span>65%</span>
+                            </div>
+                            <div style="height: 8px; background: #ecf0f1; border-radius: 4px; margin-top: 5px;">
+                                <div style="width: 65%; height: 100%; background: #2ecc71; border-radius: 4px;"></div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin: 15px 0;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>SQL</span>
+                                <span>50%</span>
+                            </div>
+                            <div style="height: 8px; background: #ecf0f1; border-radius: 4px; margin-top: 5px;">
+                                <div style="width: 50%; height: 100%; background: #e74c3c; border-radius: 4px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 
-                <div style="margin-top: 20px; padding: 15px; background: #e8f4fc; border-radius: 8px;">
-                    <h4>📥 Descargar proyecto completo:</h4>
-                    <a href="modelos-economicos.zip" class="btn btn-primary" download>
-                        <i class="fas fa-download"></i> Descargar ZIP
-                    </a>
+                <div class="skill-category-detailed">
+                    <h3><i class="fas fa-chart-line" style="color: #2ecc71;"></i> Econometría</h3>
+                    <ul style="margin-top: 20px; list-style: none;">
+                        <li style="padding: 10px 0; border-bottom: 1px solid #eee;">
+                            <i class="fas fa-check" style="color: #2ecc71;"></i> Stata
+                        </li>
+                        <li style="padding: 10px 0; border-bottom: 1px solid #eee;">
+                            <i class="fas fa-check" style="color: #2ecc71;"></i> EViews
+                        </li>
+                        <li style="padding: 10px 0; border-bottom: 1px solid #eee;">
+                            <i class="fas fa-check" style="color: #2ecc71;"></i> Series Temporales
+                        </li>
+                        <li style="padding: 10px 0; border-bottom: 1px solid #eee;">
+                            <i class="fas fa-check" style="color: #2ecc71;"></i> Modelos de Regresión
+                        </li>
+                        <li style="padding: 10px 0;">
+                            <i class="fas fa-check" style="color: #2ecc71;"></i> Pruebas de Hipótesis
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="skill-category-detailed">
+                    <h3><i class="fas fa-tools" style="color: #e74c3c;"></i> Herramientas</h3>
+                    <div style="margin-top: 20px;">
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                            <span style="background: #e8f4fc; padding: 8px 15px; border-radius: 20px;">Excel Avanzado</span>
+                            <span style="background: #e8f4fc; padding: 8px 15px; border-radius: 20px;">Git/GitHub</span>
+                            <span style="background: #e8f4fc; padding: 8px 15px; border-radius: 20px;">LaTeX</span>
+                            <span style="background: #e8f4fc; padding: 8px 15px; border-radius: 20px;">Jupyter</span>
+                            <span style="background: #e8f4fc; padding: 8px 15px; border-radius: 20px;">PowerPoint</span>
+                            <span style="background: #e8f4fc; padding: 8px 15px; border-radius: 20px;">Word</span>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Enlaces -->
-            <div class="project-section">
-                <h2>🔗 Enlaces Relacionados</h2>
-                <p>
-                    <a href="https://github.com/Daruvio17/modelos-economicos" target="_blank">
-                        <i class="fab fa-github"></i> Ver en GitHub
+        <!-- Pestaña de Contacto -->
+        <div id="contacto" class="tab-content">
+            <h2>Contáctame</h2>
+            <p style="margin-bottom: 40px; color: #666;">
+                ¿Interesado en colaborar o tienes preguntas sobre econometría y data science?
+            </p>
+            
+            <div class="contact-grid">
+                <div class="contact-item-detailed">
+                    <div class="contact-icon-detailed">
+                        <i class="fab fa-github"></i>
+                    </div>
+                    <h3>GitHub</h3>
+                    <p>Sigue mi trabajo y proyectos</p>
+                    <a href="https://github.com/Daruvio17" target="_blank" style="color: #3498db; text-decoration: none;">
+                        github.com/Daruvio17
                     </a>
-                </p>
+                </div>
+                
+                <div class="contact-item-detailed">
+                    <div class="contact-icon-detailed">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>Email</h3>
+                    <p>Envíame un correo</p>
+                    <a href="mailto:tuemail@ejemplo.com" style="color: #3498db; text-decoration: none;">
+                        tuemail@ejemplo.com
+                    </a>
+                </div>
+                
+                <div class="contact-item-detailed">
+                    <div class="contact-icon-detailed">
+                        <i class="fab fa-linkedin"></i>
+                    </div>
+                    <h3>LinkedIn</h3>
+                    <p>Conectemos profesionalmente</p>
+                    <span style="color: #666; font-style: italic;">
+                        Disponible próximamente
+                    </span>
+                </div>
+                
+                <div class="contact-item-detailed">
+                    <div class="contact-icon-detailed">
+                        <i class="fas fa-file-pdf"></i>
+                    </div>
+                    <h3>CV</h3>
+                    <p>Descarga mi currículum</p>
+                    <span style="color: #666; font-style: italic;">
+                        Disponible próximamente
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pestaña Sobre Mí -->
+        <div id="sobre-mi" class="tab-content">
+            <h2>Sobre Mí</h2>
+            
+            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 40px; margin-top: 30px;">
+                <div>
+                    <div style="background: #f8f9fa; padding: 30px; border-radius: 10px; text-align: center;">
+                        <div style="width: 150px; height: 150px; background: #3498db; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <h3>David Ernesto Rubio</h3>
+                        <p>Estudiante de Economía</p>
+                        <p style="color: #666; margin-top: 10px;">Enfoque en Econometría</p>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3>🎓 Formación Académica</h3>
+                    <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #3498db;">
+                        <h4>Licenciatura en Economía</h4>
+                        <p style="color: #666; margin: 5px 0;">Universidad [Nombre]</p>
+                        <p style="color: #888; font-size: 0.9rem;">2020 - Presente</p>
+                        <p>Enfoque en econometría aplicada y análisis de datos económicos.</p>
+                    </div>
+                    
+                    <h3>🎯 Intereses Profesionales</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0;">
+                        <span style="background: #e8f4fc; padding: 8px 15px; border-radius: 20px;">Econometría Aplicada</span>
+                        <span style="background: #e8f4fc; padding: 8px 15px; border-radius: 20px;">Análisis de Datos</span>
+                        <span style="background: #e8f4fc; padding: 8px 15px; border-radius: 20px;">Series Temporales</span>
+                        <span style="background: #e8f4fc; padding: 8px 15px; border-radius: 20px;">Machine Learning</span>
+                        <span style="background: #e8f4fc; padding: 8px 15px; border-radius: 20px;">Política Económica</span>
+                    </div>
+                    
+                    <h3>📚 Cursos Relevantes</h3>
+                    <ul style="margin: 20px 0 30px 20px;">
+                        <li>Econometría I y II</li>
+                        <li>Series de Tiempo</li>
+                        <li>Programación en R</li>
+                        <li>Estadística Multivariada</li>
+                        <li>Python para Data Science</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- Footer -->
     <footer>
         <div class="container">
-            <p>&copy; 2023 David Rubio - Proyecto: Modelos Económicos</p>
+            <div style="text-align: center; padding: 30px 0;">
+                <p>&copy; 2023 David Ernesto Rubio - Portafolio de Data Science y Econometría</p>
+                <p style="margin-top: 10px; color: #888; font-size: 0.9rem;">
+                    Este sitio es parte de mi portafolio académico y profesional
+                </p>
+            </div>
         </div>
     </footer>
+
+    <script>
+        // Función para mostrar/ocultar pestañas
+        function showTab(tabId) {
+            // Ocultar todas las pestañas
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Mostrar la pestaña seleccionada
+            document.getElementById(tabId).classList.add('active');
+            
+            // Actualizar URL (opcional, para compartir enlaces)
+            window.location.hash = tabId;
+            
+            // Scroll suave al principio
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Mostrar la pestaña correcta al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            const hash = window.location.hash.substring(1);
+            if (hash && document.getElementById(hash)) {
+                showTab(hash);
+            }
+        });
+        
+        // Menú móvil
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            
+            if (menuToggle) {
+                menuToggle.addEventListener('click', function() {
+                    navLinks.classList.toggle('active');
+                    menuToggle.innerHTML = navLinks.classList.contains('active') 
+                        ? '<i class="fas fa-times"></i>' 
+                        : '<i class="fas fa-bars"></i>';
+                });
+            }
+            
+            // Cerrar menú al hacer clic en un enlace
+            document.querySelectorAll('.nav-links a').forEach(item => {
+                item.addEventListener('click', function() {
+                    navLinks.classList.remove('active');
+                    menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                });
+            });
+        });
+    </script>
 </body>
 </html>

@@ -413,53 +413,53 @@
                             <tr style="border-bottom: 1px solid #eee;">
                                 <td style="padding: 12px;"><strong>Edad Meses</strong></td>
                                 <td style="padding: 12px;">0.00000</td>
-                                <td style="padding: 12px;">$p < 0.05$</td>
-                                <td style="padding: 12px; color: var(--success);">Rechazo $H_0$ (Significativa)</td>
+                                <td style="padding: 12px;">p < 0.05$</td>
+                                <td style="padding: 12px; color: var(--success);">Rechazo H_0 (Significativa)</td>
                             </tr>
                             <tr style="border-bottom: 1px solid #eee;">
                                 <td style="padding: 12px;"><strong>KM</strong></td>
                                 <td style="padding: 12px;">0.00000</td>
-                                <td style="padding: 12px;">$p < 0.05$</td>
-                                <td style="padding: 12px; color: var(--success);">Rechazo $H_0$ (Significativa)</td>
+                                <td style="padding: 12px;">p < 0.05$</td>
+                                <td style="padding: 12px; color: var(--success);">Rechazo H_0 (Significativa)</td>
                             </tr>
                             <tr style="border-bottom: 1px solid #eee;">
                                 <td style="padding: 12px;"><strong>Met_Color</strong></td>
                                 <td style="padding: 12px;">0.31597</td>
-                                <td style="padding: 12px;">$p > 0.05$</td>
-                                <td style="padding: 12px; color: var(--danger);">No Rechazo $H_0$ (No Sig.)</td>
+                                <td style="padding: 12px;">p > 0.05$</td>
+                                <td style="padding: 12px; color: var(--danger);">No Rechazo H_0 (No Sig.)</td>
                             </tr>
                             <tr style="border-bottom: 1px solid #eee;">
                                 <td style="padding: 12px;"><strong>Automático</strong></td>
                                 <td style="padding: 12px;">0.00868</td>
-                                <td style="padding: 12px;">$p < 0.05$</td>
-                                <td style="padding: 12px; color: var(--success);">Rechazo $H_0$ (Significativa)</td>
+                                <td style="padding: 12px;">p < 0.05$</td>
+                                <td style="padding: 12px; color: var(--success);">Rechazo H_0 (Significativa)</td>
                             </tr>
                             <tr>
                                 <td style="padding: 12px;"><strong>Airbag_1</strong></td>
                                 <td style="padding: 12px;">0.69563</td>
-                                <td style="padding: 12px;">$p > 0.05$</td>
-                                <td style="padding: 12px; color: var(--danger);">No Rechazo $H_0$ (No Sig.)</td>
+                                <td style="padding: 12px;">p > 0.05$</td>
+                                <td style="padding: 12px; color: var(--danger);">No Rechazo H_0 (No Sig.)</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
                 <div style="margin-top: 20px; font-style: italic; color: #555; font-size: 0.9rem;">
-                    <p><strong>Interpretación:</strong> Al usar un $\alpha = 0.05$, cualquier p-valor menor a este umbral nos permite afirmar con un 95% de confianza que la variable efectivamente afecta el precio del Toyota Corolla.</p>
+                    <p><strong>Interpretación:</strong> Al usar un α = 0.05$, cualquier p-valor menor a este umbral nos permite afirmar con un 95% de confianza que la variable efectivamente afecta el precio del Toyota Corolla.</p>
                 </div>
             </div>
 
             <h3>Código Implementado en R</h3>
             <pre style="background: #282c34; color: white; padding: 15px; border-radius: 8px; overflow-x: auto;">
-# Carga de librerías y datos
 library(readxl)
-datos <- read_excel("ToyotaCorolla.xlsx")
-
-# Estimación del modelo por MCO incluyendo todas las variables
-modelo_inicial <- lm(Price ~ ., data = datos)
-
-# Visualización de resultados
-summary(modelo_inicial)
+datos <- read_excel(file.choose())
+datos <- data.frame(datos)
+head(datos)
+datos$precio <- datos$precio/1000
+attach(datos)
+modelo_inicial <- lm(precio ~., data = datos)
+round(coef(summary(modelo_inicial)),5)
+formula(modelo_inicial)
             </pre>
         </div>
 

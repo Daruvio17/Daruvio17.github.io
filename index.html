@@ -351,7 +351,7 @@
             </div>
            <div style="margin: 30px 0;">
                 <h3 style="border-bottom: 2px solid var(--primary); display: inline-block; margin-bottom: 20px;">
-                    Interpretación Económica de los Coeficientes
+                    Interpretación Económica de algunos de los Coeficientes
                 </h3>
                 
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
@@ -359,26 +359,33 @@
                     <div style="background: #fff; border: 1px solid #ddd; padding: 15px; border-radius: 8px;">
                         <h4 style="color: var(--primary);"><i class="fas fa-chart-line"></i> Variables Continuas</h4>
                         <ul style="list-style: none; padding-top: 10px; font-size: 0.95rem;">
-                            <li style="margin-bottom: 10px;"><strong>Edad (Meses):</strong> Por cada mes adicional de antigüedad, el precio disminuye en promedio <strong>$121</strong>, manteniendo el resto constante.</li>
-                            <li style="margin-bottom: 10px;"><strong>KM:</strong> Por cada kilómetro adicional recorrido, el precio cae aproximadamente <strong>$0.02</strong>.</li>
-                            <li style="margin-bottom: 10px;"><strong>HP (Caballos):</strong> Un incremento de un caballo de fuerza se traduce en un aumento promedio de <strong>$20</strong> en el valor.</li>
-                            <li style="margin-bottom: 10px;"><strong>Peso:</strong> Por cada kilogramo adicional de peso (robustez), el precio tiende a subir <strong>$15</strong>.</li>
-                            <li style="margin-bottom: 10px;"><strong>Impuesto Anual:</strong> Un aumento de $1 en el impuesto se asocia a una reducción de <strong>$2</strong> en el precio de reventa.</li>
+                            <li style="margin-bottom: 10px;"><strong>Edad (Meses):</strong> Por cada mes adicional de antigüedad, el precio disminuye en promedio <strong>$0.118 dólares</strong>, manteniendo el resto constante.</li>
+                            <li style="margin-bottom: 10px;"><strong>KM:</strong> Por cada kilómetro adicional recorrido, el precio cae aproximadamente <strong>$0.00002 dólares</strong>.</li>
+                            <li style="margin-bottom: 10px;"><strong>HP (Caballos):</strong> Un incremento de un caballo de fuerza se traduce en un aumento promedio de <strong>$0.0196 dólares</strong> en el valor.</li>
+                            <li style="margin-bottom: 10px;"><strong>Peso:</strong> Por cada kilogramo adicional de peso (robustez), el precio tiende a subir <strong>$0.0107 dólares</strong>.</li>
+                            <li style="margin-bottom: 10px;"><strong>Impuesto Anual:</strong> Un aumento de $1 en el impuesto se asocia a una reducción de <strong>$0.014 dólares</strong> en el precio de reventa.</li>
                         </ul>
                     </div>
 
                     <div style="background: #fff; border: 1px solid #ddd; padding: 15px; border-radius: 8px;">
                         <h4 style="color: var(--success);"><i class="fas fa-toggle-on"></i> Variables Categóricas (Dummies)</h4>
-                        <ul style="list-style: none; padding-top: 10px; font-size: 0.95rem;">
-                            <li style="margin-bottom: 10px;"><strong>Met_Color (1 = Sí):</strong> Los vehículos con pintura metalizada valen, en promedio, <strong>$50</strong> más que los que no tienen, aunque este efecto suele ser poco significativo.</li>
-                            <li style="margin-bottom: 10px;"><strong>Automático (1 = Sí):</strong> Un vehículo con caja automática cuesta, en promedio, <strong>$350</strong> más que uno manual, ceteris paribus.</li>
+                        <ul style="list-style: none; padding: 0; font-size: 0.95rem;">
+                            <li style="margin-bottom: 12px;">
+                                <strong>Transmisión Automática:</strong> Un Toyota Corolla automático es, en promedio, <strong>$352.63</strong> más costoso que uno de transmisión manual, ceteris paribus.
+                            </li>
+                            <li style="margin-bottom: 12px;">
+                                <strong>Tipo de Combustible (Petrol):</strong> Los autos a gasolina (Petrol) tienen un precio promedio superior en <strong>$2,050.61</strong> respecto a la categoría de referencia, siendo este un diferencial crítico en el modelo.
+                            </li>
+                            <li style="margin-bottom: 12px;">
+                                <strong>Aire Acondicionado Automático:</strong> Esta característica de lujo aporta un incremento sustancial de <strong>$2,397.95</strong> al valor del vehículo frente a los que no cuentan con este sistema.
+                            </li>
                         </ul>
                     </div>
 
                 </div>
 
                 <div style="margin-top: 20px; background: #fffde7; padding: 15px; border-radius: 8px; border-left: 5px solid #fbc02d;">
-                    <p style="font-size: 0.9rem;"><strong>Nota de Inferencia:</strong> Todas las interpretaciones se realizan bajo el supuesto <em>Ceteris Paribus</em> (manteniendo todo lo demás constante). Los valores resaltados en <strong>negrita</strong> deben ser validados con los asteriscos de significancia (***) en tu summary.</p>
+                    <p style="font-size: 0.9rem;"><strong>Nota de Inferencia:</strong> Todas las interpretaciones se realizan bajo el supuesto <em>Ceteris Paribus</em> (manteniendo todo lo demás constante).</p>
                 </div>
             </div>
 

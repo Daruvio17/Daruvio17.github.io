@@ -325,14 +325,19 @@
    <p>
     Acá, veremos el modelo estimado sin hacer validación de supuestos del modelo, es decir, asumimos que no hay problemas de multicolinealidad y que el error tiene un comportamiento homoscedástico. En otras palabras, asumimos que se cumplen las propiedades de <strong>Gauss-Markov</strong>, donde el término de perturbación cumple:
 </p>
-
+<p style="text-align: left; margin-bottom: 15px;">Summary de nuestro modelo inicial</p>
+        
+        <img src="Summary_toyota.png" alt="Summary de los datos Toyota" style="max-width: 100%; height: auto; border-radius: 5px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+        
+        <p style="font-size: 0.85rem; color: #666; margin-top: 10px;"><i>Figura 2: Muestra del summary de nuestra estimación por mínimos cuadrados ordinarios.</i></p>
 <div style="background: #f4f7f9; padding: 15px; border-radius: 8px; text-align: center; margin: 20px 0;">
     <p>
         $$ E(\epsilon_i | X) = 0 \quad \text{y} \quad \text{Var}(\epsilon_i | X) = \sigma^2 $$
     </p>
     <p style="font-size: 0.9rem; color: #666;">
-        Esto implica que $\epsilon_i \sim (0, \sigma^2)$, asegurando que nuestros estimadores sean los más eficientes dentro de la clase de estimadores lineales e insesgados.
+        Esto implica que, al cumplir Gauss-Markov el término de error, se está asegurando que nuestros estimadores MCO sean los más eficientes dentro de la clase de estimadores lineales e insesgados.
     </p>
+    
 </div>
             <h3>Código Destacado</h3>
             <pre style="background: #282c34; color: white; padding: 15px; border-radius: 8px; overflow-x: auto;">

@@ -322,6 +322,16 @@
     </p>
     <p style="font-size: 0.9rem; color: #555;">
         <strong>Nota:</strong> El modelo incluye 32 variables explicativas, abarcando características técnicas (HP, Cilindraje), equipamiento de seguridad (ABS, Airbags) y confort (Aire acondicionado, Radio). Todo esto, para un total de 1436 observaciones.
+   <p>
+    Acá, veremos el modelo estimado sin hacer validación de supuestos del modelo, es decir, asumimos que no hay problemas de multicolinealidad y que el error tiene un comportamiento homoscedástico. En otras palabras, asumimos que se cumplen las propiedades de <strong>Gauss-Markov</strong>, donde el término de perturbación cumple:
+</p>
+
+<div style="background: #f4f7f9; padding: 15px; border-radius: 8px; text-align: center; margin: 20px 0;">
+    <p>
+        $$ E(\epsilon_i | X) = 0 \quad \text{y} \quad \text{Var}(\epsilon_i | X) = \sigma^2 $$
+    </p>
+    <p style="font-size: 0.9rem; color: #666;">
+        Esto implica que $\epsilon_i \sim (0, \sigma^2)$, asegurando que nuestros estimadores sean los más eficientes dentro de la clase de estimadores lineales e insesgados.
     </p>
 </div>
             <h3>Código Destacado</h3>

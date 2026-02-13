@@ -389,6 +389,66 @@
                 </div>
             </div>
 
+           <div style="margin: 30px 0; padding: 25px; background: #fff; border-radius: 12px; border: 1px solid #eee;">
+                <h3 style="color: var(--secondary); margin-bottom: 20px;">
+                    <i class="fas fa-microscope"></i> Pruebas de Hipótesis Individuales ($\alpha = 5\%$)
+                </h3>
+                <p>Para cada coeficiente, evaluamos si la variable tiene un impacto real en el precio mediante el siguiente contraste:</p>
+                
+                <div style="text-align: center; margin: 20px 0; font-size: 1.2rem;">
+                    $$ H_0: \beta_j = 0 \quad \text{vs} \quad H_1: \beta_j \neq 0 $$
+                </div>
+
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+                        <thead>
+                            <tr style="background: var(--primary); color: white; text-align: left;">
+                                <th style="padding: 12px;">Variable</th>
+                                <th style="padding: 12px;">P-Valor (Pr > |t|)</th>
+                                <th style="padding: 12px;">Regla de Decisión</th>
+                                <th style="padding: 12px;">Conclusión</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid #eee;">
+                                <td style="padding: 12px;"><strong>Edad Meses</strong></td>
+                                <td style="padding: 12px;">0.00000</td>
+                                <td style="padding: 12px;">$p < 0.05$</td>
+                                <td style="padding: 12px; color: var(--success);">Rechazo $H_0$ (Significativa)</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #eee;">
+                                <td style="padding: 12px;"><strong>KM</strong></td>
+                                <td style="padding: 12px;">0.00000</td>
+                                <td style="padding: 12px;">$p < 0.05$</td>
+                                <td style="padding: 12px; color: var(--success);">Rechazo $H_0$ (Significativa)</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #eee;">
+                                <td style="padding: 12px;"><strong>Met_Color</strong></td>
+                                <td style="padding: 12px;">0.31597</td>
+                                <td style="padding: 12px;">$p > 0.05$</td>
+                                <td style="padding: 12px; color: var(--danger);">No Rechazo $H_0$ (No Sig.)</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #eee;">
+                                <td style="padding: 12px;"><strong>Automático</strong></td>
+                                <td style="padding: 12px;">0.00868</td>
+                                <td style="padding: 12px;">$p < 0.05$</td>
+                                <td style="padding: 12px; color: var(--success);">Rechazo $H_0$ (Significativa)</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 12px;"><strong>Airbag_1</strong></td>
+                                <td style="padding: 12px;">0.69563</td>
+                                <td style="padding: 12px;">$p > 0.05$</td>
+                                <td style="padding: 12px; color: var(--danger);">No Rechazo $H_0$ (No Sig.)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="margin-top: 20px; font-style: italic; color: #555; font-size: 0.9rem;">
+                    <p><strong>Interpretación:</strong> Al usar un $\alpha = 0.05$, cualquier p-valor menor a este umbral nos permite afirmar con un 95% de confianza que la variable efectivamente afecta el precio del Toyota Corolla.</p>
+                </div>
+            </div>
+
             <h3>Código Implementado en R</h3>
             <pre style="background: #282c34; color: white; padding: 15px; border-radius: 8px; overflow-x: auto;">
 # Carga de librerías y datos

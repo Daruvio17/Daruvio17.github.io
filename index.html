@@ -300,50 +300,71 @@
             </div>
         </div>
 
-       <div id="proyecto1-detalle" class="tab-content">
-    <a onclick="showTab('proyectos')" style="color: var(--primary); cursor: pointer; text-decoration: none;">
-        <i class="fas fa-arrow-left"></i> Volver a Proyectos
-    </a>
-    <h2 style="margin-top: 20px;">Modelo de precios de Toyota - Análisis Profundo</h2>
-    <p>Este proyecto analiza el impacto de variables como kilometraje, año y tipo de combustible en el valor de reventa de autos Toyota.</p>
-    
-    <div style="margin: 25px 0; text-align: center; background: #fff; padding: 20px; border-radius: 10px; border: 1px solid #eee;">
-        <h3 style="text-align: left; margin-bottom: 10px;">Exploración de Datos (Head)</h3>
-        <p style="text-align: left; margin-bottom: 15px;">Visualización de las primeras filas del dataset para entender la estructura de las variables:</p>
-        
-        <img src="tabla_head.png" alt="Head de los datos Toyota" style="max-width: 100%; height: auto; border-radius: 5px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-        
-        <p style="font-size: 0.85rem; color: #666; margin-top: 10px;"><i>Figura 1: Muestra de datos importados desde Excel a R.</i></p>
-    </div>
-   <div style="background: #fdfdfd; border-left: 5px solid var(--primary); padding: 20px; margin: 20px 0;">
-    <h4>Especificación del Modelo Completo:</h4>
-    <p style="overflow-x: auto;">
-       $$ \text{Precio}_i = \beta_0 + \beta_1 \text{Edad\_Meses}_i + \beta_2 \text{KM}_i + \beta_3 \text{HP}_i + \dots + \beta_{32} \text{Asistente\_Parqueo}_i + \epsilon_i $$
-    </p>
-    <p style="font-size: 0.9rem; color: #555;">
-        <strong>Nota:</strong> El modelo incluye 32 variables explicativas, abarcando características técnicas (HP, Cilindraje), equipamiento de seguridad (ABS, Airbags) y confort (Aire acondicionado, Radio). Todo esto, para un total de 1436 observaciones.
-   <p>
-    Acá, veremos el modelo estimado sin hacer validación de supuestos del modelo, es decir, asumimos que no hay problemas de multicolinealidad y que el error tiene un comportamiento homoscedástico. En otras palabras, asumimos que se cumplen las propiedades de <strong>Gauss-Markov</strong>, donde el término de perturbación cumple:
-</p>
-<p style="text-align: left; margin-bottom: 15px;">Summary de nuestro modelo inicial</p>
-        
-        <img src="Summary_toyota.png" alt="Summary de los datos Toyota" style="max-width: 100%; height: auto; border-radius: 5px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-        
-        <p style="font-size: 0.85rem; color: #666; margin-top: 10px;"><i>Figura 2: Muestra del summary de nuestra estimación por mínimos cuadrados ordinarios.</i></p>
-<div style="background: #f4f7f9; padding: 15px; border-radius: 8px; text-align: center; margin: 20px 0;">
-    <p>
-        $$ E(\epsilon_i | X) = 0 \quad \text{y} \quad \text{Var}(\epsilon_i | X) = \sigma^2 $$
-    </p>
-    <p style="font-size: 0.9rem; color: #666;">
-        Esto implica que, al cumplir Gauss-Markov el término de error, se está asegurando que nuestros estimadores MCO sean los más eficientes dentro de la clase de estimadores lineales e insesgados.
-    </p>
-    
-</div>
-            <h3>Código Destacado</h3>
+      Aquí tienes el código completo de la sección de "proyecto1-detalle". He unificado todo: la exploración de datos con la imagen tabla_head.png, la especificación matemática corregida, la explicación de Gauss-Markov y la imagen Summary_toyota.png.
+
+Copia y reemplaza desde la línea <div id="proyecto1-detalle" ... hasta el cierre de ese bloque </div>:
+
+HTML
+        <div id="proyecto1-detalle" class="tab-content">
+            <a onclick="showTab('proyectos')" style="color: var(--primary); cursor: pointer; text-decoration: none;">
+                <i class="fas fa-arrow-left"></i> Volver a Proyectos
+            </a>
+            
+            <h2 style="margin-top: 20px;">Modelo de precios de Toyota - Análisis Profundo</h2>
+            <p>Este proyecto analiza el impacto de variables como kilometraje, año y tipo de combustible en el valor de reventa de autos Toyota.</p>
+            
+            <div style="margin: 25px 0; text-align: center; background: #fff; padding: 20px; border-radius: 10px; border: 1px solid #eee;">
+                <h3 style="text-align: left; margin-bottom: 10px;">Exploración de Datos (Head)</h3>
+                <p style="text-align: left; margin-bottom: 15px;">Visualización de las primeras filas del dataset para entender la estructura de las variables antes del modelado:</p>
+                
+                <img src="tabla_head.png" alt="Head de los datos Toyota" style="max-width: 100%; height: auto; border-radius: 5px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                
+                <p style="font-size: 0.85rem; color: #666; margin-top: 10px;"><i>Figura 1: Muestra de datos importados desde Excel a R.</i></p>
+            </div>
+
+            <div style="background: #fdfdfd; border-left: 5px solid var(--primary); padding: 20px; margin: 20px 0;">
+                <h4>Especificación del Modelo Completo:</h4>
+                <div style="overflow-x: auto; padding: 10px 0;">
+                    $$ \text{Precio}_i = \beta_0 + \beta_1 \text{Edad\_Meses}_i + \beta_2 \text{KM}_i + \beta_3 \text{HP}_i + \dots + \beta_{32} \text{Asistente\_Parqueo}_i + \epsilon_i $$
+                </div>
+                <p style="font-size: 0.9rem; color: #555; margin-top: 10px;">
+                    <strong>Nota:</strong> El modelo incluye 32 variables explicativas, abarcando características técnicas (HP, Cilindraje), seguridad (ABS, Airbags) y confort. Contamos con un total de <strong>1436 observaciones</strong>.
+                </p>
+            </div>
+
+            <div style="margin: 25px 0;">
+                <p>
+                    Para esta primera estimación, presentamos el modelo sin realizar aún la validación exhaustiva de supuestos. Es decir, trabajamos bajo el marco de las propiedades de <strong>Gauss-Markov</strong>, asumiendo ausencia de multicolinealidad perfecta y errores homoscedásticos:
+                </p>
+                
+                <div style="background: #f4f7f9; padding: 15px; border-radius: 8px; text-align: center; margin: 15px 0;">
+                    $$ E(\epsilon_i | X) = 0 \quad \text{y} \quad \text{Var}(\epsilon_i | X) = \sigma^2 $$
+                    <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">
+                        Bajo estos supuestos, aseguramos que nuestros estimadores MCO sean los <strong>MELI</strong> (Mejor Estimador Lineal Insesgado).
+                    </p>
+                </div>
+            </div>
+
+            <div style="margin: 25px 0; text-align: center; background: #fff; padding: 20px; border-radius: 10px; border: 1px solid #eee;">
+                <h3 style="text-align: left; margin-bottom: 10px;">Resultados de la Estimación (Summary)</h3>
+                <p style="text-align: left; margin-bottom: 15px;">A continuación se detallan los coeficientes estimados, errores estándar y niveles de significancia:</p>
+                
+                <img src="Summary_toyota.png" alt="Summary del modelo Toyota" style="max-width: 100%; height: auto; border-radius: 5px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                
+                <p style="font-size: 0.85rem; color: #666; margin-top: 10px;"><i>Figura 2: Salida oficial del comando summary(modelo) en R.</i></p>
+            </div>
+
+            <h3>Código Implementado en R</h3>
             <pre style="background: #282c34; color: white; padding: 15px; border-radius: 8px; overflow-x: auto;">
-# Estimación del modelo por MCO
-modelo_toyota <- lm(log(Price) ~ Age_08_04 + KM + HP + Weight, data = toyota_data)
-summary(modelo_toyota)
+# Carga de librerías y datos
+library(readxl)
+datos <- read_excel("ToyotaCorolla.xlsx")
+
+# Estimación del modelo por MCO incluyendo todas las variables
+modelo_inicial <- lm(Price ~ ., data = datos)
+
+# Visualización de resultados
+summary(modelo_inicial)
             </pre>
         </div>
 

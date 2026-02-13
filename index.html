@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>David Rubio - Data Science & Economics</title>
+    
+    <link rel="icon" type="image/png" href="icono.png">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     
@@ -300,8 +303,7 @@
             </div>
         </div>
 
-      
-       <div id="proyecto1-detalle" class="tab-content">
+        <div id="proyecto1-detalle" class="tab-content">
             <a onclick="showTab('proyectos')" style="color: var(--primary); cursor: pointer; text-decoration: none;">
                 <i class="fas fa-arrow-left"></i> Volver a Proyectos
             </a>
@@ -312,9 +314,7 @@
             <div style="margin: 25px 0; text-align: center; background: #fff; padding: 20px; border-radius: 10px; border: 1px solid #eee;">
                 <h3 style="text-align: left; margin-bottom: 10px;">Exploración de Datos (Head)</h3>
                 <p style="text-align: left; margin-bottom: 15px;">Visualización de las primeras filas del dataset para entender la estructura de las variables antes del modelado:</p>
-                
                 <img src="tabla_head.png" alt="Head de los datos Toyota" style="max-width: 100%; height: auto; border-radius: 5px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-                
                 <p style="font-size: 0.85rem; color: #666; margin-top: 10px;"><i>Figura 1: Muestra de datos importados desde Excel a R.</i></p>
             </div>
 
@@ -330,9 +330,8 @@
 
             <div style="margin: 25px 0;">
                 <p>
-                    Para esta primera estimación, presentamos el modelo sin realizar aún la validación exhaustiva de supuestos. Es decir, trabajamos bajo el marco de las propiedades de <strong>Gauss-Markov</strong>, asumiendo ausencia de multicolinealidad perfecta y errores homoscedásticos:
+                    Para esta primera estimación, presentamos el modelo sin realizar aún la validación exhaustiva de supuestos. Trabajamos bajo el marco de las propiedades de <strong>Gauss-Markov</strong>, asumiendo ausencia de multicolinealidad perfecta y errores homoscedásticos:
                 </p>
-                
                 <div style="background: #f4f7f9; padding: 15px; border-radius: 8px; text-align: center; margin: 15px 0;">
                     $$ E(\epsilon_i | X) = 0 \quad \text{y} \quad \text{Var}(\epsilon_i | X) = \sigma^2 $$
                     <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">
@@ -344,61 +343,45 @@
             <div style="margin: 25px 0; text-align: center; background: #fff; padding: 20px; border-radius: 10px; border: 1px solid #eee;">
                 <h3 style="text-align: left; margin-bottom: 10px;">Resultados de la Estimación (Summary)</h3>
                 <p style="text-align: left; margin-bottom: 15px;">A continuación se detallan los coeficientes estimados, errores estándar y niveles de significancia:</p>
-                
                 <img src="Summary_toyota.png" alt="Summary del modelo Toyota" style="max-width: 100%; height: auto; border-radius: 5px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-                
                 <p style="font-size: 0.85rem; color: #666; margin-top: 10px;"><i>Figura 2: Salida oficial del comando summary(modelo) en R.</i></p>
             </div>
-           <div style="margin: 30px 0;">
+
+            <div style="margin: 30px 0;">
                 <h3 style="border-bottom: 2px solid var(--primary); display: inline-block; margin-bottom: 20px;">
                     Interpretación Económica de algunos de los Coeficientes
                 </h3>
-                
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
-                    
                     <div style="background: #fff; border: 1px solid #ddd; padding: 15px; border-radius: 8px;">
                         <h4 style="color: var(--primary);"><i class="fas fa-chart-line"></i> Variables Continuas</h4>
                         <ul style="list-style: none; padding-top: 10px; font-size: 0.95rem;">
-                            <li style="margin-bottom: 10px;"><strong>Edad (Meses):</strong> Por cada mes adicional de antigüedad, el precio disminuye en promedio <strong>$0.118 dólares</strong>, manteniendo el resto constante.</li>
-                            <li style="margin-bottom: 10px;"><strong>KM:</strong> Por cada kilómetro adicional recorrido, el precio cae aproximadamente <strong>$0.00002 dólares</strong>.</li>
-                            <li style="margin-bottom: 10px;"><strong>HP (Caballos):</strong> Un incremento de un caballo de fuerza se traduce en un aumento promedio de <strong>$0.0196 dólares</strong> en el valor.</li>
-                            <li style="margin-bottom: 10px;"><strong>Peso:</strong> Por cada kilogramo adicional de peso (robustez), el precio tiende a subir <strong>$0.0107 dólares</strong>.</li>
-                            <li style="margin-bottom: 10px;"><strong>Impuesto Anual:</strong> Un aumento de $1 en el impuesto se asocia a una reducción de <strong>$0.014 dólares</strong> en el precio de reventa.</li>
+                            <li style="margin-bottom: 10px;"><strong>Edad (Meses):</strong> Por cada mes adicional de antigüedad, el precio disminuye en promedio <strong>$118.45</strong>, manteniendo el resto constante.</li>
+                            <li style="margin-bottom: 10px;"><strong>KM:</strong> Por cada kilómetro adicional recorrido, el precio cae aproximadamente <strong>$0.02</strong>.</li>
+                            <li style="margin-bottom: 10px;"><strong>HP (Caballos):</strong> Un incremento de un caballo de fuerza se traduce en un aumento promedio de <strong>$19.65</strong> en el valor.</li>
+                            <li style="margin-bottom: 10px;"><strong>Peso:</strong> Por cada kilogramo adicional de peso, el precio tiende a subir <strong>$10.71</strong>.</li>
+                            <li style="margin-bottom: 10px;"><strong>Garantía (Meses):</strong> Por cada mes adicional de garantía, el valor sube en promedio <strong>$64.07</strong>.</li>
                         </ul>
                     </div>
-
                     <div style="background: #fff; border: 1px solid #ddd; padding: 15px; border-radius: 8px;">
                         <h4 style="color: var(--success);"><i class="fas fa-toggle-on"></i> Variables Categóricas (Dummies)</h4>
                         <ul style="list-style: none; padding: 0; font-size: 0.95rem;">
-                            <li style="margin-bottom: 12px;">
-                                <strong>Transmisión Automática:</strong> Un Toyota Corolla automático es, en promedio, <strong>$352.63</strong> más costoso que uno de transmisión manual, ceteris paribus.
-                            </li>
-                            <li style="margin-bottom: 12px;">
-                                <strong>Tipo de Combustible (Petrol):</strong> Los autos a gasolina (Petrol) tienen un precio promedio superior en <strong>$2,050.61</strong> respecto a la categoría de referencia, siendo este un diferencial crítico en el modelo.
-                            </li>
-                            <li style="margin-bottom: 12px;">
-                                <strong>Aire Acondicionado Automático:</strong> Esta característica de lujo aporta un incremento sustancial de <strong>$2,397.95</strong> al valor del vehículo frente a los que no cuentan con este sistema.
-                            </li>
+                            <li style="margin-bottom: 12px;"><strong>Transmisión Automática:</strong> Un Toyota Corolla automático es, en promedio, <strong>$352.63</strong> más costoso que uno manual, ceteris paribus.</li>
+                            <li style="margin-bottom: 12px;"><strong>Tipo de Combustible (Petrol):</strong> Los autos a gasolina tienen un precio promedio superior en <strong>$2,050.61</strong> respecto a la categoría de referencia.</li>
+                            <li style="margin-bottom: 12px;"><strong>Aire Acondicionado Automático:</strong> Esta característica aporta un incremento sustancial de <strong>$2,397.95</strong> al valor del vehículo.</li>
                         </ul>
                     </div>
-
                 </div>
-
                 <div style="margin-top: 20px; background: #fffde7; padding: 15px; border-radius: 8px; border-left: 5px solid #fbc02d;">
                     <p style="font-size: 0.9rem;"><strong>Nota de Inferencia:</strong> Todas las interpretaciones se realizan bajo el supuesto <em>Ceteris Paribus</em> (manteniendo todo lo demás constante).</p>
                 </div>
             </div>
 
-           <div style="margin: 30px 0; padding: 25px; background: #fff; border-radius: 12px; border: 1px solid #eee;">
-                <h3 style="color: var(--secondary); margin-bottom: 20px;">
-                    <i class="fas fa-microscope"></i> Pruebas de Hipótesis Individuales (α = 0.05)
-                </h3>
-                <p>Para cada coeficiente, evaluamos si la variable tiene un impacto real en el precio mediante el siguiente contraste:</p>
-                
+            <div style="margin: 30px 0; padding: 25px; background: #fff; border-radius: 12px; border: 1px solid #eee;">
+                <h3 style="color: var(--secondary); margin-bottom: 20px;"><i class="fas fa-microscope"></i> Pruebas de Hipótesis Individuales (α = 0.05)</h3>
+                <p>Evaluamos si la variable tiene un impacto real en el precio mediante el siguiente contraste:</p>
                 <div style="text-align: center; margin: 20px 0; font-size: 1.2rem;">
                     $$ H_0: \beta_j = 0 \quad \text{vs} \quad H_1: \beta_j \neq 0 $$
                 </div>
-
                 <div style="overflow-x: auto;">
                     <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
                         <thead>
@@ -414,38 +397,47 @@
                                 <td style="padding: 12px;"><strong>Edad Meses</strong></td>
                                 <td style="padding: 12px;">0.00000</td>
                                 <td style="padding: 12px;">p < 0.05 </td>
-                                <td style="padding: 12px; color: var(--success);">Rechazo H_0 (Significativa)</td>
+                                <td style="padding: 12px; color: var(--success);">Rechazo H0 (Significativa)</td>
                             </tr>
                             <tr style="border-bottom: 1px solid #eee;">
                                 <td style="padding: 12px;"><strong>KM</strong></td>
                                 <td style="padding: 12px;">0.00000</td>
                                 <td style="padding: 12px;">p < 0.05 </td>
-                                <td style="padding: 12px; color: var(--success);">Rechazo H_0 (Significativa)</td>
+                                <td style="padding: 12px; color: var(--success);">Rechazo H0 (Significativa)</td>
                             </tr>
                             <tr style="border-bottom: 1px solid #eee;">
                                 <td style="padding: 12px;"><strong>Met_Color</strong></td>
                                 <td style="padding: 12px;">0.31597</td>
                                 <td style="padding: 12px;">p > 0.05 </td>
-                                <td style="padding: 12px; color: var(--danger);">No Rechazo H_0 (No Sig.)</td>
+                                <td style="padding: 12px; color: var(--danger);">No Rechazo H0 (No Sig.)</td>
                             </tr>
                             <tr style="border-bottom: 1px solid #eee;">
                                 <td style="padding: 12px;"><strong>Automático</strong></td>
                                 <td style="padding: 12px;">0.00868</td>
                                 <td style="padding: 12px;">p < 0.05 </td>
-                                <td style="padding: 12px; color: var(--success);">Rechazo H_0 (Significativa)</td>
+                                <td style="padding: 12px; color: var(--success);">Rechazo H0 (Significativa)</td>
                             </tr>
                             <tr>
                                 <td style="padding: 12px;"><strong>Airbag_1</strong></td>
                                 <td style="padding: 12px;">0.69563</td>
                                 <td style="padding: 12px;">p > 0.05 </td>
-                                <td style="padding: 12px; color: var(--danger);">No Rechazo H_0 (No Sig.)</td>
+                                <td style="padding: 12px; color: var(--danger);">No Rechazo H0 (No Sig.)</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
+            </div>
 
-                <div style="margin-top: 20px; font-style: italic; color: #555; font-size: 0.9rem;">
-                    <p><strong>Interpretación:</strong> Al usar un α = 0.05, cualquier p-valor menor a este umbral nos permite afirmar con un 95% de confianza que la variable efectivamente afecta el precio del Toyota Corolla.</p>
+            <div style="margin: 30px 0; display: flex; flex-wrap: wrap; gap: 20px; align-items: center; background: linear-gradient(135deg, #ffffff 0%, #f1f8ff 100%); padding: 30px; border-radius: 15px; border: 1px solid #d1e3f8;">
+                <div style="flex: 1; min-width: 250px; text-align: center;">
+                    <div style="font-size: 3.5rem; font-weight: 700; color: var(--primary); margin-bottom: 5px;">91.08%</div>
+                    <div style="font-weight: 500; color: var(--secondary); text-transform: uppercase; letter-spacing: 1px;">R-Cuadrado</div>
+                </div>
+                <div style="flex: 2; min-width: 300px;">
+                    <h3 style="color: var(--secondary); margin-bottom: 15px;">Interpretación de la Bondad de Ajuste</h3>
+                    <p style="font-size: 1.05rem; line-height: 1.7;">
+                        El coeficiente de determinación $R^2$ de <strong>0.9108</strong> indica que el <strong>91.08% de la variabilidad total del precio</strong> de los Toyota Corolla es explicada por el conjunto de variables incluidas en este modelo.
+                    </p>
                 </div>
             </div>
 
@@ -461,25 +453,6 @@ modelo_inicial <- lm(precio ~., data = datos)
 round(coef(summary(modelo_inicial)),5)
 formula(modelo_inicial)
             </pre>
-    <div style="margin: 30px 0; display: flex; flex-wrap: wrap; gap: 20px; align-items: center; background: linear-gradient(135deg, #ffffff 0%, #f1f8ff 100%); padding: 30px; border-radius: 15px; border: 1px solid #d1e3f8;">
-                
-                <div style="flex: 1; min-width: 250px; text-align: center;">
-                    <div style="font-size: 3.5rem; font-weight: 700; color: var(--primary); margin-bottom: 5px;">91.08%</div>
-                    <div style="font-weight: 500; color: var(--secondary); text-transform: uppercase; letter-spacing: 1px;">R-Cuadrado</div>
-                </div>
-
-                <div style="flex: 2; min-width: 300px;">
-                    <h3 style="color: var(--secondary); margin-bottom: 15px;">Interpretación de la Bondad de Ajuste</h3>
-                    <p style="font-size: 1.05rem; line-height: 1.7;">
-                        El coeficiente de determinación R^2 de <strong>0.9108</strong> indica que el <strong>91.08% de la variabilidad total del precio</strong> de los Toyota Corolla es explicada por el conjunto de variables incluidas en este modelo (edad, kilometraje, extras, etc.).
-                    </p>
-                    <div style="margin-top: 15px; padding: 10px; border-left: 4px solid var(--success); background: rgba(46, 204, 113, 0.1);">
-                        <p style="font-size: 0.9rem; margin: 0;">
-                            <strong>Análisis Económico:</strong> Un ajuste superior al 90% es muy alto para datos de corte transversal, lo que sugiere que el modelo captura casi todos los factores críticos que determinan el valor de reventa en este mercado.
-                        </p>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <div id="habilidades" class="tab-content">

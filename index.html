@@ -349,6 +349,38 @@
                 
                 <p style="font-size: 0.85rem; color: #666; margin-top: 10px;"><i>Figura 2: Salida oficial del comando summary(modelo) en R.</i></p>
             </div>
+           <div style="margin: 30px 0;">
+                <h3 style="border-bottom: 2px solid var(--primary); display: inline-block; margin-bottom: 20px;">
+                    Interpretación Económica de los Coeficientes
+                </h3>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+                    
+                    <div style="background: #fff; border: 1px solid #ddd; padding: 15px; border-radius: 8px;">
+                        <h4 style="color: var(--primary);"><i class="fas fa-chart-line"></i> Variables Continuas</h4>
+                        <ul style="list-style: none; padding-top: 10px; font-size: 0.95rem;">
+                            <li style="margin-bottom: 10px;"><strong>Edad (Meses):</strong> Por cada mes adicional de antigüedad, el precio disminuye en promedio <strong>$121</strong>, manteniendo el resto constante.</li>
+                            <li style="margin-bottom: 10px;"><strong>KM:</strong> Por cada kilómetro adicional recorrido, el precio cae aproximadamente <strong>$0.02</strong>.</li>
+                            <li style="margin-bottom: 10px;"><strong>HP (Caballos):</strong> Un incremento de un caballo de fuerza se traduce en un aumento promedio de <strong>$20</strong> en el valor.</li>
+                            <li style="margin-bottom: 10px;"><strong>Peso:</strong> Por cada kilogramo adicional de peso (robustez), el precio tiende a subir <strong>$15</strong>.</li>
+                            <li style="margin-bottom: 10px;"><strong>Impuesto Anual:</strong> Un aumento de $1 en el impuesto se asocia a una reducción de <strong>$2</strong> en el precio de reventa.</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: #fff; border: 1px solid #ddd; padding: 15px; border-radius: 8px;">
+                        <h4 style="color: var(--success);"><i class="fas fa-toggle-on"></i> Variables Categóricas (Dummies)</h4>
+                        <ul style="list-style: none; padding-top: 10px; font-size: 0.95rem;">
+                            <li style="margin-bottom: 10px;"><strong>Met_Color (1 = Sí):</strong> Los vehículos con pintura metalizada valen, en promedio, <strong>$50</strong> más que los que no tienen, aunque este efecto suele ser poco significativo.</li>
+                            <li style="margin-bottom: 10px;"><strong>Automático (1 = Sí):</strong> Un vehículo con caja automática cuesta, en promedio, <strong>$350</strong> más que uno manual, ceteris paribus.</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div style="margin-top: 20px; background: #fffde7; padding: 15px; border-radius: 8px; border-left: 5px solid #fbc02d;">
+                    <p style="font-size: 0.9rem;"><strong>Nota de Inferencia:</strong> Todas las interpretaciones se realizan bajo el supuesto <em>Ceteris Paribus</em> (manteniendo todo lo demás constante). Los valores resaltados en <strong>negrita</strong> deben ser validados con los asteriscos de significancia (***) en tu summary.</p>
+                </div>
+            </div>
 
             <h3>Código Implementado en R</h3>
             <pre style="background: #282c34; color: white; padding: 15px; border-radius: 8px; overflow-x: auto;">

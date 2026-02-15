@@ -520,6 +520,57 @@
         <strong>Nota de Inferencia:</strong> Al usar <strong>HC4</strong>, los errores estándar suelen ser más altos y realistas. Esto asegura que solo las variables genuinamente relacionadas con el precio sean consideradas significativas, evitando conclusiones falsas debido a la dispersión de los datos.
     </div>
 </div>
+                    <div style="margin-bottom: 50px; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+    <h3 style="color: var(--secondary); font-size: 1.8rem; margin-bottom: 25px; border-bottom: 2px solid #f1f1f1; padding-bottom: 10px;">
+        <i class="fas fa-exclamation-triangle" style="color: var(--primary);"></i> 3. Valores Atípicos e Influyentes
+    </h3>
+    
+    <p>
+        Los <i>outliers</i> son observaciones que se alejan significativamente del patrón del resto de los datos, pudiendo sesgar los coeficientes y distorsionar las predicciones del modelo de precios.
+    </p>
+
+    <div style="margin: 25px 0;">
+        <div style="background: #fff5f5; border-left: 5px solid #e74c3c; padding: 15px; border-radius: 4px; margin-bottom: 15px;">
+            <h4 style="color: #c53030; margin: 0;"><i class="fas fa-search-plus"></i> Detección: Criterio de Distancia de Cook</h4>
+            <p style="margin: 5px 0 0 0; font-size: 0.95rem;">
+                Identificamos datos influyentes mediante una matriz lógica. Detectamos una <strong>Distancia de Cook de 48.4</strong> (superior al umbral de 1), residuos absolutos mayores a 3 y <i>hat-values</i> superiores a 0.2.
+            </p>
+        </div>
+        
+        <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee;">
+            <img src="Cook.toyota.png" alt="Detección de outliers en R" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Figura 7: Identificación de observaciones influyentes y puntos de apalancamiento.</i></p>
+        </div>
+    </div>
+
+    <div style="margin: 25px 0;">
+        <div style="background: #f0fdf4; border-left: 5px solid #16a34a; padding: 15px; border-radius: 4px; margin-bottom: 15px;">
+            <h4 style="color: #16a34a; margin: 0;"><i class="fas fa-magic"></i> Corrección: Estimador Robusto de Yohai</h4>
+            <p style="margin: 5px 0 0 0; font-size: 0.95rem;">
+                En lugar de eliminar datos, utilizamos la función <code>robustRegBS</code> para aplicar el estimador de Yohai, el cual reduce automáticamente el peso de las observaciones atípicas en la estimación.
+            </p>
+        </div>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee;">
+            <div style="flex: 1; min-width: 250px; text-align: center;">
+                <img src="OLSoriginal_toyota.png" alt="Residuos Originales" style="max-width: 100%; border-radius: 4px; border: 1px solid #ddd;">
+                <p style="font-size: 0.75rem; color: #777; margin-top: 5px;">Modelo Original (MCO)</p>
+            </div>
+            <div style="flex: 1; min-width: 250px; text-align: center;">
+                <img src="OLSrobusto_toyota.png" alt="Residuos Robustos" style="max-width: 100%; border-radius: 4px; border: 1px solid var(--primary);">
+                <p style="font-size: 0.75rem; color: #777; margin-top: 5px;">Modelo Robusto (Yohai)</p>
+            </div>
+        </div>
+        <p style="font-size: 0.8rem; color: #888; text-align: center; margin-top: 10px;"><i>Figura 8: Comparativa de residuos. El modelo robusto muestra una distribución mucho más estable y controlada.</i></p>
+    </div>
+
+    <div style="background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); padding: 25px; border-radius: 12px; color: white; margin-top: 30px;">
+        <h4 style="margin-bottom: 10px; color: white;"><i class="fas fa-trophy"></i> Conclusión del Diagnóstico</h4>
+        <p style="font-size: 1rem; opacity: 0.95; line-height: 1.6;">
+            Tras corregir la <strong>multicolinealidad</strong> (vía AIC), la <strong>heteroscedasticidad</strong> (vía HC4) y los <strong>datos atípicos</strong> (vía Yohai), hemos logrado un modelo que no solo tiene un alto poder explicativo, sino que también cumple con el rigor estadístico necesario para realizar inferencias confiables sobre el mercado de vehículos Toyota.
+        </p>
+    </div>
+</div>
             </div>
 
             <h3>Código Implementado en R</h3>

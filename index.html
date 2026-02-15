@@ -472,7 +472,53 @@
             <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Figura 4: Estructura del modelo final tras la eliminación de variables no significativas y redundantes.</i></p>
         </div>
     </div>
+<div style="background: #f8f9fa; padding: 15px; border-radius: 8px; font-size: 0.9rem; color: #555;">
+        <i class="fas fa-info-circle" style="color: var(--primary);"></i> 
+     <img src="Mapes_toyota.png" alt="Comparación de MAPES" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+        <strong>Validación cruzada:</strong> Al comparar el <strong>MAPE</strong> (Error Porcentual Absoluto Medio) entre el modelo inicial y el final, la precisión se mantuvo estable, demostrando que la eliminación de variables no afectó la capacidad predictiva.
+    </div>
+</div>
+                    <div style="margin-bottom: 50px; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+    <h3 style="color: var(--secondary); font-size: 1.8rem; margin-bottom: 25px; border-bottom: 2px solid #f1f1f1; padding-bottom: 10px;">
+        <i class="fas fa-chart-area" style="color: var(--primary);"></i> 2. Heteroscedasticidad
+    </h3>
+    
+    <p>
+        Este problema surge cuando la varianza de los errores no es constante a lo largo de las observaciones. En nuestro caso, la dispersión del precio tiende a aumentar en ciertos rangos, lo que invalida la inferencia clásica de las pruebas t y F.
+    </p>
 
+    <div style="margin: 25px 0;">
+        <div style="background: #fff5f5; border-left: 5px solid #e74c3c; padding: 15px; border-radius: 4px; margin-bottom: 15px;">
+            <h4 style="color: #c53030; margin: 0;"><i class="fas fa-microscope"></i> Detección: Prueba de Breusch-Pagan</h4>
+            <p style="margin: 5px 0 0 0; font-size: 0.95rem;">
+                Ejecutamos la prueba formal donde $H_0$ es la homoscedasticidad. El p-valor obtenido ($2.2 \times 10^{-16}$) nos permite rechazar la hipótesis nula con total confianza.
+            </p>
+        </div>
+        
+        <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee;">
+            <img src="BPtest_toyota.png" alt="Prueba de Breusch-Pagan en R" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Figura 5: Resultado de bptest(modelo). La alta significancia confirma la varianza no constante.</i></p>
+        </div>
+    </div>
+
+    <div style="margin: 25px 0;">
+        <div style="background: #f0fdf4; border-left: 5px solid #16a34a; padding: 15px; border-radius: 4px; margin-bottom: 15px;">
+            <h4 style="color: #16a34a; margin: 0;"><i class="fas fa-shield-alt"></i> Corrección: Errores Estándar Robustos (HC4)</h4>
+            <p style="margin: 5px 0 0 0; font-size: 0.95rem;">
+                Para corregir la subestimación de los errores, implementamos la matriz de covarianza tipo <strong>HC4</strong> (Matriz Sándwich) mediante la función <code>coeftest()</code>.
+            </p>
+        </div>
+
+        <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee;">
+            <img src="Correcion_toyotaHC4.png" alt="Corrección HC4 en R" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Figura 6: Coeficientes con errores estándar ajustados. Nótese el cambio en la significancia de algunas variables.</i></p>
+        </div>
+    </div>
+
+    <div style="background: #eef2ff; padding: 15px; border-radius: 8px; font-size: 0.9rem; color: #3730a3; border: 1px solid #c7d2fe;">
+        <i class="fas fa-exclamation-circle"></i> 
+        <strong>Nota de Inferencia:</strong> Al usar <strong>HC4</strong>, los errores estándar suelen ser más altos y realistas. Esto asegura que solo las variables genuinamente relacionadas con el precio sean consideradas significativas, evitando conclusiones falsas debido a la dispersión de los datos.
+    </div>
 </div>
             </div>
 

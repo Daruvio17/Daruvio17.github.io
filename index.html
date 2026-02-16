@@ -562,159 +562,63 @@
             </div>
         </div>
         <p style="font-size: 0.8rem; color: #888; text-align: center; margin-top: 10px;"><i>Figura 8: Comparativa de residuos. El modelo robusto muestra una distribución mucho más estable y controlada.</i></p>
-    </div>
-
-    <div style="background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); padding: 25px; border-radius: 12px; color: white; margin-top: 30px;">
+    </div> <div style="background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); padding: 25px; border-radius: 12px; color: white; margin-top: 30px;">
         <h4 style="margin-bottom: 10px; color: white;"><i class="fas fa-trophy"></i> Conclusión del Diagnóstico</h4>
         <p style="font-size: 1rem; opacity: 0.95; line-height: 1.6;">
             Tras corregir la <strong>multicolinealidad</strong> (vía AIC), la <strong>heteroscedasticidad</strong> (vía HC4) y los <strong>datos atípicos</strong> (vía Yohai), hemos logrado un modelo que no solo tiene un alto poder explicativo, sino que también cumple con el rigor estadístico necesario para realizar inferencias confiables sobre el mercado de vehículos Toyota.
         </p>
     </div>
-</div>
-            </div>
-
-            <h3>Código Implementado en R</h3>
-            <pre style="background: #282c34; color: white; padding: 15px; border-radius: 8px; overflow-x: auto;">
-####Primeras cosas####
+</div> <div style="width: 100%; margin-top: 50px; clear: both;">
+    <h3 style="color: var(--secondary); border-bottom: 2px solid var(--primary); display: inline-block; padding-bottom: 5px;">
+        <i class="fas fa-code"></i> Código Implementado en R
+    </h3>
+    <pre style="background: #282c34; color: #ffffff; padding: 20px; border-radius: 8px; overflow-x: auto; font-family: 'Consolas', 'Monaco', monospace; font-size: 0.9rem; line-height: 1.5; margin-top: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+#### 1. Configuración y Carga ####
 library(readxl)
 library(car)
 library(lmtest)
 library(sandwich)
-install.packages("robustlm")
 library(robustbase)
-library(robustreg)#instalar
+
 datos <- read_excel(file.choose())
 datos <- data.frame(datos)
-attach(datos)
 
 set.seed(782003)
-
 s <- sequence(1, nrow(datos), by=1)
-s
-
 r <- sample(s, size = 0.10*nrow(datos))
-r
 
+# Modelo inicial
 modelo <- lm(precio ~., datos[-r, ])
-formula(modelo)
-round(coef(summary(modelo)), 5)
 
-
-
-
-
-####Multicolinealidad y solución####
-
+#### 2. Multicolinealidad (AIC) ####
 vif(modelo)
-
 modelo_final <- step(modelo)
-round(coef(summary(modelo_final)), 5)
 
-prediccion_1=predict(modelo, newdata = datos[r,])
-prediccion_2=predict(modelo_final, newdata = datos[r,])
+#### 3. Heteroscedasticidad (HC4) ####
+bptest(modelo_final)
+coeftest(modelo_final, vcov = vcovHC, type = "HC4")
 
-mape1=100*mean(abs(prediccion_1-datos[r,1])/datos[r,1])
-mape2=100*mean(abs(prediccion_2-datos[r,1])/datos[r,1])
-mape1;mape2
+#### 4. Outliers (Modelo Robusto) ####
+# Usando estimador de Yohai
+modelo_robusto <- lmrob(precio ~ ., data = datos[-r,], 
+                        control = lmrob.control(tuning.chi = 4.685))
 
-r_modelo <- summary(modelo)$r.squared
-r_modelofinal <- summary(modelo_final)$r.squared  
-
-Mapes <- c(mape1, mape2)
-Rcuadrados <- c(r_modelo, r_modelofinal)
-
-tabla_comparativa <- data.frame(
-  Modelo = c("Sin AIC", "Con AIC"),
-  MAPE = round(c(mape1, mape2), 5),
-  R2 = round(c(r_modelo, r_modelofinal), 5), 
-  Num_Variables = c(length(coef(modelo)), length(coef(modelo_final)))
-)
-tabla_comparativa
-
-
-
-
-
-
-
-
-
-####Heteroscedasticidad y solución####
-hist(precio, prob =TRUE, col = 'red')
-bptest(modelo)
-round(coeftest(modelo,vcov = vcovHC, type = "HC4"), 5)
-####Outliers####
-influence.measures(modelo)
-influence.measures(modelo)$is.inf
-influencePlot(modelo,col='blue')
-
-modelo1 <- robustRegBS(precio ~ edad_meses + mes_manufactura + KM + tipo_gasolina + 
-                      HP + met_color + Color + automatico + volumen_cilindros + 
-                      puertas + cambios + impuesto_anual + peso + garantia + importado + 
-                      meses_garantia + ABS + Airbag_1 + Airbag_2 + aire_acondicionado + 
-                      aire_acondicionado_automatico + sistema_computraizado + CD_radio + 
-                      bloqueo_central + ventanas_electricas + Radio + exploradoras + 
-                      modelo_deportivo + asiento_trasero + rines_metalicos + radio_casette + 
-                      asistente_de_parqueo, data=datos[-r,],tune=4.685,
-                    max.it=1000,tol=1e-5,
-                    anova.table=TRUE)
-modelo1 <- robustreg(precio ~ ., data = datos[-r,],
-                 control = lmrob.control(tuning.chi = 4.685, 
-                                         max.it = 1000, 
-                                         tol = 1e-5))
-round(coef(summary(modelo1)), 5)
-
+# Comparación visual
 plot(fitted(modelo), residuals(modelo), main = "Residuos OLS", col = "blue")
-plot(fitted(modelo1), residuals(modelo1), main = "Residuos Robustos", col = "blue")
+plot(fitted(modelo_robusto), residuals(modelo_robusto), main = "Residuos Robustos", col = "red")
+    </pre>
+</div>
 
-            </pre>
+</div> <div id="habilidades" class="tab-content">
+    <h2>Habilidades Técnicas</h2>
+    <div class="projects-grid">
+        <div style="padding: 20px; border: 1px solid #eee; border-radius: 10px;">
+            <h3><i class="fas fa-code"></i> Software</h3>
+            <p>R (Avanzado), SQL, Stata, Excel.</p>
         </div>
-
-        <div id="habilidades" class="tab-content">
-            <h2>Habilidades Técnicas</h2>
-            <div class="projects-grid">
-                <div style="padding: 20px; border: 1px solid #eee; border-radius: 10px;">
-                    <h3><i class="fas fa-code"></i> Software</h3>
-                    <p>R (Avanzado), SQL, Stata, Excel.</p>
-                </div>
-                <div style="padding: 20px; border: 1px solid #eee; border-radius: 10px;">
-                    <h3><i class="fas fa-chart-bar"></i> Econometría</h3>
-                    <p>Series de Tiempo, Microeconometría, Inferencia Causal.</p>
-                </div>
-            </div>
+        <div style="padding: 20px; border: 1px solid #eee; border-radius: 10px;">
+            <h3><i class="fas fa-chart-bar"></i> Econometría</h3>
+            <p>Series de Tiempo, Microeconometría, Inferencia Causal.</p>
         </div>
-
-        <div id="sobre-mi" class="tab-content">
-            <h2>Sobre Mí</h2>
-            <p>Soy David Ernesto Rubio, estudiante de 6to semestre de Economía en la <strong>Universidad de Antioquia</strong>. Me apasiona transformar datos complejos en decisiones estratégicas mediante el rigor estadístico.</p>
-        </div>
-
-        <div id="contacto" class="tab-content">
-            <h2>Contacto</h2>
-            <p>¿Quieres colaborar? ¡Hablemos!</p>
-            <div style="margin-top: 20px;">
-                <p><i class="fas fa-envelope"></i> david.rubio@udea.edu.co</p>
-                <p><i class="fab fa-github"></i> github.com/Daruvio17</p>
-            </div>
-        </div>
-
     </div>
-
-    <footer>
-        <p>&copy; 2026 David Ernesto Rubio - Portafolio de Econometría</p>
-    </footer>
-
-    <script>
-        function showTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            const targetTab = document.getElementById(tabId);
-            if(targetTab) {
-                targetTab.classList.add('active');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        }
-    </script>
-</body>
-</html>
+</div>

@@ -582,43 +582,726 @@ library(robustbase)
 
 datos <- read_excel(file.choose())
 datos <- data.frame(datos)
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>David Rubio - Data Science & Economics</title>
+    
+    <link rel="icon" type="image/png" href="icono.png">
 
-set.seed(782003)
-s <- sequence(1, nrow(datos), by=1)
-r <- sample(s, size = 0.10*nrow(datos))
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
-# Modelo inicial
-modelo <- lm(precio ~., datos[-r, ])
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #2c3e50;
+            --success: #2ecc71;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --light: #f8f9fa;
+            --dark: #2c3e50;
+        }
 
-#### 2. Multicolinealidad (AIC) ####
-vif(modelo)
-modelo_final <- step(modelo)
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
 
-#### 3. Heteroscedasticidad (HC4) ####
-bptest(modelo_final)
-coeftest(modelo_final, vcov = vcovHC, type = "HC4")
+        body {
+            background-color: #f0f2f5;
+            color: var(--dark);
+            line-height: 1.6;
+        }
 
-#### 4. Outliers (Modelo Robusto) ####
-# Usando estimador de Yohai
-modelo_robusto <- lmrob(precio ~ ., data = datos[-r,], 
-                        control = lmrob.control(tuning.chi = 4.685))
+        /* Navegación */
+        .navbar {
+            background: white;
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-# Comparación visual
-plot(fitted(modelo), residuals(modelo), main = "Residuos OLS", col = "blue")
-plot(fitted(modelo_robusto), residuals(modelo_robusto), main = "Residuos Robustos", col = "red")
-    </pre>
-</div>
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+            text-decoration: none;
+        }
 
-</div> <div id="habilidades" class="tab-content">
-    <h2>Habilidades Técnicas</h2>
-    <div class="projects-grid">
-        <div style="padding: 20px; border: 1px solid #eee; border-radius: 10px;">
-            <h3><i class="fas fa-code"></i> Software</h3>
-            <p>R (Avanzado), SQL, Stata, Excel.</p>
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Contenedor de Pestañas */
+        .tab-container {
+            max-width: 1200px;
+            margin: 100px auto 50px;
+            padding: 0 20px;
+        }
+
+        .tab-content {
+            display: none;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            animation: fadeIn 0.5s;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Hero Inicio */
+        .hero-main {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 40px;
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            border: 4px solid white;
+        }
+
+        /* Cuadrícula de Proyectos */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .project-card-detailed {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            border: 1px solid #eee;
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card-detailed:hover {
+            transform: translateY(-5px);
+        }
+
+        .project-header-detailed {
+            padding: 20px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .project-body-detailed {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .tech-badge {
+            background: #e8f4fc;
+            color: var(--primary);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-secondary { background: white; color: var(--primary); border: 2px solid var(--primary); }
+        
+        .project-btn {
+            margin-top: 15px;
+            padding: 10px;
+            text-align: center;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #888;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .projects-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="#" class="logo">David Rubio</a>
+        <div class="nav-links">
+            <a onclick="showTab('inicio')">Inicio</a>
+            <a onclick="showTab('proyectos')">Proyectos</a>
+            <a onclick="showTab('habilidades')">Habilidades</a>
+            <a onclick="showTab('sobre-mi')">Sobre Mí</a>
+            <a onclick="showTab('contacto')">Contacto</a>
         </div>
-        <div style="padding: 20px; border: 1px solid #eee; border-radius: 10px;">
-            <h3><i class="fas fa-chart-bar"></i> Econometría</h3>
-            <p>Series de Tiempo, Microeconometría, Inferencia Causal.</p>
+    </nav>
+
+    <div class="tab-container">
+        
+        <div id="inicio" class="tab-content active">
+            <div class="hero-main">
+                <div class="profile-img"><i class="fas fa-user-graduate"></i></div>
+                <h1>David Ernesto Rubio</h1>
+                <p>Estudiante de Economía | Especializado en Econometría y Data Science</p>
+                <div style="display: flex; gap: 15px; justify-content: center;">
+                    <a onclick="showTab('proyectos')" class="btn btn-primary">Ver Proyectos</a>
+                    <a onclick="showTab('contacto')" class="btn btn-secondary">Contacto</a>
+                </div>
+            </div>
+            <div style="text-align: center; max-width: 700px; margin: 0 auto;">
+                <h2>Análisis de datos con rigor econométrico</h2>
+                <p>Bienvenido a mi espacio personal donde documento aplicaciones de modelos econométricos. </p>
+            </div>
+        </div>
+
+        <div id="proyectos" class="tab-content">
+            <h2>Mis Proyectos de Data Science</h2>
+            <p>Explora mis análisis y modelos implementados principalmente en R y SQL.</p>
+            
+            <div class="projects-grid">
+                <div class="project-card-detailed">
+                    <div class="project-header-detailed" style="background: linear-gradient(135deg, #3498db, #2c3e50);">
+                        <h3>Modelo de precios de Toyota</h3>
+                    </div>
+                    <div class="project-body-detailed">
+                        <p>Limpieza, modelado y validación de supuestos para predecir el precio de un vehículo de marca Toyota.</p>
+                        <div style="margin: 10px 0;">
+                            <span class="tech-badge">RStudio</span>
+                            <span class="tech-badge">Econometría</span>
+                        </div>
+                        <a onclick="showTab('proyecto1-detalle')" class="project-btn">Ver Detalles Completos</a>
+                    </div>
+                </div>
+
+                <div class="project-card-detailed">
+                    <div class="project-header-detailed" style="background: linear-gradient(135deg, #2ecc71, #27ae60);">
+                        <h3>Precios de Vivienda</h3>
+                    </div>
+                    <div class="project-body-detailed">
+                        <p>Análisis hedónico de los precios de vivienda en Boston usando modelos de regresión múltiple.</p>
+                        <div style="margin: 10px 0;">
+                            <span class="tech-badge">RStudio</span>
+                            <span class="tech-badge">SQL</span>
+                        </div>
+                        <a onclick="alert('Detalles pronto')" class="project-btn">Ver Detalles</a>
+                    </div>
+                </div>
+
+                <div class="project-card-detailed">
+                    <div class="project-header-detailed" style="background: linear-gradient(135deg, #e74c3c, #c0392b);">
+                        <h3>Modelo Churn</h3>
+                    </div>
+                    <div class="project-body-detailed">
+                        <p>Clasificación binaria para predecir la tasa de abandono de clientes en servicios financieros.</p>
+                        <div style="margin: 10px 0;">
+                            <span class="tech-badge">Logit/Probit</span>
+                            <span class="tech-badge">R</span>
+                        </div>
+                        <a onclick="alert('Detalles pronto')" class="project-btn">Ver Detalles</a>
+                    </div>
+                </div>
+
+                <div class="project-card-detailed">
+                    <div class="project-header-detailed" style="background: linear-gradient(135deg, #f39c12, #d35400);">
+                        <h3>Modelo Default</h3>
+                    </div>
+                    <div class="project-body-detailed">
+                        <p>Evaluación de riesgo crediticio para predecir el incumplimiento de pago de clientes.</p>
+                        <div style="margin: 10px 0;">
+                            <span class="tech-badge">RStudio</span>
+                            <span class="tech-badge">Machine Learning</span>
+                        </div>
+                        <a onclick="alert('Detalles pronto')" class="project-btn">Ver Detalles</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="proyecto1-detalle" class="tab-content">
+            <a onclick="showTab('proyectos')" style="color: var(--primary); cursor: pointer; text-decoration: none;">
+                <i class="fas fa-arrow-left"></i> Volver a Proyectos
+            </a>
+            
+            <h2 style="margin-top: 20px;">Modelo de precios de Toyota - Análisis Profundo</h2>
+            <p>Este proyecto analiza el impacto de variables como kilometraje, año y tipo de combustible en el valor de reventa de autos Toyota.</p>
+            
+            <div style="margin: 25px 0; text-align: center; background: #fff; padding: 20px; border-radius: 10px; border: 1px solid #eee;">
+                <h3 style="text-align: left; margin-bottom: 10px;">Exploración de Datos (Head)</h3>
+                <p style="text-align: left; margin-bottom: 15px;">Visualización de las primeras filas del dataset para entender la estructura de las variables antes del modelado:</p>
+                <img src="tabla_head.png" alt="Head de los datos Toyota" style="max-width: 100%; height: auto; border-radius: 5px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                <p style="font-size: 0.85rem; color: #666; margin-top: 10px;"><i>Figura 1: Muestra de datos importados desde Excel a R.</i></p>
+            </div>
+
+            <div style="background: #fdfdfd; border-left: 5px solid var(--primary); padding: 20px; margin: 20px 0;">
+                <h4>Especificación del Modelo Completo:</h4>
+                <div style="overflow-x: auto; padding: 10px 0;">
+                    $$ \text{Precio}_i = \beta_0 + \beta_1 \text{Edad\_Meses}_i + \beta_2 \text{KM}_i + \beta_3 \text{HP}_i + \dots + \beta_{32} \text{Asistente\_Parqueo}_i + \epsilon_i $$
+                </div>
+                <p style="font-size: 0.9rem; color: #555; margin-top: 10px;">
+                    <strong>Nota:</strong> El modelo incluye 32 variables explicativas, abarcando características técnicas (HP, Cilindraje), seguridad (ABS, Airbags) y confort. Contamos con un total de <strong>1436 observaciones</strong>.
+                </p>
+            </div>
+
+            <div style="margin: 25px 0;">
+                <p>
+                    Para esta primera estimación, presentamos el modelo sin realizar aún la validación exhaustiva de supuestos. Trabajamos bajo el marco de las propiedades de <strong>Gauss-Markov</strong>, asumiendo ausencia de multicolinealidad perfecta y errores homoscedásticos:
+                </p>
+                <div style="background: #f4f7f9; padding: 15px; border-radius: 8px; text-align: center; margin: 15px 0;">
+                    $$ E(\epsilon_i | X) = 0 \quad \text{y} \quad \text{Var}(\epsilon_i | X) = \sigma^2 $$
+                    <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">
+                        Bajo estos supuestos, aseguramos que nuestros estimadores MCO sean los <strong>MELI</strong> (Mejor Estimador Lineal Insesgado).
+                    </p>
+                </div>
+            </div>
+
+            <div style="margin: 25px 0; text-align: center; background: #fff; padding: 20px; border-radius: 10px; border: 1px solid #eee;">
+                <h3 style="text-align: left; margin-bottom: 10px;">Resultados de la Estimación (Summary)</h3>
+                <p style="text-align: left; margin-bottom: 15px;">A continuación se detallan los coeficientes estimados, errores estándar y niveles de significancia:</p>
+                <img src="Summary_toyota.png" alt="Summary del modelo Toyota" style="max-width: 100%; height: auto; border-radius: 5px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                <p style="font-size: 0.85rem; color: #666; margin-top: 10px;"><i>Figura 2: Salida oficial del comando summary(modelo) en R.</i></p>
+            </div>
+
+            <div style="margin: 30px 0;">
+                <h3 style="border-bottom: 2px solid var(--primary); display: inline-block; margin-bottom: 20px;">
+                    Interpretación Económica de algunos de los Coeficientes
+                </h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+                    <div style="background: #fff; border: 1px solid #ddd; padding: 15px; border-radius: 8px;">
+                        <h4 style="color: var(--primary);"><i class="fas fa-chart-line"></i> Variables Continuas</h4>
+                        <ul style="list-style: none; padding-top: 10px; font-size: 0.95rem;">
+                            <li style="margin-bottom: 10px;"><strong>Edad (Meses):</strong> Por cada mes adicional de antigüedad, el precio disminuye en promedio <strong>$118.45</strong>, manteniendo el resto constante.</li>
+                            <li style="margin-bottom: 10px;"><strong>KM:</strong> Por cada kilómetro adicional recorrido, el precio cae aproximadamente <strong>$0.02</strong>.</li>
+                            <li style="margin-bottom: 10px;"><strong>HP (Caballos):</strong> Un incremento de un caballo de fuerza se traduce en un aumento promedio de <strong>$19.65</strong> en el valor.</li>
+                            <li style="margin-bottom: 10px;"><strong>Peso:</strong> Por cada kilogramo adicional de peso, el precio tiende a subir <strong>$10.71</strong>.</li>
+                            <li style="margin-bottom: 10px;"><strong>Garantía (Meses):</strong> Por cada mes adicional de garantía, el valor sube en promedio <strong>$64.07</strong>.</li>
+                        </ul>
+                    </div>
+                    <div style="background: #fff; border: 1px solid #ddd; padding: 15px; border-radius: 8px;">
+                        <h4 style="color: var(--success);"><i class="fas fa-toggle-on"></i> Variables Categóricas (Dummies)</h4>
+                        <ul style="list-style: none; padding: 0; font-size: 0.95rem;">
+                            <li style="margin-bottom: 12px;"><strong>Transmisión Automática:</strong> Un Toyota Corolla automático es, en promedio, <strong>$352.63</strong> más costoso que uno manual, ceteris paribus.</li>
+                            <li style="margin-bottom: 12px;"><strong>Tipo de Combustible (Petrol):</strong> Los autos a gasolina tienen un precio promedio superior en <strong>$2,050.61</strong> respecto a la categoría de referencia.</li>
+                            <li style="margin-bottom: 12px;"><strong>Aire Acondicionado Automático:</strong> Esta característica aporta un incremento sustancial de <strong>$2,397.95</strong> al valor del vehículo.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div style="margin-top: 20px; background: #fffde7; padding: 15px; border-radius: 8px; border-left: 5px solid #fbc02d;">
+                    <p style="font-size: 0.9rem;"><strong>Nota de Inferencia:</strong> Todas las interpretaciones se realizan bajo el supuesto <em>Ceteris Paribus</em> (manteniendo todo lo demás constante).</p>
+                </div>
+            </div>
+
+            <div style="margin: 30px 0; padding: 25px; background: #fff; border-radius: 12px; border: 1px solid #eee;">
+                <h3 style="color: var(--secondary); margin-bottom: 20px;"><i class="fas fa-microscope"></i> Pruebas de Hipótesis Individuales (α = 0.05)</h3>
+                <p>Evaluamos si la variable tiene un impacto real en el precio mediante el siguiente contraste:</p>
+                <div style="text-align: center; margin: 20px 0; font-size: 1.2rem;">
+                    $$ H_0: \beta_j = 0 \quad \text{vs} \quad H_1: \beta_j \neq 0 $$
+                </div>
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+                        <thead>
+                            <tr style="background: var(--primary); color: white; text-align: left;">
+                                <th style="padding: 12px;">Variable</th>
+                                <th style="padding: 12px;">P-Valor (Pr > |t|)</th>
+                                <th style="padding: 12px;">Regla de Decisión</th>
+                                <th style="padding: 12px;">Conclusión</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid #eee;">
+                                <td style="padding: 12px;"><strong>Edad Meses</strong></td>
+                                <td style="padding: 12px;">0.00000</td>
+                                <td style="padding: 12px;">p < 0.05 </td>
+                                <td style="padding: 12px; color: var(--success);">Rechazo H0 (Significativa)</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #eee;">
+                                <td style="padding: 12px;"><strong>KM</strong></td>
+                                <td style="padding: 12px;">0.00000</td>
+                                <td style="padding: 12px;">p < 0.05 </td>
+                                <td style="padding: 12px; color: var(--success);">Rechazo H0 (Significativa)</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #eee;">
+                                <td style="padding: 12px;"><strong>Met_Color</strong></td>
+                                <td style="padding: 12px;">0.31597</td>
+                                <td style="padding: 12px;">p > 0.05 </td>
+                                <td style="padding: 12px; color: var(--danger);">No Rechazo H0 (No Sig.)</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #eee;">
+                                <td style="padding: 12px;"><strong>Automático</strong></td>
+                                <td style="padding: 12px;">0.00868</td>
+                                <td style="padding: 12px;">p < 0.05 </td>
+                                <td style="padding: 12px; color: var(--success);">Rechazo H0 (Significativa)</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 12px;"><strong>Airbag_1</strong></td>
+                                <td style="padding: 12px;">0.69563</td>
+                                <td style="padding: 12px;">p > 0.05 </td>
+                                <td style="padding: 12px; color: var(--danger);">No Rechazo H0 (No Sig.)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div style="margin: 30px 0; display: flex; flex-wrap: wrap; gap: 20px; align-items: center; background: linear-gradient(135deg, #ffffff 0%, #f1f8ff 100%); padding: 30px; border-radius: 15px; border: 1px solid #d1e3f8;">
+                <div style="flex: 1; min-width: 250px; text-align: center;">
+                    <div style="font-size: 3.5rem; font-weight: 700; color: var(--primary); margin-bottom: 5px;">91.08%</div>
+                    <div style="font-weight: 500; color: var(--secondary); text-transform: uppercase; letter-spacing: 1px;">R-Cuadrado</div>
+                </div>
+                <div style="flex: 2; min-width: 300px;">
+                    <h3 style="color: var(--secondary); margin-bottom: 15px;">Interpretación de la Bondad de Ajuste</h3>
+                    <p style="font-size: 1.05rem; line-height: 1.7;">
+                        El coeficiente de determinación $R^2$ de <strong>0.9108</strong> indica que el <strong>91.08% de la variabilidad total del precio</strong> de los Toyota Corolla es explicada por el conjunto de variables incluidas en este modelo.
+                    </p>
+                </div>
+                <div style="margin: 40px 0;">
+   <div style="margin-bottom: 50px; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+    <h3 style="color: var(--secondary); font-size: 1.8rem; margin-bottom: 25px; border-bottom: 2px solid #f1f1f1; padding-bottom: 10px;">
+        <i class="fas fa-project-diagram" style="color: var(--primary);"></i> 1. Multicolinealidad
+    </h3>
+    
+    <p>
+        La presencia de correlación lineal entre variables explicativas infla la varianza de los estimadores. En este modelo, variables como <code>edad_meses</code>, <code>tipo_gasolina</code> y <code>Radio</code> presentaban redundancia informativa.
+    </p>
+
+    <div style="margin: 25px 0;">
+        <div style="background: #fff9f0; border-left: 5px solid #e67e22; padding: 15px; border-radius: 4px; margin-bottom: 15px;">
+            <h4 style="color: #e67e22; margin: 0;"><i class="fas fa-search"></i> Detección: Factor de Inflación de la Varianza (VIF)</h4>
+            <p style="margin: 5px 0 0 0; font-size: 0.95rem;">Identificamos variables con $VIF \approx 5$, lo que indica una alta colinealidad.</p>
+        </div>
+        
+        <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee;">
+            <img src="Toyota_VIF.png" alt="Detección VIF en R" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Figura 3: Salida de vif(modelo). Se observan valores críticos en variables de confort y motorización.</i></p>
         </div>
     </div>
+
+    <div style="margin: 25px 0;">
+        <div style="background: #f0fdf4; border-left: 5px solid #16a34a; padding: 15px; border-radius: 4px; margin-bottom: 15px;">
+            <h4 style="color: #16a34a; margin: 0;"><i class="fas fa-check-circle"></i> Corrección: Optimización por AIC (Stepwise)</h4>
+            <p style="margin: 5px 0 0 0; font-size: 0.95rem;">Seleccionamos el modelo con el menor <strong>Criterio de Información de Akaike</strong>, eliminando 10 variables redundantes.</p>
+        </div>
+
+        <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee;">
+            <img src="Toyota_AIC.png.jfif" alt="Modelo Final tras AIC" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Figura 4: Estructura del modelo final tras la eliminación de variables no significativas y redundantes.</i></p>
+        </div>
+    </div>
+<div style="background: #f8f9fa; padding: 15px; border-radius: 8px; font-size: 0.9rem; color: #555;">
+        <i class="fas fa-info-circle" style="color: var(--primary);"></i> 
+     <img src="Mapes_toyota.png" alt="Comparación de MAPES" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+        <strong>Validación cruzada:</strong> Al comparar el <strong>MAPE</strong> (Error Porcentual Absoluto Medio) entre el modelo inicial y el final, la precisión se mantuvo estable, demostrando que la eliminación de variables no afectó la capacidad predictiva.
+    </div>
 </div>
+                    <div style="margin-bottom: 50px; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+    <h3 style="color: var(--secondary); font-size: 1.8rem; margin-bottom: 25px; border-bottom: 2px solid #f1f1f1; padding-bottom: 10px;">
+        <i class="fas fa-chart-area" style="color: var(--primary);"></i> 2. Heteroscedasticidad
+    </h3>
+    
+    <p>
+        Este problema surge cuando la varianza de los errores no es constante a lo largo de las observaciones. En nuestro caso, la dispersión del precio tiende a aumentar en ciertos rangos, lo que invalida la inferencia clásica de las pruebas t y F.
+    </p>
+
+    <div style="margin: 25px 0;">
+        <div style="background: #fff5f5; border-left: 5px solid #e74c3c; padding: 15px; border-radius: 4px; margin-bottom: 15px;">
+            <h4 style="color: #c53030; margin: 0;"><i class="fas fa-microscope"></i> Detección: Prueba de Breusch-Pagan</h4>
+            <p style="margin: 5px 0 0 0; font-size: 0.95rem;">
+                Ejecutamos la prueba formal donde $H_0$ es la homoscedasticidad. El p-valor obtenido ($2.2 \times 10^{-16}$) nos permite rechazar la hipótesis nula con total confianza.
+            </p>
+        </div>
+        
+        <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee;">
+            <img src="BPtest_toyota.png" alt="Prueba de Breusch-Pagan en R" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Figura 5: Resultado de bptest(modelo). La alta significancia confirma la varianza no constante.</i></p>
+        </div>
+    </div>
+
+    <div style="margin: 25px 0;">
+        <div style="background: #f0fdf4; border-left: 5px solid #16a34a; padding: 15px; border-radius: 4px; margin-bottom: 15px;">
+            <h4 style="color: #16a34a; margin: 0;"><i class="fas fa-shield-alt"></i> Corrección: Errores Estándar Robustos (HC4)</h4>
+            <p style="margin: 5px 0 0 0; font-size: 0.95rem;">
+                Para corregir la subestimación de los errores, implementamos la matriz de covarianza tipo <strong>HC4</strong> (Matriz Sándwich) mediante la función <code>coeftest()</code>.
+            </p>
+        </div>
+
+        <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee;">
+            <img src="Correcion_toyotaHC4.png" alt="Corrección HC4 en R" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Figura 6: Coeficientes con errores estándar ajustados. Nótese el cambio en la significancia de algunas variables.</i></p>
+        </div>
+    </div>
+
+    <div style="background: #eef2ff; padding: 15px; border-radius: 8px; font-size: 0.9rem; color: #3730a3; border: 1px solid #c7d2fe;">
+        <i class="fas fa-exclamation-circle"></i> 
+        <strong>Nota de Inferencia:</strong> Al usar <strong>HC4</strong>, los errores estándar suelen ser más altos y realistas. Esto asegura que solo las variables genuinamente relacionadas con el precio sean consideradas significativas, evitando conclusiones falsas debido a la dispersión de los datos.
+    </div>
+</div>
+                    <div style="margin-bottom: 50px; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+    <h3 style="color: var(--secondary); font-size: 1.8rem; margin-bottom: 25px; border-bottom: 2px solid #f1f1f1; padding-bottom: 10px;">
+        <i class="fas fa-exclamation-triangle" style="color: var(--primary);"></i> 3. Valores Atípicos e Influyentes
+    </h3>
+    
+    <p>
+        Los <i>outliers</i> son observaciones que se alejan significativamente del patrón del resto de los datos, pudiendo sesgar los coeficientes y distorsionar las predicciones del modelo de precios.
+    </p>
+
+    <div style="margin: 25px 0;">
+        <div style="background: #fff5f5; border-left: 5px solid #e74c3c; padding: 15px; border-radius: 4px; margin-bottom: 15px;">
+            <h4 style="color: #c53030; margin: 0;"><i class="fas fa-search-plus"></i> Detección: Criterio de Distancia de Cook</h4>
+            <p style="margin: 5px 0 0 0; font-size: 0.95rem;">
+                Identificamos datos influyentes mediante una matriz lógica. Detectamos una <strong>Distancia de Cook de 48.4</strong> (superior al umbral de 1), residuos absolutos mayores a 3 y <i>hat-values</i> superiores a 0.2.
+            </p>
+        </div>
+        
+        <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee;">
+            <img src="Cook.toyota.png" alt="Detección de outliers en R" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Figura 7: Identificación de observaciones influyentes y puntos de apalancamiento.</i></p>
+        </div>
+    </div>
+
+    <div style="margin: 25px 0;">
+        <div style="background: #f0fdf4; border-left: 5px solid #16a34a; padding: 15px; border-radius: 4px; margin-bottom: 15px;">
+            <h4 style="color: #16a34a; margin: 0;"><i class="fas fa-magic"></i> Corrección: Estimador Robusto de Yohai</h4>
+            <p style="margin: 5px 0 0 0; font-size: 0.95rem;">
+                En lugar de eliminar datos, utilizamos la función <code>robustRegBS</code> para aplicar el estimador de Yohai, el cual reduce automáticamente el peso de las observaciones atípicas en la estimación.
+            </p>
+        </div>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee;">
+            <div style="flex: 1; min-width: 250px; text-align: center;">
+                <img src="OLSoriginal_toyota.png" alt="Residuos Originales" style="max-width: 100%; border-radius: 4px; border: 1px solid #ddd;">
+                <p style="font-size: 0.75rem; color: #777; margin-top: 5px;">Modelo Original (MCO)</p>
+            </div>
+            <div style="flex: 1; min-width: 250px; text-align: center;">
+                <img src="OLSrobusto_toyota.png" alt="Residuos Robustos" style="max-width: 100%; border-radius: 4px; border: 1px solid var(--primary);">
+                <p style="font-size: 0.75rem; color: #777; margin-top: 5px;">Modelo Robusto (Yohai)</p>
+            </div>
+        </div>
+        <p style="font-size: 0.8rem; color: #888; text-align: center; margin-top: 10px;"><i>Figura 8: Comparativa de residuos. El modelo robusto muestra una distribución mucho más estable y controlada.</i></p>
+    </div>
+
+    <div style="background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); padding: 25px; border-radius: 12px; color: white; margin-top: 30px;">
+        <h4 style="margin-bottom: 10px; color: white;"><i class="fas fa-trophy"></i> Conclusión del Diagnóstico</h4>
+        <p style="font-size: 1rem; opacity: 0.95; line-height: 1.6;">
+            Tras corregir la <strong>multicolinealidad</strong> (vía AIC), la <strong>heteroscedasticidad</strong> (vía HC4) y los <strong>datos atípicos</strong> (vía Yohai), hemos logrado un modelo que no solo tiene un alto poder explicativo, sino que también cumple con el rigor estadístico necesario para realizar inferencias confiables sobre el mercado de vehículos Toyota.
+        </p>
+    </div>
+</div>
+            </div>
+
+            <h3>Código Implementado en R</h3>
+            <pre style="background: #282c34; color: white; padding: 15px; border-radius: 8px; overflow-x: auto;">
+####Primeras cosas####
+library(readxl)
+library(car)
+library(lmtest)
+library(sandwich)
+install.packages("robustlm")
+library(robustbase)
+library(robustreg)#instalar
+datos <- read_excel(file.choose())
+datos <- data.frame(datos)
+attach(datos)
+
+set.seed(782003)
+
+s <- sequence(1, nrow(datos), by=1)
+s
+
+r <- sample(s, size = 0.10*nrow(datos))
+r
+
+modelo <- lm(precio ~., datos[-r, ])
+formula(modelo)
+round(coef(summary(modelo)), 5)
+
+
+
+
+
+####Multicolinealidad y solución####
+
+vif(modelo)
+
+modelo_final <- step(modelo)
+round(coef(summary(modelo_final)), 5)
+
+prediccion_1=predict(modelo, newdata = datos[r,])
+prediccion_2=predict(modelo_final, newdata = datos[r,])
+
+mape1=100*mean(abs(prediccion_1-datos[r,1])/datos[r,1])
+mape2=100*mean(abs(prediccion_2-datos[r,1])/datos[r,1])
+mape1;mape2
+
+r_modelo <- summary(modelo)$r.squared
+r_modelofinal <- summary(modelo_final)$r.squared  
+
+Mapes <- c(mape1, mape2)
+Rcuadrados <- c(r_modelo, r_modelofinal)
+
+tabla_comparativa <- data.frame(
+  Modelo = c("Sin AIC", "Con AIC"),
+  MAPE = round(c(mape1, mape2), 5),
+  R2 = round(c(r_modelo, r_modelofinal), 5), 
+  Num_Variables = c(length(coef(modelo)), length(coef(modelo_final)))
+)
+tabla_comparativa
+
+
+
+
+
+
+
+
+
+####Heteroscedasticidad y solución####
+hist(precio, prob =TRUE, col = 'red')
+bptest(modelo)
+round(coeftest(modelo,vcov = vcovHC, type = "HC4"), 5)
+####Outliers####
+influence.measures(modelo)
+influence.measures(modelo)$is.inf
+influencePlot(modelo,col='blue')
+
+modelo1 <- robustRegBS(precio ~ edad_meses + mes_manufactura + KM + tipo_gasolina + 
+                      HP + met_color + Color + automatico + volumen_cilindros + 
+                      puertas + cambios + impuesto_anual + peso + garantia + importado + 
+                      meses_garantia + ABS + Airbag_1 + Airbag_2 + aire_acondicionado + 
+                      aire_acondicionado_automatico + sistema_computraizado + CD_radio + 
+                      bloqueo_central + ventanas_electricas + Radio + exploradoras + 
+                      modelo_deportivo + asiento_trasero + rines_metalicos + radio_casette + 
+                      asistente_de_parqueo, data=datos[-r,],tune=4.685,
+                    max.it=1000,tol=1e-5,
+                    anova.table=TRUE)
+modelo1 <- robustreg(precio ~ ., data = datos[-r,],
+                 control = lmrob.control(tuning.chi = 4.685, 
+                                         max.it = 1000, 
+                                         tol = 1e-5))
+round(coef(summary(modelo1)), 5)
+
+plot(fitted(modelo), residuals(modelo), main = "Residuos OLS", col = "blue")
+plot(fitted(modelo1), residuals(modelo1), main = "Residuos Robustos", col = "blue")
+
+            </pre>
+        </div>
+
+        <div id="habilidades" class="tab-content">
+            <h2>Habilidades Técnicas</h2>
+            <div class="projects-grid">
+                <div style="padding: 20px; border: 1px solid #eee; border-radius: 10px;">
+                    <h3><i class="fas fa-code"></i> Software</h3>
+                    <p>R (Avanzado), SQL, Stata, Excel.</p>
+                </div>
+                <div style="padding: 20px; border: 1px solid #eee; border-radius: 10px;">
+                    <h3><i class="fas fa-chart-bar"></i> Econometría</h3>
+                    <p>Series de Tiempo, Microeconometría, Inferencia Causal.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="sobre-mi" class="tab-content">
+            <h2>Sobre Mí</h2>
+            <p>Soy David Ernesto Rubio, estudiante de 6to semestre de Economía en la <strong>Universidad de Antioquia</strong>. Me apasiona transformar datos complejos en decisiones estratégicas mediante el rigor estadístico.</p>
+        </div>
+
+        <div id="contacto" class="tab-content">
+            <h2>Contacto</h2>
+            <p>¿Quieres colaborar? ¡Hablemos!</p>
+            <div style="margin-top: 20px;">
+                <p><i class="fas fa-envelope"></i> david.rubio@udea.edu.co</p>
+                <p><i class="fab fa-github"></i> github.com/Daruvio17</p>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 David Ernesto Rubio - Portafolio de Econometría</p>
+    </footer>
+
+    <script>
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            const targetTab = document.getElementById(tabId);
+            if(targetTab) {
+                targetTab.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+    </script>
+</body>
+</html>
+
+
+

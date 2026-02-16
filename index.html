@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>David Rubio | Data Science & Econometrics</title>
+<title>David Rubio - Data Science & Economics</title>
 
 <link rel="icon" type="image/png" href="icono.png">
 
@@ -21,292 +21,240 @@
 --secondary:#2c3e50;
 --success:#2ecc71;
 --danger:#e74c3c;
+--warning:#f39c12;
 --light:#f8f9fa;
 --dark:#2c3e50;
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
-body{
-font-family:'Roboto',sans-serif;
-background:#f0f2f5;
-color:var(--dark);
-line-height:1.6;
-}
+body{font-family:'Roboto',sans-serif;background:#f0f2f5;color:var(--dark);line-height:1.65}
 
-/* Layout */
-.container{max-width:1200px;margin:auto;padding:0 20px}
-
-/* Navbar */
-header{
-position:fixed;
-top:0;
-width:100%;
-background:white;
-box-shadow:0 2px 6px rgba(0,0,0,.08);
-z-index:1000;
-}
+/* NAVBAR */
 .navbar{
+background:white;
+padding:1rem 2rem;
+position:fixed;
+width:100%;
+top:0;
+z-index:1000;
+box-shadow:0 2px 8px rgba(0,0,0,.08);
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:1rem 2rem;
 }
-.logo{
-font-size:1.4rem;
-font-weight:700;
-color:var(--primary);
-text-decoration:none;
-}
-.nav-links{
-display:flex;
-gap:20px;
-}
+
+.logo{font-weight:700;font-size:1.5rem;color:var(--primary);text-decoration:none}
+.nav-links{display:flex;gap:20px}
 .nav-links button{
-background:none;
-border:none;
-font-weight:500;
-cursor:pointer;
-color:var(--dark);
+background:none;border:none;font-weight:500;cursor:pointer;color:var(--dark)
 }
 .nav-links button:hover{color:var(--primary)}
 
-/* Sections */
-main{margin-top:100px}
-.tab-content{display:none}
+/* CONTENEDOR */
+.tab-container{max-width:1200px;margin:100px auto 50px;padding:0 20px}
+.tab-content{
+display:none;background:white;padding:40px;border-radius:15px;
+box-shadow:0 8px 25px rgba(0,0,0,0.05);animation:fadeIn .4s
+}
 .tab-content.active{display:block}
 
-/* Hero */
-.hero{
-background:linear-gradient(135deg,#667eea,#764ba2);
-color:white;
-padding:60px 20px;
-border-radius:15px;
-text-align:center;
-margin-bottom:40px;
-}
-.profile{
-width:150px;height:150px;
-border-radius:50%;
-background:rgba(255,255,255,.2);
-display:flex;
-align-items:center;
-justify-content:center;
-margin:auto auto 20px;
-font-size:3rem;
-border:4px solid white;
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(10px)}
+to{opacity:1;transform:translateY(0)}
 }
 
-/* Grid */
-.grid{
+/* HERO */
+.hero-main{
+text-align:center;padding:60px 20px;
+background:linear-gradient(135deg,#667eea,#764ba2);
+color:white;border-radius:15px;margin-bottom:40px
+}
+
+.profile-img{
+width:150px;height:150px;border-radius:50%;
+margin:0 auto 20px;background:rgba(255,255,255,0.2);
+display:flex;align-items:center;justify-content:center;
+font-size:3.5rem;border:4px solid white
+}
+
+/* CARDS */
+.projects-grid{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-gap:25px;
-margin-top:30px;
+gap:25px;margin-top:30px
 }
 
-/* Cards */
-.card{
-background:white;
-border-radius:12px;
-box-shadow:0 4px 12px rgba(0,0,0,.06);
-overflow:hidden;
-display:flex;
-flex-direction:column;
-}
-.card-header{
-padding:20px;
-color:white;
-font-weight:600;
-}
-.card-body{
-padding:20px;
-flex:1;
-display:flex;
-flex-direction:column;
-justify-content:space-between;
+.project-card-detailed{
+background:white;border-radius:12px;overflow:hidden;
+box-shadow:0 6px 18px rgba(0,0,0,.08);
+border:1px solid #eee;transition:.25s;
+display:flex;flex-direction:column
 }
 
-/* Buttons */
-.btn{
-display:inline-flex;
-align-items:center;
-gap:8px;
-padding:10px 18px;
-border-radius:8px;
-text-decoration:none;
-font-weight:500;
-cursor:pointer;
-border:none;
-}
-.btn-primary{background:var(--primary);color:white}
-.btn-outline{
-border:2px solid var(--primary);
-color:var(--primary);
-background:white;
+.project-card-detailed:hover{
+transform:translateY(-6px);
+box-shadow:0 10px 25px rgba(0,0,0,.12)
 }
 
-/* Table */
+.project-header-detailed{padding:20px;color:white;font-weight:600}
+.project-body-detailed{padding:20px;flex-grow:1}
+
+.tech-badge{
+background:#e8f4fc;color:var(--primary);
+padding:5px 12px;border-radius:15px;
+font-size:0.8rem;font-weight:bold;margin-right:5px
+}
+
+/* BLOQUES ACADÉMICOS */
+.paper-box{
+background:#f8fafc;
+border-left:5px solid var(--primary);
+padding:20px;border-radius:8px;margin:25px 0
+}
+
+img{
+max-width:100%;height:auto;border-radius:6px;
+box-shadow:0 3px 10px rgba(0,0,0,.08)
+}
+
 table{
-width:100%;
-border-collapse:collapse;
-margin-top:20px;
+width:100%;border-collapse:collapse;margin-top:20px
 }
-th,td{
-padding:12px;
-border-bottom:1px solid #eee;
-text-align:left;
-}
+th,td{padding:12px;border-bottom:1px solid #eee;text-align:left}
 th{background:var(--primary);color:white}
 
-/* Footer */
-footer{
-text-align:center;
-padding:40px;
-color:#777;
-}
+footer{text-align:center;padding:40px;color:#888}
 
-/* Responsive */
 @media(max-width:768px){
 .nav-links{display:none}
+.projects-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
 
 <body>
 
-<header>
-<nav class="navbar container">
-<a class="logo">David Rubio</a>
-<div class="nav-links" role="tablist">
+<nav class="navbar">
+<a href="#" class="logo">David Rubio</a>
+<div class="nav-links">
 <button data-tab="inicio">Inicio</button>
 <button data-tab="proyectos">Proyectos</button>
 <button data-tab="habilidades">Habilidades</button>
-<button data-tab="sobre-mi">Sobre mí</button>
+<button data-tab="sobre-mi">Sobre Mí</button>
 <button data-tab="contacto">Contacto</button>
 </div>
 </nav>
-</header>
 
-<main class="container">
+<div class="tab-container">
 
-<section id="inicio" class="tab-content active">
-<div class="hero">
-<div class="profile"><i class="fas fa-user-graduate"></i></div>
+<div id="inicio" class="tab-content active">
+<div class="hero-main">
+<div class="profile-img"><i class="fas fa-user-graduate"></i></div>
 <h1>David Ernesto Rubio</h1>
-<p>Economics Student | Econometrics & Data Science</p>
-<br>
-<button class="btn btn-primary" data-tab="proyectos">Ver proyectos</button>
-<button class="btn btn-outline" data-tab="contacto">Contacto</button>
+<p>Estudiante de Economía | Especializado en Econometría y Data Science</p>
 </div>
 
-<section>
+<div style="text-align:center;max-width:700px;margin:0 auto;">
 <h2>Análisis de datos con rigor econométrico</h2>
-<p>Portafolio de modelos econométricos aplicados y análisis estadístico reproducible.</p>
-</section>
-</section>
-
-<section id="proyectos" class="tab-content">
-<h2>Proyectos de Data Science</h2>
-
-<div class="grid">
-
-<article class="card">
-<div class="card-header" style="background:linear-gradient(135deg,#3498db,#2c3e50)">
-Modelo de precios Toyota
+<p>Bienvenido a mi espacio personal donde documento aplicaciones de modelos econométricos.</p>
 </div>
-<div class="card-body">
-<p>Predicción del precio de vehículos mediante regresión econométrica.</p>
-<button class="btn btn-primary" data-tab="proyecto1-detalle">Ver análisis</button>
-</div>
-</article>
-
-<article class="card">
-<div class="card-header" style="background:linear-gradient(135deg,#2ecc71,#27ae60)">
-Precios de vivienda
-</div>
-<div class="card-body">
-<p>Análisis hedónico con regresión múltiple.</p>
-</div>
-</article>
-
-<article class="card">
-<div class="card-header" style="background:linear-gradient(135deg,#e74c3c,#c0392b)">
-Modelo Churn
-</div>
-<div class="card-body">
-<p>Clasificación binaria para abandono de clientes.</p>
-</div>
-</article>
-
-</div>
-</section>
-
-<section id="proyecto1-detalle" class="tab-content">
-<button class="btn btn-outline" data-tab="proyectos">← Volver</button>
-
-<h2>Modelo econométrico de precios Toyota</h2>
-
-<p>Modelo MCO con validación de supuestos clásicos.</p>
-
-<div>
-$$ Precio_i = \beta_0 + \beta_1 Edad_i + \beta_2 KM_i + \epsilon_i $$
 </div>
 
-<h3>Hipótesis</h3>
-$$ H_0: \beta_j = 0 \quad vs \quad H_1: \beta_j \neq 0 $$
+<div id="proyectos" class="tab-content">
+<h2>Mis Proyectos de Data Science</h2>
 
-<table>
-<thead>
-<tr>
-<th>Variable</th>
-<th>P-valor</th>
-<th>Conclusión</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Edad</td>
-<td>0.000</td>
-<td style="color:var(--success)">Significativa</td>
-</tr>
-<tr>
-<td>KM</td>
-<td>0.000</td>
-<td style="color:var(--success)">Significativa</td>
-</tr>
-</tbody>
-</table>
-</section>
+<div class="projects-grid">
 
-<section id="habilidades" class="tab-content">
-<h2>Habilidades técnicas</h2>
-<div class="grid">
-<div class="card"><div class="card-body">
-<h3>Software</h3>
-<p>R, SQL, Stata, Excel</p>
-</div></div>
-<div class="card"><div class="card-body">
-<h3>Econometría</h3>
-<p>Series de tiempo, inferencia causal</p>
-</div></div>
+<div class="project-card-detailed">
+<div class="project-header-detailed" style="background:linear-gradient(135deg,#3498db,#2c3e50)">
+<h3>Modelo de precios de Toyota</h3>
 </div>
-</section>
+<div class="project-body-detailed">
+<p>Limpieza, modelado y validación de supuestos para predecir el precio de un vehículo Toyota.</p>
+<span class="tech-badge">RStudio</span>
+<span class="tech-badge">Econometría</span>
+<button data-tab="proyecto1-detalle">Ver Detalles Completos</button>
+</div>
+</div>
 
-<section id="sobre-mi" class="tab-content">
-<h2>Sobre mí</h2>
-<p>Estudiante de Economía enfocado en modelado estadístico y análisis de datos.</p>
-</section>
+</div>
+</div>
 
-<section id="contacto" class="tab-content">
+<div id="proyecto1-detalle" class="tab-content">
+
+<h2>Modelo de precios de Toyota - Análisis Profundo</h2>
+
+<div class="paper-box">
+<h3>Exploración de Datos</h3>
+<img src="tabla_head.png">
+<p><i>Figura 1: Muestra de datos importados desde Excel a R.</i></p>
+</div>
+
+<div class="paper-box">
+<h3>Especificación del Modelo</h3>
+$$ \text{Precio}_i = \beta_0 + \beta_1 \text{Edad\_Meses}_i + \beta_2 \text{KM}_i + ... + \epsilon_i $$
+</div>
+<div class="paper-box">
+<h3>Resultados de la Estimación</h3>
+<img src="Summary_toyota.png">
+</div>
+
+<div class="paper-box">
+<h3>Interpretación Económica</h3>
+<ul>
+<li>Edad reduce el precio en $118.45</li>
+<li>KM reduce $0.02 por unidad</li>
+<li>HP aumenta $19.65</li>
+<li>Peso aumenta $10.71</li>
+<li>Garantía aumenta $64.07</li>
+</ul>
+</div>
+
+<div class="paper-box">
+<h3>Bondad de Ajuste</h3>
+<p>R² = 0.9108</p>
+</div>
+
+<div class="paper-box">
+<h3>Diagnóstico del Modelo</h3>
+<ul>
+<li>Multicolinealidad → AIC</li>
+<li>Heteroscedasticidad → HC4</li>
+<li>Outliers → Estimador Yohai</li>
+</ul>
+</div>
+
+<h3>Código en R</h3>
+<pre>
+library(readxl)
+library(car)
+library(lmtest)
+library(sandwich)
+library(robustbase)
+</pre>
+
+</div>
+
+<div id="habilidades" class="tab-content">
+<h2>Habilidades Técnicas</h2>
+<p>R, SQL, Stata, Econometría.</p>
+</div>
+
+<div id="sobre-mi" class="tab-content">
+<h2>Sobre Mí</h2>
+<p>Estudiante de Economía en la Universidad de Antioquia.</p>
+</div>
+
+<div id="contacto" class="tab-content">
 <h2>Contacto</h2>
 <p>david.rubio@udea.edu.co</p>
 <p>github.com/Daruvio17</p>
-</section>
+</div>
 
-</main>
+</div>
 
 <footer>
-<p>© 2026 David Ernesto Rubio</p>
+<p>&copy; 2026 David Ernesto Rubio</p>
 </footer>
 
 <script>
@@ -316,7 +264,7 @@ const tabs=document.querySelectorAll('.tab-content');
 buttons.forEach(btn=>{
 btn.addEventListener('click',()=>{
 const id=btn.dataset.tab;
-tabs.forEach(t=>t.classList.remove('active'));
+tabs.forEach(tab=>tab.classList.remove('active'));
 document.getElementById(id)?.classList.add('active');
 window.scrollTo({top:0,behavior:'smooth'});
 });

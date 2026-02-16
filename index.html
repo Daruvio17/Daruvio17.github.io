@@ -1159,54 +1159,36 @@ datos <- data.frame(datos)
 
             <h3>Código Implementado en R</h3>
             <pre style="background: #282c34; color: white; padding: 15px; border-radius: 8px; overflow-x: auto;">
-####Primeras cosas####
 library(readxl)
 library(car)
 library(lmtest)
 library(sandwich)
 install.packages("robustlm")
 library(robustbase)
-library(robustreg)#instalar
+library(robustreg)
 datos <- read_excel(file.choose())
 datos <- data.frame(datos)
 attach(datos)
-
 set.seed(782003)
-
 s <- sequence(1, nrow(datos), by=1)
 s
-
 r <- sample(s, size = 0.10*nrow(datos))
 r
-
 modelo <- lm(precio ~., datos[-r, ])
 formula(modelo)
 round(coef(summary(modelo)), 5)
-
-
-
-
-
-####Multicolinealidad y solución####
-
 vif(modelo)
-
 modelo_final <- step(modelo)
 round(coef(summary(modelo_final)), 5)
-
 prediccion_1=predict(modelo, newdata = datos[r,])
 prediccion_2=predict(modelo_final, newdata = datos[r,])
-
 mape1=100*mean(abs(prediccion_1-datos[r,1])/datos[r,1])
 mape2=100*mean(abs(prediccion_2-datos[r,1])/datos[r,1])
 mape1;mape2
-
 r_modelo <- summary(modelo)$r.squared
 r_modelofinal <- summary(modelo_final)$r.squared  
-
 Mapes <- c(mape1, mape2)
 Rcuadrados <- c(r_modelo, r_modelofinal)
-
 tabla_comparativa <- data.frame(
   Modelo = c("Sin AIC", "Con AIC"),
   MAPE = round(c(mape1, mape2), 5),
@@ -1214,16 +1196,6 @@ tabla_comparativa <- data.frame(
   Num_Variables = c(length(coef(modelo)), length(coef(modelo_final)))
 )
 tabla_comparativa
-
-
-
-
-
-
-
-
-
-####Heteroscedasticidad y solución####
 hist(precio, prob =TRUE, col = 'red')
 bptest(modelo)
 round(coeftest(modelo,vcov = vcovHC, type = "HC4"), 5)
@@ -1231,7 +1203,6 @@ round(coeftest(modelo,vcov = vcovHC, type = "HC4"), 5)
 influence.measures(modelo)
 influence.measures(modelo)$is.inf
 influencePlot(modelo,col='blue')
-
 modelo1 <- robustRegBS(precio ~ edad_meses + mes_manufactura + KM + tipo_gasolina + 
                       HP + met_color + Color + automatico + volumen_cilindros + 
                       puertas + cambios + impuesto_anual + peso + garantia + importado + 
@@ -1247,11 +1218,9 @@ modelo1 <- robustreg(precio ~ ., data = datos[-r,],
                                          max.it = 1000, 
                                          tol = 1e-5))
 round(coef(summary(modelo1)), 5)
-
 plot(fitted(modelo), residuals(modelo), main = "Residuos OLS", col = "blue")
 plot(fitted(modelo1), residuals(modelo1), main = "Residuos Robustos", col = "blue")
-
-            </pre>
+</pre>
         </div>
 
         <div id="habilidades" class="tab-content">

@@ -741,3 +741,26 @@ footer {
         font-size: 1.2rem;
     }
 }
+/* Contenedor para que el código no ocupe toda la pantalla hacia abajo */
+.code-container {
+    background: #282c34; /* Color oscuro profesional */
+    border-radius: 8px;
+    margin: 20px 0;
+    max-height: 450px;   /* Si el código es muy largo, saldrá scroll interno */
+    overflow-y: auto;    /* Scroll vertical */
+    overflow-x: auto;    /* Scroll horizontal para líneas muy largas */
+    border: 1px solid #444;
+}
+
+pre {
+    padding: 15px;
+    margin: 0;
+}
+
+code {
+    font-family: 'Fira Code', 'Courier New', monospace; /* Fuentes tipo programador */
+    font-size: 0.9rem;
+    color: #abb2bf; /* Color gris claro para el texto */
+    line-height: 1.5;
+    white-space: pre; /* Mantiene el formato de RStudio */
+}

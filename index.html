@@ -1007,21 +1007,31 @@ abline(v=quantile(b2, probs = 0.975), col='red')
         <p>&copy; 2026 David Ernesto Rubio - Portafolio de Econometría</p>
     </footer>
 
-    <script>
-    function showTab(tabId) {
+   <script>
+function showTab(tabId) {
+    // 1. Buscamos todas las secciones con la clase tab-content
+    const tabs = document.querySelectorAll('.tab-content');
+    
+    // 2. Las ocultamos todas de forma absoluta
+    tabs.forEach(tab => {
+        tab.style.display = 'none';
+        tab.classList.remove('active');
+    });
+    
+    // 3. Buscamos la sección que queremos mostrar
+    const targetTab = document.getElementById(tabId);
+    
+    if (targetTab) {
+        // 4. Forzamos que se muestre como bloque
+        targetTab.style.display = 'block';
+        targetTab.classList.add('active');
         
-        document.querySelectorAll('.tab-content').forEach(tab => {
-            tab.classList.remove('active');
-            tab.style.display = 'none'; // 
-        });
-        
-        const targetTab = document.getElementById(tabId);
-        if(targetTab) {
-            targetTab.classList.add('active');
-            targetTab.style.display = 'block'; 
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+        // 5. Subimos al inicio de la página para ver el contenido
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+        console.error("No se encontró el contenido con ID: " + tabId);
     }
+}
 </script>
 </body>
 </html>

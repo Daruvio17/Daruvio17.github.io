@@ -17,13 +17,15 @@ document.addEventListener('DOMContentLoaded', function() {
     navItems.forEach(item => {
         item.addEventListener('click', function() {
             navLinks.classList.remove('active');
-            menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+            if (menuToggle) {
+                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+            }
         });
     });
     
     // Cerrar menú al hacer clic fuera
     document.addEventListener('click', function(event) {
-        if (!event.target.closest('.navbar')) {
+        if (navLinks && !event.target.closest('.navbar')) {
             navLinks.classList.remove('active');
             if (menuToggle) {
                 menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
@@ -34,19 +36,46 @@ document.addEventListener('DOMContentLoaded', function() {
     // ===== ANIMACIÓN DE BARRAS DE HABILIDADES =====
     const skillBars = document.querySelectorAll('.skill-level');
     
-    // Función para animar barras cuando son visibles
     function animateSkillBars() {
         skillBars.forEach(bar => {
             const rect = bar.getBoundingClientRect();
             const isVisible = (rect.top <= window.innerHeight && rect.bottom >= 0);
             
             if (isVisible && !bar.dataset.animated) {
-               
+                const width = bar.style.width;
+                bar.style.width = '0';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 100);
+                bar.dataset.animated = 'true';
+            }
+        });
+    }
+
+    // Ejecutar animación al cargar y al hacer scroll
+    window.addEventListener('scroll', animateSkillBars);
+    animateSkillBars();
+});
+
+// ===== FUNCIÓN PARA CAMBIAR PESTAÑAS (FUERA DE TODO) =====
 function showTab(tabId) {
-    // Oculta todos los contenidos
-    document.querySelectorAll('.tab-content').forEach(tab => {
+    // 1. Oculta todos los bloques de contenido
+    const tabs = document.querySelectorAll('.tab-content');
+    tabs.forEach(tab => {
         tab.style.display = 'none';
     });
-    // Muestra el seleccionado
-    document.getElementById(tabId).style.display = 'block';
+    
+    // 2. Muestra el bloque que coincide con el ID pasado por parámetro
+    const selectedTab = document.getElementById(tabId);
+    if (selectedTab) {
+        selectedTab.style.display = 'block';
+        
+        // 3. Opcional: Desplazar la pantalla hacia arriba al cambiar de vista
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    } else {
+        console.error("No se encontró la pestaña con ID: " + tabId);
     }
+}

@@ -913,8 +913,87 @@ abline(v=quantile(b2, probs = 0.975), col='red')
         $$Z = \beta_0 + \beta_1(\text{Tenure}) + \beta_2(\text{MonthlyCharges}) + \dots + \beta_n(X_n)$$
     </div>
 
-        
+
+    <div style="line-height: 1.8; color: #333;">
+        <h3>Estimación inicial</h3>
+        <p>Ahora, procedemos a estimar el modelo usando la familia binomial. Obtenemos lo siguiente:</p>
+<div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee;">
+            <img src="summary_churn.png" alt="Summary Churn" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"></p>
+    <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee;">
+            <img src="summary2_churn.png" alt="Summary Churn" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Summary del modelo estimado</i></p>
+        </div>
+        <h3>Resultados y Coeficientes Significativos</h3>
+<p>Tras entrenar el modelo, se identificaron los factores con mayor impacto en el <i>Churn</i>:</p>
+    <ul style="line-height: 1.6;">
+    <li><b>Tenure (Antigüedad):</b> Coeficiente negativo. Indica una relación inversa: a más meses de contrato, menor probabilidad de fuga.</li>
+    <li><b>Senior Citizen:</b> Factor de riesgo positivo. Los adultos mayores tienen una mayor probabilidad estadística de cancelar el servicio.</li>
+    <li><b>Monthly Charges:</b> En este conjunto de datos, cargos mensuales más altos mostraron una correlación con una mayor retención, sugiriendo una mayor valoración del servicio premium.</li>
+</ul>
+
     
+    <h3 style="color: #c0392b; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 30px;">4. Evaluación de Capacidad Predictiva</h3>
+        <p>Para validar el modelo, se analizó el comportamiento de un individuo de prueba (Sujeto 1164), donde el modelo estimó una probabilidad de abandono del <strong>78.57%</strong>, coincidiendo con su comportamiento real.</p>
+<div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee;">
+            <img src="prediccion_churn.png" alt="Predicción" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Salida de la predicción del sujeto 1164</i></p>
+        </div>
+
+
+
+    
+        <h4>Matriz de Confusión</h4>
+        <p>Al evaluar el modelo con los datos de prueba, se obtuvieron los siguientes resultados de clasificación:</p>
+        
+        <div style="display: flex; justify-content: center; margin: 20px 0;">
+            <table style="border-collapse: collapse; text-align: center; font-family: sans-serif; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                <thead>
+                    <tr style="background-color: #f2f2f2;">
+                        <th style="padding: 12px; border: 1px solid #ddd;">Predicción / Real</th>
+                        <th style="padding: 12px; border: 1px solid #ddd; color: #276749;">No Abandona (0)</th>
+                        <th style="padding: 12px; border: 1px solid #ddd; color: #c53030;">Abandona (1)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold; background: #f9f9f9;">Clasificado 0</td>
+                        <td style="padding: 12px; border: 1px solid #ddd; background: #e6fffa;">279</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">68</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold; background: #f9f9f9;">Clasificado 1</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">45</td>
+                        <td style="padding: 12px; border: 1px solid #ddd; background: #fff5f5;">90</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p style="font-size: 0.9rem; color: #666; text-align: center;"><i>Se identificaron 45 falsos positivos y 68 falsos negativos. Se concluye que el modelo necesita ajustarse mejor ya que tuvo 45 falsos positivos y 68 falsos negativos, que son números considerables.</i></p>
+
+
+        <h4>Curva ROC y AUC</h4>
+        <p>El modelo presenta un <strong>AUC de 0.817</strong>. Esto significa que existe un 81.7% de probabilidad de que el modelo asigne una mayor probabilidad de abandono a un cliente que realmente abandonará en comparación con uno que no lo hará.</p>
+
+        <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee; margin: 20px 0;">
+            <img src="auc_churn.png" alt="Curva ROC" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>imagen 3. Curva ROC (AUC: 0.817).</i></p>
+        </div>
+        
+        
+
+        <h3 style="color: #c0392b; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 30px;">5. Optimización: Balanceo de Datos</h3>
+        <p>Debido a que el modelo inicial presentaba dificultades para clasificar correctamente a quienes abandonan, se procedió a realizar un balanceo de la muestra al 50% (proporción equilibrada entre clientes que se van y los que se quedan).</p>
+
+        <div style="background: #ebf8ff; padding: 20px; border-radius: 8px; border-left: 5px solid #3182ce; margin: 20px 0;">
+            <p style="margin: 0; font-weight: bold; color: #2c5282;">Resultado del ajuste:</p>
+            <p style="margin: 5px 0 0 0;">La precisión para identificar clientes que efectivamente abandonan mejoró significativamente, pasando del <strong>56.96% al 77.93%</strong>.</p>
+        </div>
+  <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee; margin: 20px 0;">
+            <img src="50_50_churn.png" alt="Matriz de confusión con equilibrio" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Nueva matriz de confusión</i></p>
+        </div>
+        <p>Este ajuste permite a la empresa tomar decisiones preventivas mucho más precisas, enfocando sus recursos en el 78% de los clientes en riesgo real de fuga.</p>
         
     </div>
 </div>

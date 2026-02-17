@@ -49,3 +49,4 @@ function showTab(tabId) {
     });
     // Muestra el seleccionado
     document.getElementById(tabId).style.display = 'block';
+    }

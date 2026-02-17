@@ -1080,8 +1080,52 @@ plot(rl4,colorize=T,main=paste("AUC:",(rl1@y.values)))
 
 
 <!---------------------------------------------------------------------------- Contenido Modelo No lineal Ultrasónico ------------------------------------------------------------------------------------------------------->
+<div id="proyecto4-detalle" class="tab-content" style="display: none;">
+    <a onclick="showTab('proyectos')" style="color: #3498db; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; font-weight: bold;">
+        <i class="fas fa-arrow-left"></i> Volver a Proyectos
+    </a>
 
+    <div style="background: linear-gradient(135deg, #3498db, #2c3e50); color: white; padding: 30px; border-radius: 12px; margin-bottom: 30px;">
+        <h2 style="margin: 0; color: white;">Modelo de Respuesta Ultrasónica</h2>
+        <p style="margin: 10px 0 0 0; opacity: 0.9;">Estimación de la distancia y densidad de materiales mediante señales de alta frecuencia.</p>
+    </div>
 
+    <div style="line-height: 1.8; color: #333;">
+        <h3>1. Fundamento Teórico</h3>
+        <p>El proyecto analiza la relación entre el tiempo de respuesta de una onda ultrasónica y las propiedades del medio. La variable dependiente es el tiempo de retorno de la señal, modelado a partir de la velocidad de propagación.</p>
+        
+        <div style="text-align: center; background: #fafafa; padding: 20px; border-radius: 8px; border: 1px solid #eee; margin: 25px 0;">
+            <p style="font-size: 1.3rem; background: white; padding: 15px; display: inline-block; border-radius: 5px; border: 1px solid #ddd;">
+                $$y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$$
+            </p>
+            <p style="font-size: 0.8rem; color: #888;"><i>Donde $y_i$ es la respuesta ultrasónica y $x_i$ es la profundidad o densidad.</i></p>
+        </div>
+
+        <h3>2. Análisis de Datos (Head)</h3>
+        <p>Se procesó un conjunto de datos técnicos que registra la amplitud de la señal y el desfase temporal en milisegundos.</p>
+
+        <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee; margin: 20px 0;">
+            <img src="head_ultrasonica.png" alt="Head datos ultrasonido" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Figura 1: Muestra de la base de datos de señales.</i></p>
+        </div>
+
+        <h3>3. Resultados del Modelo</h3>
+        <p>Tras la ejecución en R, el modelo reveló una alta sensibilidad a las variaciones del material:</p>
+        <ul>
+            <li><strong>Linealidad:</strong> Se observa un ajuste preciso entre la profundidad y el tiempo de eco.</li>
+            <li><strong>Precisión:</strong> El error residual es mínimo, lo que permite una calibración industrial confiable.</li>
+        </ul>
+
+        <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee; margin: 20px 0;">
+            <img src="summary_ultrasonica.png" alt="Summary R ultrasonido" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Figura 2: Coeficientes del modelo de respuesta.</i></p>
+        </div>
+        
+
+        <h3>4. Conclusión Técnica</h3>
+        <p>Este modelo permite predecir con una confianza del 95% la integridad estructural de materiales no ferrosos basándose únicamente en la respuesta acústica recolectada por los sensores.</p>
+    </div>
+</div>
 
 
 

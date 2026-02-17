@@ -994,6 +994,73 @@ abline(v=quantile(b2, probs = 0.975), col='red')
             <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Nueva matriz de confusión</i></p>
         </div>
         <p>Este ajuste permite a la empresa tomar decisiones preventivas mucho más precisas, enfocando sus recursos en el 78% de los clientes en riesgo real de fuga.</p>
+    <h3>Código Implementado en R</h3>
+            <div class="code-container">
+                <pre class="language-r"><code class="language-r">
+library(readxl)
+datos <- read_excel(file.choose())
+datos <- data.frame(datos)
+datos <- datos[,-1]
+datos <- datos[,-6]
+str(datos)
+datos$MonthlyCharges <- as.numeric(datos$MonthlyCharges)
+datos$TotalCharges <- as.numeric(datos$TotalCharges)
+str(datos)
+Abandona <- subset(datos, Churn == 1)
+Permanece <- subset(datos, Churn == 0)
+set.seed(4569)
+r1 <- sample(seq_len(nrow(Abandona)), size = 0.1 * nrow(Abandona))
+r2 <- sample(seq_len(nrow(Permanece)), size = 0.1 * nrow(Permanece))
+entrenamiento <- rbind(Abandona[-r1, ], Permanece[-r2, ])
+prueba <- rbind(Abandona[r1, ], Permanece[r2, ])
+modelo <- glm(
+  Churn ~ .,
+  data = entrenamiento,
+  family = binomial()
+)
+summary(modelo)
+p <- predict(modelo,newdata=prueba[1,],type='response')
+p
+p <- predict(modelo,newdata=prueba,type='response')
+p
+p1 <- round(p,0)
+tp <- table(prueba$Churn)
+tp
+t1 <- table(prueba$Churn,p1)
+t1
+accuracy <- (t1[1,1] + t1[2,2])/(tp[1]+tp[2])
+accuracy
+library(ROCR)
+curva1 <- prediction(data.frame(p),prueba$Churn)
+rl1 <- performance(curva1,measure="auc",x.measure ="cutoff")
+rl2 <- performance(curva1, "tpr","fpr")
+plot(rl2,colorize=T,main=paste("AUC:",(rl1@y.values)))
+r3 <- sample(seq_len(nrow(Abandona)), size = 241)
+r4 <- sample(seq_len(nrow(Permanece)), size = 241)
+entrenamiento1 <- rbind(Abandona[-r3, ], Permanece[-r4, ])
+prueba1 <- rbind(Abandona[r3, ], Permanece[r4, ])
+modelo1 <- glm(
+  Churn ~ .,
+  data = entrenamiento1,
+  family = binomial()
+)
+summary(modelo1)
+p2 <- predict(modelo,newdata=prueba1[1,],type='response')
+p2
+p2 <- predict(modelo,newdata=prueba1,type='response')
+p2
+p2 <- round(p2,0)
+p2
+tp2 <- table(prueba1$Churn)
+t3 <- table(prueba1$Churn,p2)
+accuracy1 <- (t3[1,1] + t3[2,2])/(tp2[1]+tp2[2])
+accuracy1
+accuracy
+curva2 <- prediction(data.frame(p2),prueba1$Churn)
+rl3 <- performance(curva2,measure="auc",x.measure ="cutoff")
+rl4 <- performance(curva2, "tpr","fpr")
+plot(rl4,colorize=T,main=paste("AUC:",(rl1@y.values)))
+                </code></pre>
         
     </div>
 </div>

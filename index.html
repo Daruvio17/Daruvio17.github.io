@@ -881,58 +881,65 @@ abline(v=quantile(b2, probs = 0.975), col='red')
 
 <!---------------------------------------------------------------------------- Contenido Modelo Churn ------------------------------------------------------------------------------------------------------->
 
- <div id="proyecto3-detalle" class="tab-content" style="display: none;">
+ <div id="proyecto3-detalle" class="tab-content" style="display: none; padding: 20px;">
     
-    <div style="margin-bottom: 25px;">
-        <a onclick="showTab('proyectos')" style="color: #e74c3c; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; font-weight: bold;">
-            <i class="fas fa-arrow-left"></i> Volver a Proyectos
-        </a>
+    <a onclick="showTab('proyectos')" style="color: #e74c3c; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; font-weight: bold; margin-bottom: 20px;">
+        <i class="fas fa-arrow-left"></i> Volver a Proyectos
+    </a>
+
+    <div style="background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; padding: 30px; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+        <h2 style="margin: 0; color: white; font-size: 2rem;">Análisis de Churn (Abandono de Clientes)</h2>
+        <p style="margin: 10px 0 0 0; opacity: 0.9; font-size: 1.1rem;">Predicción de deserción mediante Regresión Logística y balanceo de datos.</p>
     </div>
 
-    <div style="background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; padding: 25px; border-radius: 10px; margin-bottom: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-        <h2 style="margin: 0; color: white; font-size: 1.8rem;">Análisis Predictivo de Churn</h2>
-        <p style="margin: 10px 0 0 0; opacity: 0.9;">Uso de Regresión Logística para predecir la deserción de clientes.</p>
-    </div>
-
-    <div style="line-height: 1.7; color: #444; max-width: 900px; margin: auto;">
+    <div style="max-width: 1000px; margin: auto; line-height: 1.8; color: #333; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
         
-        <h3>1. Introducción y Datos</h3>
-        [cite_start]<p>Se utiliza una base de datos con 4835 observaciones[cite: 10]. [cite_start]El objetivo es predecir la variable <b>Churn</b> ($Y_i$), donde 1 indica que el cliente abandona y 0 que permanece[cite: 7, 31].</p>
+        <h3 style="color: #c0392b; border-bottom: 2px solid #eee; padding-bottom: 10px;">1. Definición del Problema</h3>
+        <p>A partir de una base de datos con información de 4,835 clientes, se busca identificar los factores que influyen en la probabilidad de que un cliente abandone el servicio ($Churn = 1$).</p>
 
-        <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee; margin: 20px 0;">
-            <img src="imagen 1" alt="imagen 1" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-            [cite_start]<p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>imagen 1. Muestra de la base de datos original[cite: 2].</i></p>
+        <div style="text-align: center; background: #fafafa; padding: 20px; border-radius: 8px; border: 1px solid #eee; margin: 25px 0;">
+            <img src="imagen 1" alt="imagen 1" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+            <p style="font-size: 0.85rem; color: #777; margin-top: 12px;"><i><b>Imagen 1:</b> Estructura inicial de la base de datos (CustomerID, Gender, Tenure, etc).</i></p>
         </div>
 
-        <h3>2. El Modelo Estadístico</h3>
-        [cite_start]<p>Se implementó una regresión logística estimada por máxima verosimilitud[cite: 11]:</p>
-        <p style="text-align: center; font-size: 1.2rem; margin: 20px 0;">
-            [cite_start]$$p_{i\_estimado}=\frac{e^{\beta_{1}+\beta_{2}x_{2i}...+\beta_{20}x_{21i}}}{1+e^{\beta_{1}+\beta_{2}x_{2i}...+\beta_{20}x_{21i}}}$$ [cite: 9]
-        </p>
+        <h3 style="color: #c0392b; border-bottom: 2px solid #eee; padding-bottom: 10px;">2. Metodología: Regresión Logística</h3>
+        <p>Se implementó un modelo de clasificación binaria para estimar la probabilidad de abandono ($p_{i\_estimado}$) utilizando 19 variables explicativas:</p>
+        
+        <div style="text-align: center; background: #fdfdfd; padding: 20px; border-radius: 8px; border-left: 5px solid #e74c3c; margin: 20px 0; font-size: 1.2rem; overflow-x: auto;">
+            $$p_{i\_estimado}=\frac{e^{\beta_{1}+\beta_{2}x_{2i}+\dots+\beta_{20}x_{21i}}}{1+e^{\beta_{1}+\beta_{2}x_{2i}+\dots+\beta_{20}x_{21i}}}$$
+        </div>
 
-        <h3>3. Interpretación de Resultados Clave</h3>
-        [cite_start]<p>Tras entrenar el modelo con el 90% de los datos[cite: 11], se observaron los siguientes efectos (ceteris paribus):</p>
-        <ul>
-            [cite_start]<li><b>Antigüedad (tenure):</b> A mayor tiempo de permanencia, menor riesgo de abandono ($\beta_{19} < 0$)[cite: 13, 18].</li>
-            [cite_start]<li><b>Cargos Mensuales:</b> Un mayor cargo mensual se asocia con un menor riesgo de abandono en este dataset específico[cite: 20].</li>
-            [cite_start]<li><b>Cargos Totales:</b> A mayor monto total cobrado, aumenta el riesgo de abandono[cite: 22].</li>
-            [cite_start]<li><b>Perfil Demográfico:</b> Los ciudadanos mayores (SeniorCitizen) presentan un riesgo significativamente más alto de abandonar el servicio[cite: 24].</li>
+        <h3 style="color: #c0392b; border-bottom: 2px solid #eee; padding-bottom: 10px;">3. Resultados del Modelo</h3>
+        <p>Utilizando el 90% de los datos para entrenamiento, el modelo identificó variables críticas:</p>
+        <ul style="padding-left: 20px;">
+            <li><b>Antigüedad (Tenure):</b> Los clientes con más tiempo en la empresa tienen menor probabilidad de irse.</li>
+            <li><b>Cargos Mensuales y Totales:</b> Influyen directamente en la decisión de abandono.</li>
+            <li><b>Senior Citizen:</b> Los ciudadanos mayores presentan una tendencia de abandono distinta a los jóvenes.</li>
         </ul>
 
-        <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee; margin: 20px 0;">
-            <img src="imagen 2" alt="imagen 2" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-            [cite_start]<p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>imagen 2. Summary del modelo y coeficientes estimados[cite: 12, 13].</i></p>
+        <div style="text-align: center; background: #fafafa; padding: 20px; border-radius: 8px; border: 1px solid #eee; margin: 25px 0;">
+            <img src="imagen 2" alt="imagen 2" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+            <p style="font-size: 0.85rem; color: #777; margin-top: 12px;"><i><b>Imagen 2:</b> Resumen de coeficientes y significancia estadística en R.</i></p>
         </div>
 
-        <h3>4. Evaluación de Desempeño</h3>
-        [cite_start]<p>El modelo alcanzó un <b>AUC de 0.817</b>, lo que valida su capacidad discriminatoria[cite: 51, 56].</p>
-
-        <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee; margin: 20px 0;">
-            <img src="imagen 3" alt="imagen 3" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-            [cite_start]<p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>imagen 3. Curva ROC para la evaluación del modelo[cite: 45].</i></p>
+        <h3 style="color: #c0392b; border-bottom: 2px solid #eee; padding-bottom: 10px;">4. Evaluación y Conclusiones</h3>
+        <p>El modelo inicial mostró un <b>AUC de 0.817</b>, lo que indica un excelente poder de discriminación. Sin embargo, tras aplicar técnicas de balanceo de datos, la capacidad del modelo para predecir correctamente a los clientes que efectivamente abandonan mejoró notablemente:</p>
+        
+        <div style="display: flex; gap: 20px; flex-wrap: wrap; margin: 20px 0;">
+            <div style="flex: 1; background: #fff5f5; padding: 15px; border-radius: 8px; border: 1px solid #feb2b2; text-align: center;">
+                <span style="display: block; font-size: 0.9rem; color: #c53030;">Precisión Inicial</span>
+                <span style="font-size: 1.5rem; font-weight: bold; color: #c53030;">56.96%</span>
+            </div>
+            <div style="flex: 1; background: #f0fff4; padding: 15px; border-radius: 8px; border: 1px solid #9ae6b4; text-align: center;">
+                <span style="display: block; font-size: 0.9rem; color: #276749;">Precisión (Datos Balanceados)</span>
+                <span style="font-size: 1.5rem; font-weight: bold; color: #276749;">77.93%</span>
+            </div>
         </div>
 
-        [cite_start]<p>Al ajustar el balance de la muestra, la precisión para identificar clientes que efectivamente abandonan subió del <b>56.96% al 77.93%</b>[cite: 61].</p>
+        <div style="text-align: center; background: #fafafa; padding: 20px; border-radius: 8px; border: 1px solid #eee; margin: 25px 0;">
+            <img src="imagen 3" alt="imagen 3" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+            <p style="font-size: 0.85rem; color: #777; margin-top: 12px;"><i><b>Imagen 3:</b> Curva ROC y valor del AUC (0.817).</i></p>
+        </div>
     </div>
 </div>
 

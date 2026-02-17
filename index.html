@@ -731,7 +731,7 @@ plot(fitted(modelo1), residuals(modelo1), main = "Residuos Robustos", col = "blu
 </p>
 
 <div style="margin-top: 30px;">
-    <h3 style="border-bottom: 2px solid var(--primary); display: inline-block; margin-bottom: 20px;">1. Modelo Inicial vs. Método de los Casos</h3>
+    <h3 style="border-bottom: 2px solid var(--primary); display: inline-block; margin-bottom: 20px;"> Modelo Inicial vs. Método de los Casos</h3>
     <p>
         Comparamos el modelo original (MCO) con el primer método de Bootstrap, que es el remuestreo de casos.
     </p>
@@ -754,7 +754,14 @@ Como vemos, comparándo con el summary del modelo inicial, el método Bootstrap 
 
 <div style="margin-top: 30px;">
     <h3 style="border-bottom: 2px solid var(--primary); display: inline-block; margin-bottom: 20px;">1. Modelo Inicial vs. Método de los residuales</h3>
-
+  <p>
+        Ahora, vamos a remuestrar con reemplazo nuestros residuales para aproximarlos a los poblacionales, pero teniendo en cuenta que asumimos homocedasticidad ya que asumimos un modelo bien especificado por defecto del método. También se usarán 5000 réplicas. Obtenemos lo siguiente:
+    </p>
+    <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee;">
+            <img src="metodo_residuales_vivienda.png" alt="Estimación por Método 1: Método de los casos" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Figura 3: Summary del modelo con método de los residuales.</i></p>
+        </div>
+</div>
 
 
 
@@ -763,6 +770,9 @@ Como vemos, comparándo con el summary del modelo inicial, el método Bootstrap 
 
 
 
+
+
+     
 
 
 <!-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->

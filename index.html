@@ -881,57 +881,53 @@ abline(v=quantile(b2, probs = 0.975), col='red')
 
 <!---------------------------------------------------------------------------- Contenido Modelo Churn ------------------------------------------------------------------------------------------------------->
 
-<div id="proyecto3-detalle" class="tab-content" style="display: none; padding: 20px;">
-    <a onclick="showTab('proyectos')" style="color: #e74c3c; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; font-weight: bold; margin-bottom: 20px;">
+<div id="proyecto3-detalle" class="tab-content">
+    <a onclick="showTab('proyectos')" style="color: #e74c3c; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; font-weight: bold;">
         <i class="fas fa-arrow-left"></i> Volver a Proyectos
     </a>
 
-    <div style="background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; padding: 30px; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-        <h2 style="margin: 0; color: white; font-size: 2rem;">Análisis de Churn (Abandono de Clientes)</h2>
-        <p style="margin: 10px 0 0 0; opacity: 0.9; font-size: 1.1rem;">Modelo de regresión logística para la predicción de deserción en servicios.</p>
+    <div style="background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; padding: 30px; border-radius: 12px; margin-bottom: 30px;">
+        <h2 style="margin: 0; color: white;">Análisis de Churn (Abandono de Clientes)</h2>
+        <p style="margin: 10px 0 0 0; opacity: 0.9;">Modelo de regresión logística para predicción de deserción[cite: 5].</p>
     </div>
 
-    <div style="max-width: 1000px; margin: auto; line-height: 1.8; color: #333;">
-        
-        <h3>1. Descripción de los Datos</h3>
-        <p>El estudio parte de una base de datos que registra el comportamiento de clientes[cite: 1, 2]. Se analizan variables como género, antigüedad (tenure), cargos mensuales y el estado de abandono (Churn)[cite: 2].</p>
+    <div style="line-height: 1.8; color: #333;">
+        <h3>Definición y Datos</h3>
+        <p>Se utiliza una base de datos de 4,835 observaciones para predecir si un cliente abandona ($Churn=1$) o permanece ($Churn=0$)[cite: 1, 7, 10].</p>
 
-        <div style="text-align: center; background: #fafafa; padding: 20px; border-radius: 8px; border: 1px solid #eee; margin: 25px 0;">
-            <img src="imagen 1" alt="imagen 1" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-            <p style="font-size: 0.85rem; color: #777; margin-top: 12px;"><i><b>imagen 1.</b> Vista previa de la base de datos de clientes[cite: 2].</i></p>
+        <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee; margin: 20px 0;">
+            <img src="imagen 1" alt="imagen 1" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>imagen 1. Estructura de la base de datos[cite: 2].</i></p>
         </div>
 
-        <h3>2. Especificación del Modelo</h3>
-        <p>Se define la variable dependiente $Churn_i$ como 1 si el cliente abandona y 0 si permanece[cite: 6, 7]. El modelo utiliza 19 variables explicativas bajo la siguiente función logística[cite: 8, 9]:</p>
-        
-        <div style="text-align: center; background: #fdfdfd; padding: 20px; border-radius: 8px; border-left: 5px solid #e74c3c; margin: 20px 0; font-size: 1.2rem; overflow-x: auto;">
-            $$p_{i\_estimado}=\frac{e^{\beta_{1}+\beta_{2}x_{2i}+\beta_{3}x_{3i...+\beta_{20}x_{21i}}}}{1+e^{\beta_{1}+\beta_{2}x_{2i}+\beta_{3}x_{3i...+\beta_{20}x_{21i}}}}$$
+        <h3>Modelo Estadístico</h3>
+        <p>Se implementó la siguiente función logística con 19 variables explicativas[cite: 8, 9]:</p>
+        <p style="text-align: center; background: #f9f9f9; padding: 15px; border-radius: 8px;">
+            $$p_{i\_estimado}=\frac{e^{\beta_{1}+\beta_{2}x_{2i}+\dots+\beta_{20}x_{21i}}}{1+e^{\beta_{1}+\beta_{2}x_{2i}+\dots+\beta_{20}x_{21i}}}$$
+        </p>
+
+        <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee; margin: 20px 0;">
+            <img src="imagen 2" alt="imagen 2" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>imagen 2. Resumen de coeficientes estimados en R[cite: 12, 13].</i></p>
         </div>
 
-        <h3>3. Resumen de la Estimación</h3>
-        <p>Utilizando el 90% de los datos para entrenamiento (4,835 observaciones), se obtuvieron los coeficientes del modelo[cite: 10, 11].</p>
-
-        <div style="text-align: center; background: #fafafa; padding: 20px; border-radius: 8px; border: 1px solid #eee; margin: 25px 0;">
-            <img src="imagen 2" alt="imagen 2" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-            <p style="font-size: 0.85rem; color: #777; margin-top: 12px;"><i><b>imagen 2.</b> Coeficientes y significancia estadística del modelo[cite: 12, 13].</i></p>
-        </div>
-
-        <p>De los resultados se destaca[cite: 16]:</p>
+        <h3>Interpretación de Variables</h3>
         <ul>
-            <li><b>Tenure:</b> A mayor permanencia, menor riesgo de abandono ($\beta < 0$)[cite: 17, 18].</li>
-            <li><b>Monthly Charges:</b> Un mayor cargo mensual se asocia con un menor riesgo de abandono en esta muestra[cite: 19, 20].</li>
-            <li><b>Senior Citizen:</b> Los ciudadanos mayores presentan un riesgo significativamente más alto de abandono[cite: 23, 24].</li>
+            <li><strong>Antigüedad (Tenure):</strong> A mayor tiempo de permanencia, menor riesgo de abandono[cite: 18].</li>
+            <li><strong>Cargos Mensuales:</strong> Un mayor cargo mensual se asocia con un menor riesgo de abandono en esta muestra[cite: 20].</li>
+            <li><strong>Total de Cargos:</strong> A mayor monto total cobrado, aumenta el riesgo de abandono[cite: 22].</li>
+            <li><strong>Senior Citizen:</strong> Los ciudadanos mayores presentan mayor riesgo de fuga que los jóvenes[cite: 24].</li>
         </ul>
 
-        <h3>4. Evaluación del Desempeño</h3>
-        <p>El modelo predijo correctamente un abandono real para el sujeto 1164 con una probabilidad del 78.57%[cite: 31, 32]. Globalmente, el modelo presenta un <b>AUC de 0.817</b>, indicando una alta capacidad discriminatoria[cite: 51, 56].</p>
+        <h3>Evaluación del Modelo</h3>
+        <p>El modelo presenta un <strong>AUC de 0.817</strong>, lo que indica una alta capacidad predictiva[cite: 51, 56].</p>
 
-        <div style="text-align: center; background: #fafafa; padding: 20px; border-radius: 8px; border: 1px solid #eee; margin: 25px 0;">
-            <img src="imagen 3" alt="imagen 3" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-            <p style="font-size: 0.85rem; color: #777; margin-top: 12px;"><i><b>imagen 3.</b> Curva ROC del modelo de clasificación[cite: 45].</i></p>
+        <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee; margin: 20px 0;">
+            <img src="imagen 3" alt="imagen 3" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>imagen 3. Curva ROC del modelo[cite: 45].</i></p>
         </div>
 
-        <p>Finalmente, al balancear los datos al 50%, la precisión para identificar clientes que efectivamente abandonan mejoró del <b>56.96% al 77.93%</b>[cite: 57, 61].</p>
+        <p>Tras realizar un balanceo de datos al 50%, la precisión para identificar correctamente a los clientes que abandonan mejoró del <strong>56.96% al 77.93%</strong>.</p>
     </div>
 </div>
 

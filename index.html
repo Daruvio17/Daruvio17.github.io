@@ -763,8 +763,25 @@ Como vemos, comparándo con el summary del modelo inicial, el método Bootstrap 
   <p>
       Vemos que hay una convergencia en los errores estándar tanto por el método de los casos como por el método de los residuales. Falta ver entonces los intervalos de confianza para comprobar significancia de las variables explicativas. Obtenemos lo siguiente:
     </p>
- 
-    
+   <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee;">
+            <img src="iconfianza_vivienda.png" alt="Estimación de intervalos de confianza" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Figura 4: Intervalos de confiana con Bootstrap.</i></p>
+        </div>
+      <p>
+      Seguimos usando un nivel de significancia del 5%, entonces, gráficamente, estamos viendo esto:
+    </p>
+ <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee;">
+            <img src="hist_vivienda.pngg" alt="Histograma de los intervalos de confianza Bootstrap" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Figura 5: Histograma de los intervalos de confianza.</i></p>
+        </div>
+    <p>
+      Como en los intervalos de confianza ninguna variable contiene el cero, podemos decir que todas las variables explicativas son estadísticamente significativas con un nivel de confianza del 95%.
+    </p>
+    <div style="background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); padding: 25px; border-radius: 12px; color: white; margin-top: 30px;">
+        <h4 style="margin-bottom: 10px; color: white;"><i class="fas fa-trophy"></i> Conclusión del método Bootstrap</h4>
+        <p style="font-size: 1rem; opacity: 0.95; line-height: 1.6;">
+            No necesitamos necesariamente conocer la <strong>distribución</strong>, tampoco necesitamos tener una gran cantidad de<strong>registros</strong> en nuestra base de datos. Con hacer un remuestreo ya estamos en capacidad de estimar coeficientes, errores estándar e intervalos de confianza bastante <strong>
+    </div>
 </div>
 
 

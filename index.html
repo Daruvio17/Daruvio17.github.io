@@ -783,7 +783,68 @@ Como vemos, comparándo con el summary del modelo inicial, el método Bootstrap 
             No necesitamos necesariamente conocer la <strong>distribución</strong>, tampoco necesitamos tener una gran cantidad de<strong>registros</strong> en nuestra base de datos. Con hacer un remuestreo ya estamos en capacidad de estimar coeficientes, errores estándar e intervalos de confianza bastante <strong>
     </div>
 </div>
-
+ <h3>Código Implementado en R</h3>
+            <div class="code-container">
+                <pre class="language-r"><code class="language-r">
+library(readxl)
+datos <- read_excel(file.choose())
+datos <- data.frame(datos)
+attach(datos)
+modelo <- lm(valor~ ., data = datos)
+round(coef(summary(modelo)),5)
+s <- seq(1, nrow(datos), by = 1)
+r <- sample(s, size = nrow(datos), replace = TRUE)
+modelo1 <- lm(valor ~ ., data = datos[r, ])
+simulacion <- function(x){
+  r <- sample(1:nrow(datos), size = nrow(datos), replace = TRUE)
+  lm(valor ~ ., data = datos[r, ])$coef
+}
+B <- 2000
+n_coef <- length(modelo1$coef)
+f <- array(0, dim = c(1, n_coef, B))
+for(i in 1:B) f[,,i] <- simulacion(nrow(datos))
+f1 <- aperm(f, c(3, 2, 1))
+colnames(f1) <- names(modelo1$coef)
+errores <- apply(f1, 2, sd)
+summary_bootstrap <- data.frame(
+  Coeficiente_Bootstrap = apply(f1, 2, mean),
+  errores_estándar_Bootstrap = apply(f1, 2, sd)
+)
+round(summary_bootstrap,5)
+interi <- function(x) quantile(x, c(0.025, 0.975))
+intervalos <- apply(f1, 2, interi)
+intervalos
+e <- residuals(modelo)
+eprima <- sample(e, size = nrow(datos), replace = TRUE)
+Yprima <- datos$valor + eprima
+modelo_resid <- lm(Yprima ~ ., data = datos[, -which(names(datos) == "valor")])
+b <- coef(modelo_resid)
+simulacion_1 <- function(x){
+  e <- residuals(modelo)
+  eprima <- sample(e, size = nrow(datos), replace = TRUE)
+  Yprima <- datos$valor + eprima
+  modelo_temp <- lm(Yprima ~ ., data = datos[, -which(names(datos) == "valor")])
+  return(coef(modelo_temp))
+}
+B2 <- 2000
+f2 <- array(0, dim = c(1, n_coef, B2))
+for(i in 1:B2) f2[,,i] <- simulacion_1(nrow(datos))
+f2_perm <- aperm(f2, c(3, 2, 1))
+colnames(f2_perm) <- names(modelo1$coef)
+errores2 <- apply(f2_perm, 2, sd)
+intervalos2 <- apply(f2_perm, 2, interi)
+summary_bootstrap_metodo2 <- data.frame(
+  Coeficiente_Bootstrap2 = apply(f1, 2, mean),
+  errores_estándar_Bootstrap2 = apply(f1, 2, sd)
+)
+round(summary_bootstrap_metodo2,5)
+b2 <- f1[,2,]
+hist(b2, col = 'yellow', prob=TRUE)
+lines(density(b2), col='purple')
+abline(v=quantile(b2, probs = 0.025), col='red')
+abline(v=quantile(b2, probs = 0.975), col='red')
+                </code></pre>
+        </div>
 
 
 

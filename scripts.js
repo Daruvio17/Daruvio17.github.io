@@ -59,23 +59,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // ===== FUNCIÓN PARA CAMBIAR PESTAÑAS (FUERA DE TODO) =====
 function showTab(tabId) {
-    // 1. Oculta todos los bloques de contenido
-    const tabs = document.querySelectorAll('.tab-content');
-    tabs.forEach(tab => {
+    document.querySelectorAll('.tab-content').forEach(tab => {
         tab.style.display = 'none';
     });
-    
-    // 2. Muestra el bloque que coincide con el ID pasado por parámetro
-    const selectedTab = document.getElementById(tabId);
-    if (selectedTab) {
-        selectedTab.style.display = 'block';
-        
-        // 3. Opcional: Desplazar la pantalla hacia arriba al cambiar de vista
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    } else {
-        console.error("No se encontró la pestaña con ID: " + tabId);
+    const target = document.getElementById(tabId);
+    if(target) {
+        target.style.display = 'block';
+        if (window.MathJax) { MathJax.typesetPromise(); }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 }

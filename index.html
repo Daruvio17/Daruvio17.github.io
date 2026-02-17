@@ -741,9 +741,19 @@ plot(fitted(modelo1), residuals(modelo1), main = "Residuos Robustos", col = "blu
             <img src="summary_vivienda.png" alt="Estimación MCO inicial sin Bootstrap" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
             <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Figura 1: Summary del modelo inicial sin Bootstrap.</i></p>
         </div>
+ <p>
+        Ahora, aplicaremos el método de los casos, que es el método 1. Vamos a remuestrar nuestros datos de tal forma que, en cada remuestreo, el modelo se irá ajustando cada vez más. El número de réplicas que usaré será 5000, los mismos que en clase. Con esto, hallamos las estimaciones Bootstrap para los coeficientes y errores estándar. Obtenemos lo siguiente:
+    </p>
+ <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee;">
+            <img src="metodo_casos_vivienda.png" alt="Estimación por Método 1: Método de los casos" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Figura 2: Summary del modelo con método de los casos.</i></p>
+        </div>
+   <p>
+Como vemos, comparándo con el summary del modelo inicial, el método Bootstrap estima muy cercanamente a los coeficientes y errores estándar sin necesidad de asumir normalidad.        
+    </p>   
 
-
-
+<div style="margin-top: 30px;">
+    <h3 style="border-bottom: 2px solid var(--primary); display: inline-block; margin-bottom: 20px;">1. Modelo Inicial vs. Método de los residuales</h3>
 
 
 

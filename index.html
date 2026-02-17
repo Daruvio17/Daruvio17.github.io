@@ -1012,16 +1012,20 @@ abline(v=quantile(b2, probs = 0.975), col='red')
     </footer>
 
     <script>
-        function showTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            const targetTab = document.getElementById(tabId);
-            if(targetTab) {
-                targetTab.classList.add('active');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
+    function showTab(tabId) {
+        
+        document.querySelectorAll('.tab-content').forEach(tab => {
+            tab.classList.remove('active');
+            tab.style.display = 'none'; // 
+        });
+        
+        const targetTab = document.getElementById(tabId);
+        if(targetTab) {
+            targetTab.classList.add('active');
+            targetTab.style.display = 'block'; 
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-    </script>
+    }
+</script>
 </body>
 </html>

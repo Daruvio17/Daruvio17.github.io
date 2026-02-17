@@ -322,10 +322,11 @@
                         <h3>Modelo Churn</h3>
                     </div>
                     <div class="project-body-detailed">
-                        <p>Clasificación binaria para predecir la tasa de abandono de clientes en servicios financieros.</p>
+                        <p>Estimación de regresión logística para evaluación de riesgo crediticio y predecir el incumplimiento o cumplimiento de pago de clientes.</p>
                         <div style="margin: 10px 0;">
                             <span class="tech-badge">Logit/Probit</span>
-                            <span class="tech-badge">R</span>
+                            <span class="tech-badge">Validación cruzada</span>
+                            <span class="tech-badge">Correción de desbalance para predicción</span>
                         </div>
                          <a onclick="showTab('proyecto3-detalle')" class="project-btn">Ver Detalles Completos</a>
                     </div>
@@ -338,15 +339,16 @@
 
                 <div class="project-card-detailed">
                     <div class="project-header-detailed" style="background: linear-gradient(135deg, #f39c12, #d35400);">
-                        <h3>Modelo Default</h3>
+                        <h3>Modelo de Respuesta Ultrasónica</h3>
                     </div>
                     <div class="project-body-detailed">
-                        <p>Evaluación de riesgo crediticio para predecir el incumplimiento de pago de clientes.</p>
+                        <p>Estimación de un modelo no lineal con el uso del algoritmo de Gauss-Newton para derivadas no despejables.</p>
                         <div style="margin: 10px 0;">
-                            <span class="tech-badge">RStudio</span>
-                            <span class="tech-badge">Machine Learning</span>
+                            <span class="tech-badge">Modelo no lineal</span>
+                            <span class="tech-badge">Gauss-Newton</span>
+                            <span class="tech-badge">Estimación por iteración</span>
                         </div>
-                        <a onclick="alert('Detalles pronto')" class="project-btn">Ver Detalles</a>
+                        <a onclick="showTab('proyecto4-detalle')" class="project-btn">Ver Detalles Completos</a>
                     </div>
                 </div>
             </div>
@@ -1064,6 +1066,7 @@ plot(rl4,colorize=T,main=paste("AUC:",(rl1@y.values)))
         
     </div>
 </div>
+ <!-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 
 
 
@@ -1072,8 +1075,11 @@ plot(rl4,colorize=T,main=paste("AUC:",(rl1@y.values)))
 
 
 
+    
 
 
+
+<!---------------------------------------------------------------------------- Contenido Modelo No lineal Ultrasónico ------------------------------------------------------------------------------------------------------->
 
 
 

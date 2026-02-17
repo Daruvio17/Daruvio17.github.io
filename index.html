@@ -889,35 +889,27 @@ abline(v=quantile(b2, probs = 0.975), col='red')
     </a>
 
     <div style="background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; padding: 30px; border-radius: 12px; margin-bottom: 30px;">
-        <h2 style="margin: 0; color: white;">Análisis de Churn (Abandono de Clientes)</h2>
-        <p style="margin: 10px 0 0 0; opacity: 0.9;">Modelo de regresión logística para predicción de deserción[cite: 5].</p>
+        <h2 style="margin: 0; color: white;">Modelo Churn </h2>
+        <p style="margin: 10px 0 0 0; opacity: 0.9;">Modelo de regresión logística para predicción de deserción de clientes en un servicio financiero para una empresa</p>
     </div>
 
     <div style="line-height: 1.8; color: #333;">
-        <h3>Datos y Metodología</h3>
-        <p>Se analizó una base de datos de <strong>4,835 observaciones</strong> para identificar patrones de abandono[cite: 1, 7]. El modelo utiliza variables como género, antigüedad y cargos mensuales para calcular la probabilidad de fuga[cite: 12].</p>
-
+        <h3>Head de los datos</h3>
+        <p>Se analizó una base de datos de <strong>4,835 observaciones</strong> para identificar patrones de abandono. El modelo utiliza variables como género, antigüedad y cargos mensuales para calcular la probabilidad de fuga[cite: 12].</p>
+<div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee;">
+            <img src="head_churn.png" alt="Head del dataset" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Figura 1: Head de los datos.</i></p>
+        </div>
         <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee; margin: 20px 0;">
             <p style="font-size: 1.2rem; background: white; padding: 10px; display: inline-block; border-radius: 5px;">
                 $$p_i = \frac{e^{Z}}{1+e^{Z}}$$
             </p>
-            <p style="font-size: 0.8rem; color: #888;"><i>Ecuación logística implementada en R[cite: 8].</i></p>
+            <p style="font-size: 0.8rem; color: #888;"><i>Ecuación logística implementada</i></p>
         </div>
 
-        <h3>Hallazgos Principales</h3>
-        <ul>
-            <li><strong>Antigüedad (Tenure):</strong> Factor crítico; a mayor permanencia, disminuye significativamente el riesgo de abandono[cite: 18].</li>
-            <li><strong>Senior Citizen:</strong> Los adultos mayores muestran una mayor propensión a cancelar el servicio[cite: 24].</li>
-            <li><strong>Cargos Mensuales:</strong> Impacto directo en la decisión de permanencia del cliente[cite: 20].</li>
-        </ul>
-
-        <h3>Desempeño del Modelo</h3>
-        <p>El modelo alcanzó un <strong>AUC de 0.817</strong>, demostrando una alta capacidad para distinguir entre clientes que se quedan y los que se van[cite: 51, 56]. Al balancear la muestra al 50%, la precisión para detectar abandonos reales subió del <strong>56.96% al 77.93%</strong>.</p>
-
-        <div style="text-align: center; margin: 25px 0;">
-            <img src="imagen_roc_churn.png" alt="Curva ROC Churn" style="max-width: 100%; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Figura: Curva ROC y área bajo la curva (AUC)[cite: 45].</i></p>
-        </div>
+        
+    
+        
     </div>
 </div>
 

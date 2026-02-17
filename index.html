@@ -1080,6 +1080,8 @@ plot(rl4,colorize=T,main=paste("AUC:",(rl1@y.values)))
 
 
 <!---------------------------------------------------------------------------- Contenido Modelo No lineal Ultrasónico ------------------------------------------------------------------------------------------------------->
+</div> 
+
 <div id="proyecto4-detalle" class="tab-content" style="display: none;">
     <a onclick="showTab('proyectos')" style="color: #f39c12; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; font-weight: bold;">
         <i class="fas fa-arrow-left"></i> Volver a Proyectos
@@ -1087,48 +1089,35 @@ plot(rl4,colorize=T,main=paste("AUC:",(rl1@y.values)))
 
     <div style="background: linear-gradient(135deg, #f39c12, #d35400); color: white; padding: 30px; border-radius: 12px; margin-bottom: 30px;">
         <h2 style="margin: 0; color: white;">Modelo de Respuesta Ultrasónica</h2>
-        <p style="margin: 10px 0 0 0; opacity: 0.9;">Optimización mediante algoritmo de Gauss-Newton para modelos no lineales.</p>
+        <p style="margin: 10px 0 0 0; opacity: 0.9;">Estimación no lineal mediante el algoritmo de Gauss-Newton.</p>
     </div>
 
     <div style="line-height: 1.8; color: #333;">
-        <h3>1. Fundamento Teórico: Modelo No Lineal</h3>
-        <p>A diferencia de los modelos tradicionales, la respuesta ultrasónica no siempre es lineal. Se estima un modelo donde los parámetros no pueden despejarse por MCO tradicionales:</p>
+        <h3>1. Fundamento Teórico</h3>
+        <p>Este proyecto modela la respuesta acústica en materiales. Al ser un fenómeno físico, la relación no es lineal, requiriendo una aproximación por derivadas parciales:</p>
         
         <div style="text-align: center; background: #fafafa; padding: 20px; border-radius: 8px; border: 1px solid #eee; margin: 25px 0;">
             <p style="font-size: 1.3rem; background: white; padding: 15px; display: inline-block; border-radius: 5px; border: 1px solid #ddd;">
                 $$y_i = \beta_1 + \beta_2 e^{-\beta_3 x_i} + \varepsilon_i$$
             </p>
-            <p style="font-size: 0.8rem; color: #888;"><i>Modelo exponencial de decaimiento de señal estimado mediante iteraciones.</i></p>
+            <p style="font-size: 0.8rem; color: #888;"><i>Modelo de decaimiento exponencial para la señal ultrasónica.</i></p>
         </div>
 
-        <h3>2. Implementación: Algoritmo Gauss-Newton</h3>
-        <p>Dado que las derivadas parciales respecto a los parámetros no son lineales, se utiliza el método de <strong>Gauss-Newton</strong>. Este proceso itera partiendo de valores iniciales (seeds) hasta minimizar la suma de los cuadrados residuales:</p>
-        
-        <div style="background: #fff8e1; border-left: 5px solid #f39c12; padding: 15px; margin: 20px 0;">
-            <strong>Proceso Iterativo:</strong>
-            <ol>
-                <li>Selección de valores iniciales para $\beta$.</li>
-                <li>Linealización del modelo mediante expansión de Taylor.</li>
-                <li>Actualización de parámetros hasta convergencia.</li>
-            </ol>
-        </div>
+        <h3>2. Algoritmo de Gauss-Newton</h3>
+        <p>Para estimar los parámetros $\beta$, se utilizó un proceso iterativo que linealiza el modelo en cada paso hasta minimizar la suma de cuadrados del error:</p>
 
         <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee; margin: 20px 0;">
-            <img src="head_ultrasonica.png" alt="Head datos ultrasonido" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Figura 1: Datos de amplitud vs tiempo de respuesta.</i></p>
+            <img src="head_ultrasonica.png" alt="Head datos" style="max-width: 100%; border-radius: 4px;">
+            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Figura 1: Muestra de datos técnicos analizados.</i></p>
         </div>
 
-        <h3>3. Resultados del Modelo</h3>
-        <p>El algoritmo convergió exitosamente tras varias iteraciones, logrando una estimación precisa de la densidad del material:</p>
+        <h3>3. Resultados y Convergencia</h3>
+        <p>El modelo logró converger tras las iteraciones necesarias, permitiendo identificar la densidad del material con alta precisión.</p>
 
         <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee; margin: 20px 0;">
-            <img src="summary_ultrasonica.png" alt="Summary R ultrasonido" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Figura 2: Coeficientes finales y convergencia del algoritmo.</i></p>
+            <img src="summary_ultrasonica.png" alt="Summary R" style="max-width: 100%; border-radius: 4px;">
+            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Figura 2: Coeficientes finales obtenidos en R.</i></p>
         </div>
-        
-
-        <h3>4. Aplicación Industrial</h3>
-        <p>Este modelo es fundamental en ingeniería de materiales para caracterizar la porosidad y detectar fallas internas sin destruir la pieza evaluada.</p>
     </div>
 </div>
 

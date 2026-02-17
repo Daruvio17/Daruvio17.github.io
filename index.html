@@ -881,8 +881,10 @@ abline(v=quantile(b2, probs = 0.975), col='red')
 
 <!---------------------------------------------------------------------------- Contenido Modelo Churn ------------------------------------------------------------------------------------------------------->
 
+</div> 
+
 <div id="proyecto3-detalle" class="tab-content" style="display: none;">
-    <a onclick="showTab('proyectos')" style="color: #e74c3c; cursor: pointer; ...">
+    <a onclick="showTab('proyectos')" style="color: #e74c3c; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; font-weight: bold;">
         <i class="fas fa-arrow-left"></i> Volver a Proyectos
     </a>
 
@@ -892,42 +894,30 @@ abline(v=quantile(b2, probs = 0.975), col='red')
     </div>
 
     <div style="line-height: 1.8; color: #333;">
-        <h3>Definición y Datos</h3>
-        <p>Se utiliza una base de datos de 4,835 observaciones para predecir si un cliente abandona ($Churn=1$) o permanece ($Churn=0$)[cite: 1, 7, 10].</p>
+        <h3>Datos y Metodología</h3>
+        <p>Se analizó una base de datos de <strong>4,835 observaciones</strong> para identificar patrones de abandono[cite: 1, 7]. El modelo utiliza variables como género, antigüedad y cargos mensuales para calcular la probabilidad de fuga[cite: 12].</p>
 
         <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee; margin: 20px 0;">
-            <img src="imagen 1" alt="imagen 1" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>imagen 1. Estructura de la base de datos[cite: 2].</i></p>
+            <p style="font-size: 1.2rem; background: white; padding: 10px; display: inline-block; border-radius: 5px;">
+                $$p_i = \frac{e^{Z}}{1+e^{Z}}$$
+            </p>
+            <p style="font-size: 0.8rem; color: #888;"><i>Ecuación logística implementada en R[cite: 8].</i></p>
         </div>
 
-        <h3>Modelo Estadístico</h3>
-        <p>Se implementó la siguiente función logística con 19 variables explicativas[cite: 8, 9]:</p>
-        <p style="text-align: center; background: #f9f9f9; padding: 15px; border-radius: 8px;">
-            $$p_{i\_estimado}=\frac{e^{\beta_{1}+\beta_{2}x_{2i}+\dots+\beta_{20}x_{21i}}}{1+e^{\beta_{1}+\beta_{2}x_{2i}+\dots+\beta_{20}x_{21i}}}$$
-        </p>
-
-        <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee; margin: 20px 0;">
-            <img src="imagen 2" alt="imagen 2" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>imagen 2. Resumen de coeficientes estimados en R[cite: 12, 13].</i></p>
-        </div>
-
-        <h3>Interpretación de Variables</h3>
+        <h3>Hallazgos Principales</h3>
         <ul>
-            <li><strong>Antigüedad (Tenure):</strong> A mayor tiempo de permanencia, menor riesgo de abandono[cite: 18].</li>
-            <li><strong>Cargos Mensuales:</strong> Un mayor cargo mensual se asocia con un menor riesgo de abandono en esta muestra[cite: 20].</li>
-            <li><strong>Total de Cargos:</strong> A mayor monto total cobrado, aumenta el riesgo de abandono[cite: 22].</li>
-            <li><strong>Senior Citizen:</strong> Los ciudadanos mayores presentan mayor riesgo de fuga que los jóvenes[cite: 24].</li>
+            <li><strong>Antigüedad (Tenure):</strong> Factor crítico; a mayor permanencia, disminuye significativamente el riesgo de abandono[cite: 18].</li>
+            <li><strong>Senior Citizen:</strong> Los adultos mayores muestran una mayor propensión a cancelar el servicio[cite: 24].</li>
+            <li><strong>Cargos Mensuales:</strong> Impacto directo en la decisión de permanencia del cliente[cite: 20].</li>
         </ul>
 
-        <h3>Evaluación del Modelo</h3>
-        <p>El modelo presenta un <strong>AUC de 0.817</strong>, lo que indica una alta capacidad predictiva[cite: 51, 56].</p>
+        <h3>Desempeño del Modelo</h3>
+        <p>El modelo alcanzó un <strong>AUC de 0.817</strong>, demostrando una alta capacidad para distinguir entre clientes que se quedan y los que se van[cite: 51, 56]. Al balancear la muestra al 50%, la precisión para detectar abandonos reales subió del <strong>56.96% al 77.93%</strong>.</p>
 
-        <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee; margin: 20px 0;">
-            <img src="imagen 3" alt="imagen 3" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>imagen 3. Curva ROC del modelo[cite: 45].</i></p>
+        <div style="text-align: center; margin: 25px 0;">
+            <img src="imagen_roc_churn.png" alt="Curva ROC Churn" style="max-width: 100%; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Figura: Curva ROC y área bajo la curva (AUC)[cite: 45].</i></p>
         </div>
-
-        <p>Tras realizar un balanceo de datos al 50%, la precisión para identificar correctamente a los clientes que abandonan mejoró del <strong>56.96% al 77.93%</strong>.</p>
     </div>
 </div>
 
@@ -1007,29 +997,21 @@ abline(v=quantile(b2, probs = 0.975), col='red')
         <p>&copy; 2026 David Ernesto Rubio - Portafolio de Econometría</p>
     </footer>
 
-   <script>
+ <script>
 function showTab(tabId) {
-    // 1. Buscamos todas las secciones con la clase tab-content
-    const tabs = document.querySelectorAll('.tab-content');
-    
-    // 2. Las ocultamos todas de forma absoluta
-    tabs.forEach(tab => {
+    // 1. Ocultar todos
+    document.querySelectorAll('.tab-content').forEach(tab => {
         tab.style.display = 'none';
         tab.classList.remove('active');
     });
     
-    // 3. Buscamos la sección que queremos mostrar
+    // 2. Mostrar el seleccionado
     const targetTab = document.getElementById(tabId);
-    
     if (targetTab) {
-        // 4. Forzamos que se muestre como bloque
         targetTab.style.display = 'block';
         targetTab.classList.add('active');
-        
-        // 5. Subimos al inicio de la página para ver el contenido
+        // 3. Subir al inicio de la página
         window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-        console.error("No se encontró el contenido con ID: " + tabId);
     }
 }
 </script>

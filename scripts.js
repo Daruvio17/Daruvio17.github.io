@@ -42,3 +42,10 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (isVisible && !bar.dataset.animated) {
                
+function showTab(tabId) {
+    // Oculta todos los contenidos
+    document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.style.display = 'none';
+    });
+    // Muestra el seleccionado
+    document.getElementById(tabId).style.display = 'block';

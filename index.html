@@ -1094,7 +1094,7 @@ plot(rl4,colorize=T,main=paste("AUC:",(rl1@y.values)))
 
     <div style="line-height: 1.8; color: #333;">
         <h3>1. Fundamento Teórico</h3>
-        <p>Este proyecto modela la respuesta acústica en materiales. Al ser un fenómeno físico, la relación no es lineal, requiriendo una aproximación por derivadas parciales:</p>
+        <p>Este proyecto modela la respuesta acústica en materiales. Al ser un fenómeno físico donde la señal decae, la relación no es lineal, requiriendo una aproximación por derivadas parciales:</p>
         
         <div style="text-align: center; background: #fafafa; padding: 20px; border-radius: 8px; border: 1px solid #eee; margin: 25px 0;">
             <p style="font-size: 1.3rem; background: white; padding: 15px; display: inline-block; border-radius: 5px; border: 1px solid #ddd;">
@@ -1104,23 +1104,17 @@ plot(rl4,colorize=T,main=paste("AUC:",(rl1@y.values)))
         </div>
 
         <h3>2. Algoritmo de Gauss-Newton</h3>
-        <p>Para estimar los parámetros $\beta$, se utilizó un proceso iterativo que linealiza el modelo en cada paso hasta minimizar la suma de cuadrados del error:</p>
+        <p>Para estimar los parámetros $\beta$, se utilizó un proceso iterativo que linealiza el modelo en cada paso (usando la matriz Jacobiana) hasta minimizar la suma de cuadrados del error:</p>
 
         <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee; margin: 20px 0;">
-            <img src="head_ultrasonica.png" alt="Head datos" style="max-width: 100%; border-radius: 4px;">
-            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Figura 1: Muestra de datos técnicos analizados.</i></p>
+            <img src="head_ultrasonica.png" alt="Head datos" style="max-width: 100%; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Figura: Visualización de los datos y su comportamiento no lineal.</i></p>
         </div>
 
-        <h3>3. Resultados y Convergencia</h3>
-        <p>El modelo logró converger tras las iteraciones necesarias, permitiendo identificar la densidad del material con alta precisión.</p>
-
-        <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee; margin: 20px 0;">
-            <img src="summary_ultrasonica.png" alt="Summary R" style="max-width: 100%; border-radius: 4px;">
-            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Figura 2: Coeficientes finales obtenidos en R.</i></p>
-        </div>
+        <h3>3. Resultados de la Estimación</h3>
+        <p>A diferencia de los modelos lineales, aquí la convergencia depende de los valores iniciales (seeds). El modelo final permite predecir la respuesta con un error residual mínimo.</p>
     </div>
 </div>
-
 
 
 

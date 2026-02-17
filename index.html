@@ -315,7 +315,7 @@
                             <span class="tech-badge">Logit/Probit</span>
                             <span class="tech-badge">R</span>
                         </div>
-                        <a onclick="alert('Detalles pronto')" class="project-btn">Ver Detalles</a>
+                         <a onclick="showTab('proyecto3-detalle')" class="project-btn">Ver Detalles Completos</a>
                     </div>
                 </div>
 
@@ -845,13 +845,102 @@ abline(v=quantile(b2, probs = 0.025), col='red')
 abline(v=quantile(b2, probs = 0.975), col='red')
                 </code></pre>
         </div>
+<!-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!---------------------------------------------------------------------------- Contenido Modelo Churn ------------------------------------------------------------------------------------------------------->
+
+ <div id="proyecto3-detalle" class="tab-content">
+       <a onclick="showTab('proyectos')" style="color: var(--primary); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+    <i class="fas fa-arrow-left"></i> Volver a Proyectos
+</a>
+
+    <section style="margin-top: 20px;">
+        <h2>Análisis de Churn (Abandono de Clientes)</h2>
+        [cite_start]<p>Se tiene una base de datos con información de clientes para analizar los factores que influyen en la deserción del servicio[cite: 1, 2].</p>
+
+        <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee; margin: 20px 0;">
+            <img src="imagen 1" alt="Vista previa de los datos" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>imagen 1. Estructura inicial de la base de datos.</i></p>
+        </div>
+
+        <h3>Modelo de Regresión Logística</h3>
+        [cite_start]<p>Se define la variable objetivo $Churn$ como[cite: 5, 6]:</p>
+        <p style="text-align: center;">
+            [cite_start]$Y_i = \begin{cases} 1 & \text{si el cliente } i \text{ abandona el servicio} \\ 0 & \text{si el cliente } i \text{ permanece en el servicio} \end{cases}$ [cite: 7]
+        </p>
+
+        [cite_start]<p>El modelo utiliza 19 variables explicativas para estimar la probabilidad de abandono ($p_{i\_estimado}$) mediante la siguiente función logística[cite: 8, 9]:</p>
+        <p style="text-align: center;">
+            [cite_start]$$p_{i\_estimado}=\frac{e^{\beta_{1}+\beta_{2}x_{2i}+\beta_{3}x_{3i...+\beta_{20}x_{21i}}}}{1+e^{\beta_{1}+\beta_{2}x_{2i}+\beta_{3}x_{3i...+\beta_{20}x_{21i}}}}$$ [cite: 9]
+        </p>
+
+        [cite_start]<p>Utilizando el 90% de los datos para el entrenamiento del modelo, se obtuvieron los siguientes coeficientes[cite: 11, 12, 13]:</p>
+
+        <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee; margin: 20px 0;">
+            <img src="imagen 2" alt="Resumen del modelo" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>imagen 2. Resumen estadístico de los coeficientes del modelo.</i></p>
+        </div>
+
+        <h3>Interpretación de Variables Principales</h3>
+        <ul>
+            [cite_start]<li><strong>Tenure (Antigüedad):</strong> A mayor tiempo de permanencia, menor riesgo de abandono[cite: 17, 18].</li>
+            [cite_start]<li><strong>Monthly Charges:</strong> A mayor cargo mensual, menor riesgo de abandono (manteniendo lo demás constante)[cite: 19, 20].</li>
+            [cite_start]<li><strong>Total Charges:</strong> A mayor cargo total acumulado, mayor riesgo de abandono[cite: 21, 22].</li>
+            [cite_start]<li><strong>Senior Citizen:</strong> Los ciudadanos mayores presentan un mayor riesgo de abandono en comparación con los jóvenes[cite: 23, 24].</li>
+            [cite_start]<li><strong>Gender (Género):</strong> Los hombres presentan un riesgo ligeramente menor de abandono que las mujeres[cite: 25, 26].</li>
+        </ul>
+
+        <h3>Evaluación del Modelo</h3>
+        [cite_start]<p>Para un individuo de prueba específico (Sujeto 1164), el modelo estimó una probabilidad de abandono del <strong>78.57%</strong>, lo cual coincidió con su comportamiento efectivo de Churn[cite: 27, 30, 31, 32].</p>
+
+        <h4>Matriz de Confusión Inicial</h4>
+        [cite_start]<p>El modelo clasificó correctamente a 279 personas que no abandonaron y a 90 que sí lo hicieron, pero presentó 45 falsos positivos y 68 falsos negativos[cite: 40, 41, 42, 43, 44].</p>
+
+        <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee; margin: 20px 0;">
+            <img src="imagen 3" alt="Curva ROC" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>imagen 3. Curva ROC y AUC.</i></p>
+        </div>
+
+        [cite_start]<p>Con un <strong>AUC de 0.817</strong>, el modelo tiene una probabilidad del 81.7% de marcar correctamente a un cliente con alta probabilidad de abandono al ser seleccionado aleatoriamente[cite: 51, 56].</p>
+        
+        [cite_start]<p>Finalmente, al balancear los datos, el poder predictivo para los clientes que abandonan mejoró significativamente, pasando de un <strong>56.96% a un 77.93%</strong>[cite: 57, 61].</p>
+    </section>
+
+        </div>
      
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 
 
      

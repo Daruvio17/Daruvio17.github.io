@@ -1191,143 +1191,146 @@ summary(modelo_nls)
     </div>
 
     <div style="line-height: 1.8; color: #333;">
-        <h3>1. Preparación y Validación Cruzada</h3>
-        <p>Para este análisis, se dividieron los datos utilizando una semilla (1212) en <strong>90% entrenamiento</strong> y <strong>10% prueba</strong>[cite: 107, 108]. Se implementó una validación cruzada de <strong>12 folds</strong> para evaluar el desempeño del modelo en cada iteración[cite: 109].</p>
         
-        <p>Se definió una rejilla de búsqueda para el parámetro de penalización $\lambda$ en el rango <code>seq(0.001, 0.3, 0.001)</code>[cite: 110].</p>
-
-        <div style="text-align: center; background: #fafafa; padding: 20px; border-radius: 8px; border: 1px solid #eee; margin: 25px 0;">
-            <img src="curva_errores.png" alt="Curvas MAPE y MSE" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
-            <p style="font-size: 0.85rem; color: #888; margin-top: 10px;"><i>Gráfico de errores promedio de validación cruzada en función de $\lambda$[cite: 115].</i></p>
+        <h3>1. Exploración Inicial de Datos</h3>
+        <p>El análisis comienza con la carga de las variables relacionadas con el mercado inmobiliario (precio de venta, áreas, calidades, etc.).</p>
+        
+        <div style="text-align: center; background: #fafafa; padding: 20px; border-radius: 8px; border: 1px solid #eee; margin: 20px 0;">
+            <img src="head_lasso.png" alt="Head de los datos" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+            <p style="font-size: 0.85rem; color: #888; margin-top: 10px;"><i>Figura 1: Vista previa de las primeras observaciones del conjunto de datos.</i></p>
         </div>
 
-        <p>Tras el proceso, se hallaron los valores óptimos de $\lambda$[cite: 145]:</p>
+        <h3>2. Metodología y Validación Cruzada</h3>
+        [cite_start]<p>Se realizó una división de datos (90% entrenamiento, 10% prueba) con semilla <code>1212</code>[cite: 7, 8]. [cite_start]Se utilizó validación cruzada con <strong>12 folds</strong> para garantizar la robustez de los resultados[cite: 9].</p>
+        
+        [cite_start]<p>Se definió una rejilla de búsqueda para el parámetro $\lambda$ desde 0.001 hasta 0.3.</p>
+
+        <div style="text-align: center; background: #fafafa; padding: 20px; border-radius: 8px; border: 1px solid #eee; margin: 25px 0;">
+            <img src="rejilla_lasso_precio.png" alt="Curvas MAPE y MSE" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+            [cite_start]<p style="font-size: 0.85rem; color: #888; margin-top: 10px;"><i>Figura 2: Evolución de los errores MAPE y MSE en función de la rejilla de lambdas[cite: 15, 19, 28].</i></p>
+        </div>
+
+        <p>Los valores óptimos identificados fueron:</p>
         <ul>
-            <li><strong>$\lambda$ óptimo (MAPE):</strong> 0.073 (Posición 73) con un error de 10.0074%[cite: 143, 147].</li>
-            <li><strong>$\lambda$ óptimo (MSE):</strong> 0.201 (Posición 201) con un error de 896.3885[cite: 144, 150].</li>
+            [cite_start]<li><strong>$\lambda$ óptimo (MAPE):</strong> 0.073 (Error mínimo: 10.0074%).</li>
+            [cite_start]<li><strong>$\lambda$ óptimo (MSE):</strong> 0.201 (Error mínimo: 896.3885).</li>
         </ul>
 
-        <h3>2. Penalización y Modelo LASSO</h3>
-        <p>Se aplicó una penalización con $\alpha = 1$ (LASSO), minimizando la siguiente función de costo[cite: 151, 152]:</p>
+        <h3>3. Resultados del Modelo LASSO</h3>
+        <p>Se implementó la penalización LASSO ($\alpha = 1$) bajo la siguiente estructura matemática:</p>
         
         <div style="text-align: center; background: #f9f0ff; padding: 20px; border-radius: 8px; border: 1px solid #dcd0ff; margin: 20px 0;">
             <p style="font-size: 1.1rem; margin: 0;">
-                $$RSS_{LASSO} = \sum_{t=1}^{n} (y_t - \hat{y}_t)^2 + \lambda \sum_{j=2}^{k} |\beta_j|$$
+                [cite_start]$$RSS_{LASSO} = \sum_{t=1}^{n} (y_t - \hat{y}_t)^2 + \lambda \sum_{j=2}^{k} |\beta_j|$$ [cite: 52]
             </p>
         </div>
 
-        <h4>Resultados con $\lambda = 0.073$:</h4>
-        <p>Bajo esta penalización, el modelo LASSO eliminó variables redundantes (coeficientes igual a cero). Algunos coeficientes destacados son:</p>
-        <table style="width: 100%; border-collapse: collapse; margin: 20px 0; background: white;">
-            <tr style="background: #9b59b6; color: white;">
-                <th style="padding: 10px; border: 1px solid #ddd;">Variable</th>
-                <th style="padding: 10px; border: 1px solid #ddd;">Coeficiente ($\beta$)</th>
-                <th style="padding: 10px; border: 1px solid #ddd;">Interpretación</th>
-            </tr>
-            <tr>
-                <td style="padding: 10px; border: 1px solid #ddd;"><strong>Overall.Qual</strong></td>
-                <td style="padding: 10px; border: 1px solid #ddd;">11.7657</td>
-                <td style="padding: 10px; border: 1px solid #ddd;">Un punto más de calidad aumenta el precio en $11.76 USD en promedio[cite: 158, 159].</td>
-            </tr>
-            <tr>
-                <td style="padding: 10px; border: 1px solid #ddd;"><strong>Garage.Cars</strong></td>
-                <td style="padding: 10px; border: 1px solid #ddd;">1.0239</td>
-                <td style="padding: 10px; border: 1px solid #ddd;">Un espacio adicional para auto incrementa el precio en $1.02 USD promedio[cite: 160, 161].</td>
-            </tr>
-        </table>
-
-        <div style="background: #e8f5e9; border-left: 5px solid #2e7d32; padding: 15px; border-radius: 4px; margin: 25px 0;">
-            <strong>Desempeño fuera de muestra:</strong> Con los datos de prueba, el modelo obtuvo un <strong>MAPE de 9.33%</strong> y un <strong>MSE de 790.35</strong>. Un error inferior al 10% refleja un excelente desempeño predictivo[cite: 170].
+        <h4>A. Modelo con $\lambda = 0.073$ (MAPE Óptimo)</h4>
+       <p>Con este parámetro, el modelo realiza una selección moderada de variables.</p>
+        
+        <div style="text-align: center; background: #fafafa; padding: 20px; border-radius: 8px; border: 1px solid #eee; margin: 20px 0;">
+            <img src="summary_lasso_l1.png" alt="Coeficientes Lambda 0.073" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+            <p style="font-size: 0.85rem; color: #888; margin-top: 10px;"><i>Figura 3: Coeficientes estimados para el primer lambda óptimo.</i></p>
         </div>
 
-        <h3>3. Sensibilidad del Parámetro $\lambda$</h3>
-        <p>Al utilizar un $\lambda$ más alto (0.201), el modelo aumenta la penalización y elimina más variables (5 en total), lo cual es congruente con la teoría de regularización[cite: 174, 175].</p>
+        <p><strong>Interpretaciones clave:</strong></p>
+        <ul>
+            <li><strong>Calidad General ($\beta_{4}$):</strong> Un aumento de un punto en la calidad incrementa el precio en $11.76 USD promedio.</li>
+            <li><strong>Garaje ($\beta_{25}$):</strong> Un espacio adicional para auto incrementa el precio en $1.02 USD promedio.</li>
+        </ul>
+
+        <div style="background: #e8f5e9; border-left: 5px solid #2e7d32; padding: 15px; border-radius: 4px; margin: 20px 0;">
+            <strong>Validación en Prueba:</strong> MAPE de 9.33% y MSE de 790.35, indicando un alto poder predictivo fuera de muestra.
+        </div>
+
+        <h4>B. Modelo con $\lambda = 0.201$ (MSE Óptimo)</h4>
+        <p>Al ser un $\lambda$ mayor, la penalización es más severa y se eliminan 5 variables (coeficientes iguales a cero).</p>
+
+        <div style="text-align: center; background: #fafafa; padding: 20px; border-radius: 8px; border: 1px solid #eee; margin: 20px 0;">
+            <img src="summary_lasso-l2.png" alt="Coeficientes Lambda 0.201" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+            [cite_start]<p style="font-size: 0.85rem; color: #888; margin-top: 10px;"><i>Figura 4: Coeficientes estimados para el segundo lambda óptimo[cite: 73].</i></p>
+        </div>
+
+        <h3>4. Traza de Coeficientes y Convergencia</h3>
+        <p>Se analizó cómo las pendientes parciales tienden a cero a medida que aumenta la penalización $\lambda$.</p>
 
         <div style="text-align: center; background: #fafafa; padding: 20px; border-radius: 8px; border: 1px solid #eee; margin: 25px 0;">
-            <img src="traza_coeficientes.png" alt="Traza de coeficientes LASSO" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
-            <p style="font-size: 0.85rem; color: #888; margin-top: 10px;"><i>Comportamiento de las pendientes parciales y el intercepto conforme $\lambda$ aumenta[cite: 185].</i></p>
+            <img src="traza_rejilla_lasso.png" alt="Traza de coeficientes LASSO" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+            <p style="font-size: 0.85rem; color: #888; margin-top: 10px;"><i>Figura 5: Evolución de los coeficientes hacia cero (Regularización).</i></p>
         </div>
 
-        <p><strong>Comportamiento del Intercepto:</strong> A medida que $\lambda \to \infty$, las pendientes parciales $\beta_j$ tienden a cero. En este punto, el intercepto $\beta_1$ tiende al <strong>valor medio de la variable explicada</strong> ($y_{media}$), ya que se convierte en el único coeficiente restante para predecir la serie[cite: 195, 196, 198].</p>
+       <p><strong>Comportamiento del Intercepto:</strong> Teóricamente, cuando $\lambda \to \infty$, todos los $\beta_j \to 0$ y el intercepto $\beta_1$ converge al <strong>valor medio de la variable dependiente</strong> ($y_{media}$).</p>
 
-        <h3>Código Implementado en R</h3>
+        <h3>Código Completo en R</h3>
         <div class="code-container">
             <pre class="language-r"><code class="language-r">
+# Cargando librerías y preprocesamiento
 library(caret)
 library(glmnet)
-library(boot)
 library(readxl)
+
+# Carga de datos
 datos <- read_excel(file.choose())
 datos <- na.omit(datos)
 datos <- data.frame(datos)
 datos$SalePrice <- datos$SalePrice/1000
-head(datos)
-X <- model.matrix(~.,datos)
-datos1 <- data.frame(X[,-1])
-f <- seq(1,nrow(datos1))
+modelo_inicial <- lm(SalePrice ~., data=datos)
+
+# Matrices para glmnet
+X <- model.matrix(SalePrice ~ ., datos)[, -1]
+Y <- datos$SalePrice
+
+# Partición de datos (90/10)
 set.seed(1212)
-s <- sample(f,size=0.1*nrow(datos1))
-entrena <- datos1[-s,]
-prueba <- datos1[s,]
-pliegues <- createFolds(entrena$SalePrice,k=12,list=TRUE)
-seleccion <- function(x){
-  evaluacion=function(s){
-    modelo=glmnet(x=entrena[-s,-1],y=entrena[-s,1],alpha=1,lambda=x)
-    p=predict(modelo,newx=as.matrix(entrena[s,-1]))
-    mape=100*mean(abs(entrena[s,1]-p)/entrena[s,1])
-    mse=mean((entrena[s,1]-p)^2)
-    r=cbind(mape,mse)
-    colnames(r)=c('mape','mse')
-    r
+idx <- sample(1:nrow(datos), size = 0.1 * nrow(datos))
+entrena <- datos[-idx, ]
+prueba <- datos[idx, ]
+
+# Configuración de validación cruzada (12 folds)
+pliegues <- createFolds(entrena$SalePrice, k = 12, list = TRUE)
+
+# Función de evaluación para la rejilla
+seleccion <- function(l) {
+  evaluacion <- function(s) {
+    mod <- glmnet(as.matrix(entrena[-s, -1]), entrena[-s, 1], alpha = 1, lambda = l)
+    p <- predict(mod, newx = as.matrix(entrena[s, -1]))
+    mape <- 100 * mean(abs(entrena[s, 1] - p) / entrena[s, 1])
+    mse <- mean((entrena[s, 1] - p)^2)
+    return(c(mape, mse))
   }
-  res <- lapply(pliegues,evaluacion)
-  res <- do.call(rbind,res)
-  promedio <- apply(res,2,mean)
-  promedio
+  res <- lapply(pliegues, evaluacion)
+  promedio <- apply(do.call(rbind, res), 2, mean)
+  return(promedio)
 }
-rejilla <- seq(0.001,0.3,0.001)
-rejilla
-resultado <- array(0,dim=c(1,2,length(rejilla)))
-for(i in 1:length(rejilla)){
-  resultado[,,i]=seleccion(rejilla[i])}
-resul <- t(resultado[1,,])
-colnames(resul) <- c('mape','mse')
-resul
+
+# Ejecución de la rejilla
+rejilla <- seq(0.001, 0.3, 0.001)
+resultados <- sapply(rejilla, seleccion)
+resul <- t(resultados)
+
+# Visualización de errores
 par(mfrow=c(2,1))
-plot(rejilla,resul[,1],main='MAPE')
-plot(rejilla,resul[,2],main='MSE')
-minimo <- function(t){which.min(t)}
-minimo
-optimo <- apply(resul,2,minimo)
-optimo
-rejilla[optimo[1]];rejilla[optimo[2]]
-#Lambda 1
-modelof <- glmnet(x=entrena[,-1],y=entrena[,1],alpha=1,lambda=rejilla[optimo[1]])
-coef(modelof)
-p <- predict(modelof,newx=as.matrix(prueba[,-1]))
-p
-mape <- 100*mean(abs(prueba[,1]-p)/prueba[,1])
-mape
-mse <- mean((prueba[,1]-p)^2)
-mse
-#Lambda 2
-modelof2 <- glmnet(x=entrena[,-1],y=entrena[,1],alpha=1,lambda=rejilla[optimo[2]])
-coef(modelof2)
-p2 <- predict(modelof2,newx=as.matrix(prueba[,-1]))
-p2
-mape2 <- 100*mean(abs(prueba[,1]-p)/prueba[,1])
-mape2
-mse2 <- mean((prueba[,1]-p)^2)
-mse2
-rejilla=seq(0.01,10,0.01)
-modelof <- glmnet(x = as.matrix(entrena[,-1]),
-                  y = entrena[,1],
-                  alpha = 1,
-                  lambda = rejilla)
-m <- as.matrix(coef(modelof))
-m <- t(m)
-m <- m[, ncol(m):1]
-matplot(rev(rejilla), m, type="l")
+plot(rejilla, resul[,1], main="Curva MAPE", type="l", col="purple")
+plot(rejilla, resul[,2], main="Curva MSE", type="l", col="blue")
+
+# Identificación de Lambdas óptimos
+optimo_idx <- apply(resul, 2, which.min)
+l_mape <- rejilla[optimo_idx[1]]
+l_mse <- rejilla[optimo_idx[2]]
+
+# Modelo Final 1 (Lambda MAPE)
+modelof <- glmnet(as.matrix(entrena[,-1]), entrena[,1], alpha=1, lambda=l_mape)
+print(coef(modelof))
+
+# Modelo Final 2 (Lambda MSE)
+modelof2 <- glmnet(as.matrix(entrena[,-1]), entrena[,1], alpha=1, lambda=l_mse)
+print(coef(modelof2))
+
+# Gráfico de Traza
+rejilla_traza <- seq(0.01, 10, 0.01)
+mod_traza <- glmnet(as.matrix(entrena[,-1]), entrena[,1], alpha=1, lambda=rejilla_traza)
+matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l", 
+        main="Traza de Coeficientes LASSO", xlab="rev(Lambda)", ylab="Coeficientes")
             </code></pre>
         </div>
     </div>

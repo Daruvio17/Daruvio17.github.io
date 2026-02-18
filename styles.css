@@ -764,3 +764,11 @@ code {
     line-height: 1.5;
     white-space: pre; /* Mantiene el formato de RStudio */
 }
+/* Control de visibilidad de pestañas */
+.tab-content {
+    display: none; /* Oculta todas por defecto */
+}
+
+.tab-content.active {
+    display: block !important; /* Muestra solo la activa */
+}

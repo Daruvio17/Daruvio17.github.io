@@ -1044,6 +1044,27 @@ plot(rl4,colorize=T,main=paste("AUC:",(rl1@y.values)))
 
 
 
+
+    
+
+
+
+<!---------------------------------------------------------------------------- otros ------------------------------------------------------------------------------------------------------------------------->
+</div> </div> <div id="habilidades" class="tab-content">
+            <h2 class="section-title" style="margin-bottom: 25px; color: var(--secondary);">Mis Habilidades</h2>
+            <div class="projects-grid">
+                <div class="project-card-detailed" style="padding: 25px; border-top: 5px solid var(--primary);">
+                    <h3><i class="fas fa-chart-line" style="color: var(--primary);"></i> Econometría</h3>
+                    <p>Dominio de modelos lineales (MCO), logística (Logit/Probit) y modelos no lineales. Experto en validación de supuestos de Gauss-Markov.</p>
+                </div>
+                <div class="project-card-detailed" style="padding: 25px; border-top: 5px solid var(--success);">
+                    <h3><i class="fas fa-code" style="color: var(--success);"></i> Herramientas</h3>
+                    <p>Programación avanzada en <strong>R</strong> (Tidyverse, ggplot2), gestión de bases de datos con <strong>SQL</strong> y redacción técnica en <strong>LaTeX</strong>.</p>
+                </div>
+            </div>
+        </div>
+
+
 <!---------------------------------------------------------------------------- Modelo ultrasónico ------------------------------------------------------------------------------------------------------------------------->
 
 
@@ -1122,218 +1143,40 @@ summary(modelo)
                 </code></pre>     
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
 <!--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 
 <div id="proyecto5-detalle" class="tab-content">
-    <a onclick="showTab('proyectos')" style="color: #9b59b6; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; font-weight: bold;">
-        <i class="fas fa-arrow-left"></i> Volver a Proyectos
-    </a>
+            <a onclick="showTab('proyectos')" style="color: #9b59b6; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; font-weight: bold;">
+                <i class="fas fa-arrow-left"></i> Volver a Proyectos
+            </a>
 
-    <div style="background: linear-gradient(135deg, #9b59b6, #8e44ad); color: white; padding: 30px; border-radius: 12px; margin-bottom: 30px;">
-        <h2 style="margin: 0; color: white;">Predicción de Precios de Vivienda</h2>
-        <p style="margin: 10px 0 0 0; opacity: 0.9;">Regresión Penalizada mediante el Modelo LASSO</p>
-    </div>
+            <div style="background: linear-gradient(135deg, #9b59b6, #8e44ad); color: white; padding: 30px; border-radius: 12px; margin-bottom: 30px;">
+                <h2 style="margin: 0; color: white;">Análisis de Series de Tiempo</h2>
+                <p style="margin: 10px 0 0 0; opacity: 0.9;">Pronóstico de variables macroeconómicas con modelos ARIMA/VAR</p>
+            </div>
 
-    <div style="line-height: 1.8; color: #333;">
-        
-        <h3>1. Preparación de Datos y Validación</h3>
-        <p>Iniciamos el análisis separando el conjunto de datos: un <strong>90% para entrenamiento</strong> y el <strong>10% restante para prueba</strong> [cite: 107], utilizando la semilla <code>1212</code> para asegurar la reproducibilidad[cite: 108]. Se implementó una <strong>validación cruzada de 12 pliegues (folds)</strong> para evaluar el desempeño del modelo en cada iteración[cite: 109].</p>
-
-        <div style="background: #f3e5f5; border-left: 5px solid #9b59b6; padding: 20px; margin: 25px 0; border-radius: 0 8px 8px 0;">
-            <h4 style="color: #6a1b9a; margin-bottom: 10px;"><i class="fas fa-bullseye"></i> Búsqueda del Parámetro Óptimo ($\lambda$):</h4>
-            <p>Se generó una rejilla de búsqueda para el parámetro de penalización $\lambda$ con incrementos de 0.001[cite: 110, 111]. Al graficar los errores promedio de validación cruzada (MAPE y MSE), identificamos los puntos de equilibrio óptimos[cite: 115]:</p>
-            
-            <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 15px;">
-                <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #d1c4e9; text-align: center; min-width: 150px;">
-                    <span style="display: block; font-size: 0.9rem; color: #7e57c2;">$\lambda$ Óptimo MAPE</span>
-                    <strong style="font-size: 1.4rem; color: #9b59b6;">0.073</strong> [cite: 143, 145]
+            <div style="line-height: 1.8; color: #333;">
+                <h3>1. Contexto del Problema</h3>
+                <p>Describe aquí qué variable estás analizando (ej. Inflación, PIB, Precio de una acción) y por qué es importante su pronóstico.</p>
+                
+                <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee; margin: 20px 0;">
+                    <img src="grafico_serie.png" alt="Serie de tiempo" style="max-width: 100%; height: auto; border-radius: 4px;">
+                    <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Figura: Comportamiento histórico de la variable.</i></p>
                 </div>
-                <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #d1c4e9; text-align: center; min-width: 150px;">
-                    <span style="display: block; font-size: 0.9rem; color: #7e57c2;">$\lambda$ Óptimo MSE</span>
-                    <strong style="font-size: 1.4rem; color: #9b59b6;">0.201</strong> [cite: 144, 145]
+
+                <h3>2. Metodología y Código en R</h3>
+                <div class="code-container">
+                    <pre class="language-r"><code class="language-r">
+# Ejemplo de código para tu proyecto
+library(tseries)
+library(forecast)
+# mi_serie <- ts(datos, start=c(2020, 1), frequency=12)
+# modelo <- auto.arima(mi_serie)
+# summary(modelo)
+                    </code></pre>
                 </div>
             </div>
         </div>
-
-        <h3>2. Formulación del Modelo LASSO</h3>
-        <p>El modelo penaliza la magnitud de los coeficientes para realizar selección de variables, minimizando la siguiente expresión[cite: 151, 152]:</p>
-        <div style="text-align: center; background: #fafafa; padding: 20px; border-radius: 8px; margin: 20px 0; border: 1px solid #eee;">
-            <p style="font-size: 1.2rem;">
-                $$RSS_{LASSO} = \sum_{t=1}^{n} (y_t - \hat{y}_t)^2 + \lambda \sum_{j=2}^{k} |\beta_j|$$
-            </p>
-        </div>
-
-        <h3>3. Interpretación de Coeficientes ($\lambda = 0.073$)</h3>
-        <p>Con el primer valor óptimo, el modelo ajustó los siguientes impactos significativos en el precio de venta[cite: 153, 157]:</p>
-        
-        <ul style="list-style: none; padding: 0;">
-            <li style="margin-bottom: 15px; padding-left: 15px; border-left: 3px solid #9b59b6;">
-                <strong>Calidad General (Overall.Qual):</strong> Un aumento de 1 punto incrementa el precio promedio en <strong>$11.7657</strong>[cite: 158, 159].
-            </li>
-            <li style="margin-bottom: 15px; padding-left: 15px; border-left: 3px solid #9b59b6;">
-                <strong>Capacidad del Garaje (Garage.Cars):</strong> Cada espacio adicional para un auto incrementa el precio en promedio en <strong>$1.0239</strong>[cite: 160, 161].
-            </li>
-        </ul>
-
-        <div style="background: #ffffff; border: 2px dashed #9b59b6; padding: 20px; border-radius: 12px; margin: 30px 0;">
-            <h4 style="color: #8e44ad; text-align: center; margin-bottom: 15px;">Desempeño en el Conjunto de Prueba</h4>
-            <div style="display: flex; justify-content: space-around; text-align: center;">
-                <div>
-                    <span style="font-size: 1.8rem; font-weight: bold; color: #9b59b6;">9.33%</span>
-                    <p style="margin: 0; font-size: 0.9rem; color: #666;">MAPE (Error Porcentual)</p> [cite: 166, 170]
-                </div>
-                <div>
-                    <span style="font-size: 1.8rem; font-weight: bold; color: #9b59b6;">790.35</span>
-                    <p style="margin: 0; font-size: 0.9rem; color: #666;">MSE (Error Cuadrático)</p> [cite: 169, 171]
-                </div>
-            </div>
-            <p style="margin-top: 15px; font-size: 0.95rem; text-align: center; color: #555;">
-                <i>"Este resultado refleja un excelente desempeño fuera de muestra, con un error inferior al 10%."</i> [cite: 170]
-            </p>
-        </div>
-
-        <h3>4. Análisis de Penalización</h3>
-        <p>A medida que $\lambda$ tiende al infinito ($\lambda \to \infty$), la penalización aumenta hasta eliminar todas las variables explicativas ($\beta_j \to 0$)[cite: 194, 196, 197]. En este punto, el intercepto del modelo converge inevitablemente al <strong>valor medio de la variable explicada ($\bar{y}$)</strong>[cite: 195, 198].</p>
-        
-    </div>
-     <h3>Código Implementado en R</h3>
-            <div class="code-container">
-                <pre class="language-r"><code class="language-r">
-library(caret)
-library(glmnet)
-library(boot)
-library(readxl)
-datos <- read_excel(file.choose())
-datos <- na.omit(datos)
-datos <- data.frame(datos)
-datos$SalePrice <- datos$SalePrice/1000
-head(datos)
-X <- model.matrix(~.,datos)
-
-datos1 <- data.frame(X[,-1])
-
-f <- seq(1,nrow(datos1))
-set.seed(1212)
-s <- sample(f,size=0.1*nrow(datos1))
-entrena <- datos1[-s,]
-prueba <- datos1[s,]
-pliegues <- createFolds(entrena$SalePrice,k=12,list=TRUE)
-
-seleccion <- function(x){
-  evaluacion=function(s){
-    modelo=glmnet(x=entrena[-s,-1],y=entrena[-s,1],alpha=1,lambda=x)
-    p=predict(modelo,newx=as.matrix(entrena[s,-1]))
-    mape=100*mean(abs(entrena[s,1]-p)/entrena[s,1])
-    mse=mean((entrena[s,1]-p)^2)
-    r=cbind(mape,mse)
-    colnames(r)=c('mape','mse')
-    r
-  }
-  res <- lapply(pliegues,evaluacion)
-  res <- do.call(rbind,res)
-  promedio <- apply(res,2,mean)
-  promedio
-}
-
-rejilla <- seq(0.001,0.3,0.001)
-rejilla
-resultado <- array(0,dim=c(1,2,length(rejilla)))
-
-for(i in 1:length(rejilla)){
-  resultado[,,i]=seleccion(rejilla[i])}
-
-resul <- t(resultado[1,,])
-colnames(resul) <- c('mape','mse')
-resul
-
-par(mfrow=c(2,1))
-plot(rejilla,resul[,1],main='MAPE')
-plot(rejilla,resul[,2],main='MSE')
-
-minimo <- function(t){which.min(t)}
-minimo
-optimo <- apply(resul,2,minimo)
-optimo
-rejilla[optimo[1]];rejilla[optimo[2]]
-
-#Lambda 1
-modelof <- glmnet(x=entrena[,-1],y=entrena[,1],alpha=1,lambda=rejilla[optimo[1]])
-coef(modelof)
-
-
-p <- predict(modelof,newx=as.matrix(prueba[,-1]))
-p
-mape <- 100*mean(abs(prueba[,1]-p)/prueba[,1])
-mape
-mse <- mean((prueba[,1]-p)^2)
-mse
-
-#Lambda 2
-modelof2 <- glmnet(x=entrena[,-1],y=entrena[,1],alpha=1,lambda=rejilla[optimo[2]])
-coef(modelof2)
-
-
-p2 <- predict(modelof2,newx=as.matrix(prueba[,-1]))
-p2
-mape2 <- 100*mean(abs(prueba[,1]-p)/prueba[,1])
-mape2
-mse2 <- mean((prueba[,1]-p)^2)
-mse2
-
-
-rejilla=seq(0.01,10,0.01)
-modelof <- glmnet(x = as.matrix(entrena[,-1]),
-                  y = entrena[,1],
-                  alpha = 1,
-                  lambda = rejilla)
-m <- as.matrix(coef(modelof))
-m <- t(m)
-m <- m[, ncol(m):1]
-matplot(rev(rejilla), m, type="l")
-
-                </code></pre>  
-    
-</div>
-        </div>
-<!--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-    
 
         <div id="proyecto6-detalle" class="tab-content">
             <a onclick="showTab('proyectos')" style="color: #1abc9c; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; font-weight: bold;">
@@ -1409,9 +1252,3 @@ matplot(rev(rejilla), m, type="l")
     </script>
 </body>
 </html>
-    
-
-
-
-
-

@@ -1082,36 +1082,15 @@ plot(rl4,colorize=T,main=paste("AUC:",(rl1@y.values)))
 
 
 <!---------------------------------------------------------------------------- Contenido Modelo No lineal Ultrasónico ------------------------------------------------------------------------------------------------------->
-
-
-<div id="proyecto4-detalle" class="tab-content" style="display: none;">
+<div id="proyecto4-detalle" class="tab-content">
     <a onclick="showTab('proyectos')" style="color: var(--primary); cursor: pointer; text-decoration: none;">
         <i class="fas fa-arrow-left"></i> Volver a Proyectos
     </a>
     
-    <div style="background: linear-gradient(135deg, #f39c12, #d35400); color: white; padding: 30px; border-radius: 12px; margin: 20px 0;">
-        <h2 style="margin: 0; color: white;">Modelo de Respuesta Ultrasónica</h2>
-        <p style="margin: 10px 0 0 0; opacity: 0.9;">Optimización no lineal mediante el algoritmo de Gauss-Newton.</p>
+    <h2 style="margin-top: 20px;">Modelo de Respuesta Ultrasónica - Detalles</h2>
+    <p>Aquí debes incluir la descripción detallada de tu modelo no lineal y el algoritmo de Gauss-Newton.</p>
+    
     </div>
-
-    <div style="line-height: 1.8; color: #333;">
-        <h3>1. Fundamento Teórico</h3>
-        <p>A diferencia de los modelos lineales (MCO), este fenómeno físico requiere una especificación exponencial donde los parámetros no son lineales:</p>
-        
-        <div style="text-align: center; background: #fafafa; padding: 20px; border-radius: 8px; border: 1px solid #eee; margin: 25px 0;">
-            <p style="font-size: 1.3rem; background: white; padding: 15px; display: inline-block; border-radius: 5px; border: 1px solid #ddd;">
-                $$y_i = \beta_1 + \beta_2 e^{-\beta_3 x_i} + \varepsilon_i$$
-            </p>
-        </div>
-
-        <h3>2. Estimación por Gauss-Newton</h3>
-        <p>Utilizamos un proceso iterativo para aproximar los parámetros minimizando la suma de cuadrados del error (RSS). Se requiere definir valores iniciales (<i>seeds</i>) y calcular la matriz Jacobiana en cada iteración.</p>
-
-        <div style="background: #fffaf0; border-left: 5px solid #f39c12; padding: 15px; margin: 20px 0;">
-            <strong>Resultado Clave:</strong> El modelo logró convergencia en 5 iteraciones, permitiendo modelar con precisión el decaimiento de la señal acústica en el material analizado.
-        </div>
-    </div>
-</div>
 
 
 

@@ -1105,19 +1105,20 @@ plot(rl4,colorize=T,main=paste("AUC:",(rl1@y.values)))
             <hr style="border: 0; border-top: 1px solid #ddd; margin: 20px 0;">
             <div style="text-align: left; display: inline-block; font-size: 0.95rem;">
                 <ul style="list-style: none; padding: 0; margin: 0;">
-                    <li>$$y_t: Respuesta ultrasónica de la observación $t$.</li>
-                    <li>$$x_t: Distancia del metal de la observación $t$.</li>
-                    <li>$$\epsilon_t: Error aleatorio.</li>
+                    <li>y_t: Respuesta ultrasónica de la observación t.</li>
+                    <li>x_t: Distancia del metal de la observación t.</li>
+                    <li>epsilon_t: Error aleatorio.</li>
                 </ul>
             </div>
         </div>
 
         <div style="background: #e8f4fd; border-left: 5px solid #3498db; padding: 20px; margin: 25px 0; border-radius: 0 8px 8px 0;">
             <h4 style="color: #2980b9; margin-bottom: 10px;"><i class="fas fa-code"></i> Estimación en R:</h4>
-            <p>Aplicando directamente la función <code>nls</code> con los valores iniciales establecidos para la convergencia:</p>
-            <code style="background: #fff; padding: 5px 10px; border-radius: 4px; border: 1px solid #b3d7ff; color: #c0392b;">
-                nls(formula, start = list(b1 = 0.02, b2 = 0.01, b3 = 0.01))
-            </code>
+            <p>Aplicando directamente la función <code>nls</code> con los valores iniciales establecidos para la convergencia: c0(0.02, 0.01, 0.01), obtenemos:</p>
+            <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee; margin: 20px 0;">
+            <img src="Summary_ultrasonico.png" alt="Summary por Gauss-Newton" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Estimación por iteraciones</i></p>
+        </div>
         </div>
     </div>
 </div>

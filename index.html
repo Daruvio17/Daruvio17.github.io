@@ -1118,9 +1118,29 @@ plot(rl4,colorize=T,main=paste("AUC:",(rl1@y.values)))
             <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee; margin: 20px 0;">
             <img src="Summary_ultrasonico.png" alt="Summary por Gauss-Newton" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
             <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Estimación por iteraciones</i></p>
+                <p>Vemos que la estimación para el intercepto y las dos variables explicativas converge a partir de la iteración número 7, lo que muestra buenos valores iniciales</p>
+                <h4 style="margin-bottom: 10px; color: white;"><i class="fas fa-trophy"></i> Conclusión del método Bootstrap</h4>
+        <p style="font-size: 1rem; opacity: 0.95; line-height: 1.6;">
+            En caso de no tener un modelo no lineal, para poder resolver el problema de despeje de los estimadores de las derivadas, procedemos a usar el algoritmo Gauss-Newton, uno de muchos métodos que hay.
         </div>
+            
         </div>
     </div>
+        <h3>Código Implementado en R</h3>
+            <div class="code-container">
+                <pre class="language-r"><code class="language-r">
+set.seed(457)
+library(readxl)
+datos <- read_excel(file.choose())
+datos <- data.frame(datos)
+str(datos)
+datos$y <- as.numeric(datos$y)
+datos$x <- as.numeric(datos$x)
+modelo <- nls( y ~ exp(-b1 * x) / (b2 + b3 * x), 
+               data = datos, start = c(b1 = 0.2, b2 = 0.1, b3 = 0.1) )
+summary(modelo)
+
+                </code></pre>     
 </div>
 
 <!--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->

@@ -1185,37 +1185,149 @@ summary(modelo_nls)
         <i class="fas fa-arrow-left"></i> Volver a Proyectos
     </a>
 
-    <div style="background: linear-gradient(135deg, #9b59b6, #8e44ad); color: white; padding: 30px; border-radius: 12px; margin-bottom: 30px;">
-        <h2 style="margin: 0; color: white;">Análisis de Series de Tiempo</h2>
-        <p style="margin: 10px 0 0 0; opacity: 0.9;">Pronóstico avanzado con modelos ARIMA y Descomposición Estacional</p>
+    <div style="background: linear-gradient(135deg, #9b59b6, #6c3483); color: white; padding: 30px; border-radius: 12px; margin-bottom: 30px;">
+        <h2 style="margin: 0; color: white;">Modelo Precio-LASSO</h2>
+        <p style="margin: 10px 0 0 0; opacity: 0.9;">Regularización y Selección de Variables para el Precio de Vivienda</p>
     </div>
 
     <div style="line-height: 1.8; color: #333;">
-        <h3>1. Metodología Box-Jenkins</h3>
-        <p>El análisis se centró en la modelación de variables macroeconómicas, asegurando la <strong>estacionariedad</strong> mediante pruebas de Dickey-Fuller aumentada (ADF) y analizando las funciones de autocorrelación (ACF/PACF) para determinar el orden del modelo.</p>
+        <h3>1. Preparación y Validación Cruzada</h3>
+        <p>Para este análisis, se dividieron los datos utilizando una semilla (1212) en <strong>90% entrenamiento</strong> y <strong>10% prueba</strong>[cite: 107, 108]. Se implementó una validación cruzada de <strong>12 folds</strong> para evaluar el desempeño del modelo en cada iteración[cite: 109].</p>
         
-        <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee; margin: 20px 0;">
-            <img src="grafico_serie.png" alt="Serie de tiempo analizada" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Figura: Análisis de tendencia y ciclos de la serie histórica.</i></p>
+        <p>Se definió una rejilla de búsqueda para el parámetro de penalización $\lambda$ en el rango <code>seq(0.001, 0.3, 0.001)</code>[cite: 110].</p>
+
+        <div style="text-align: center; background: #fafafa; padding: 20px; border-radius: 8px; border: 1px solid #eee; margin: 25px 0;">
+            <img src="curva_errores.png" alt="Curvas MAPE y MSE" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+            <p style="font-size: 0.85rem; color: #888; margin-top: 10px;"><i>Gráfico de errores promedio de validación cruzada en función de $\lambda$[cite: 115].</i></p>
         </div>
 
-        <h3>2. Implementación en R</h3>
-        <p>Utilicé el algoritmo <code>auto.arima</code> para la selección del modelo óptimo basado en el Criterio de Información de Akaike (AIC), seguido de un diagnóstico de ruido blanco en los residuales.</p>
+        <p>Tras el proceso, se hallaron los valores óptimos de $\lambda$[cite: 145]:</p>
+        <ul>
+            <li><strong>$\lambda$ óptimo (MAPE):</strong> 0.073 (Posición 73) con un error de 10.0074%[cite: 143, 147].</li>
+            <li><strong>$\lambda$ óptimo (MSE):</strong> 0.201 (Posición 201) con un error de 896.3885[cite: 144, 150].</li>
+        </ul>
 
+        <h3>2. Penalización y Modelo LASSO</h3>
+        <p>Se aplicó una penalización con $\alpha = 1$ (LASSO), minimizando la siguiente función de costo[cite: 151, 152]:</p>
+        
+        <div style="text-align: center; background: #f9f0ff; padding: 20px; border-radius: 8px; border: 1px solid #dcd0ff; margin: 20px 0;">
+            <p style="font-size: 1.1rem; margin: 0;">
+                $$RSS_{LASSO} = \sum_{t=1}^{n} (y_t - \hat{y}_t)^2 + \lambda \sum_{j=2}^{k} |\beta_j|$$
+            </p>
+        </div>
+
+        <h4>Resultados con $\lambda = 0.073$:</h4>
+        <p>Bajo esta penalización, el modelo LASSO eliminó variables redundantes (coeficientes igual a cero). Algunos coeficientes destacados son:</p>
+        <table style="width: 100%; border-collapse: collapse; margin: 20px 0; background: white;">
+            <tr style="background: #9b59b6; color: white;">
+                <th style="padding: 10px; border: 1px solid #ddd;">Variable</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Coeficiente ($\beta$)</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Interpretación</th>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ddd;"><strong>Overall.Qual</strong></td>
+                <td style="padding: 10px; border: 1px solid #ddd;">11.7657</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Un punto más de calidad aumenta el precio en $11.76 USD en promedio[cite: 158, 159].</td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ddd;"><strong>Garage.Cars</strong></td>
+                <td style="padding: 10px; border: 1px solid #ddd;">1.0239</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Un espacio adicional para auto incrementa el precio en $1.02 USD promedio[cite: 160, 161].</td>
+            </tr>
+        </table>
+
+        <div style="background: #e8f5e9; border-left: 5px solid #2e7d32; padding: 15px; border-radius: 4px; margin: 25px 0;">
+            <strong>Desempeño fuera de muestra:</strong> Con los datos de prueba, el modelo obtuvo un <strong>MAPE de 9.33%</strong> y un <strong>MSE de 790.35</strong>. Un error inferior al 10% refleja un excelente desempeño predictivo[cite: 170].
+        </div>
+
+        <h3>3. Sensibilidad del Parámetro $\lambda$</h3>
+        <p>Al utilizar un $\lambda$ más alto (0.201), el modelo aumenta la penalización y elimina más variables (5 en total), lo cual es congruente con la teoría de regularización[cite: 174, 175].</p>
+
+        <div style="text-align: center; background: #fafafa; padding: 20px; border-radius: 8px; border: 1px solid #eee; margin: 25px 0;">
+            <img src="traza_coeficientes.png" alt="Traza de coeficientes LASSO" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+            <p style="font-size: 0.85rem; color: #888; margin-top: 10px;"><i>Comportamiento de las pendientes parciales y el intercepto conforme $\lambda$ aumenta[cite: 185].</i></p>
+        </div>
+
+        <p><strong>Comportamiento del Intercepto:</strong> A medida que $\lambda \to \infty$, las pendientes parciales $\beta_j$ tienden a cero. En este punto, el intercepto $\beta_1$ tiende al <strong>valor medio de la variable explicada</strong> ($y_{media}$), ya que se convierte en el único coeficiente restante para predecir la serie[cite: 195, 196, 198].</p>
+
+        <h3>Código Implementado en R</h3>
         <div class="code-container">
             <pre class="language-r"><code class="language-r">
-library(forecast)
-library(tseries)
-
-# Transformación y prueba de estacionariedad
-adf.test(mi_serie)
-
-# Ajuste del modelo ARIMA(p,d,q)
-modelo_optimo <- auto.arima(mi_serie, seasonal = TRUE)
-
-# Pronóstico a 12 meses
-pronostico <- forecast(modelo_optimo, h = 12)
-plot(pronostico, main = "Pronóstico con Intervalos de Confianza (80% y 95%)")
+library(caret)
+library(glmnet)
+library(boot)
+library(readxl)
+datos <- read_excel(file.choose())
+datos <- na.omit(datos)
+datos <- data.frame(datos)
+datos$SalePrice <- datos$SalePrice/1000
+head(datos)
+X <- model.matrix(~.,datos)
+datos1 <- data.frame(X[,-1])
+f <- seq(1,nrow(datos1))
+set.seed(1212)
+s <- sample(f,size=0.1*nrow(datos1))
+entrena <- datos1[-s,]
+prueba <- datos1[s,]
+pliegues <- createFolds(entrena$SalePrice,k=12,list=TRUE)
+seleccion <- function(x){
+  evaluacion=function(s){
+    modelo=glmnet(x=entrena[-s,-1],y=entrena[-s,1],alpha=1,lambda=x)
+    p=predict(modelo,newx=as.matrix(entrena[s,-1]))
+    mape=100*mean(abs(entrena[s,1]-p)/entrena[s,1])
+    mse=mean((entrena[s,1]-p)^2)
+    r=cbind(mape,mse)
+    colnames(r)=c('mape','mse')
+    r
+  }
+  res <- lapply(pliegues,evaluacion)
+  res <- do.call(rbind,res)
+  promedio <- apply(res,2,mean)
+  promedio
+}
+rejilla <- seq(0.001,0.3,0.001)
+rejilla
+resultado <- array(0,dim=c(1,2,length(rejilla)))
+for(i in 1:length(rejilla)){
+  resultado[,,i]=seleccion(rejilla[i])}
+resul <- t(resultado[1,,])
+colnames(resul) <- c('mape','mse')
+resul
+par(mfrow=c(2,1))
+plot(rejilla,resul[,1],main='MAPE')
+plot(rejilla,resul[,2],main='MSE')
+minimo <- function(t){which.min(t)}
+minimo
+optimo <- apply(resul,2,minimo)
+optimo
+rejilla[optimo[1]];rejilla[optimo[2]]
+#Lambda 1
+modelof <- glmnet(x=entrena[,-1],y=entrena[,1],alpha=1,lambda=rejilla[optimo[1]])
+coef(modelof)
+p <- predict(modelof,newx=as.matrix(prueba[,-1]))
+p
+mape <- 100*mean(abs(prueba[,1]-p)/prueba[,1])
+mape
+mse <- mean((prueba[,1]-p)^2)
+mse
+#Lambda 2
+modelof2 <- glmnet(x=entrena[,-1],y=entrena[,1],alpha=1,lambda=rejilla[optimo[2]])
+coef(modelof2)
+p2 <- predict(modelof2,newx=as.matrix(prueba[,-1]))
+p2
+mape2 <- 100*mean(abs(prueba[,1]-p)/prueba[,1])
+mape2
+mse2 <- mean((prueba[,1]-p)^2)
+mse2
+rejilla=seq(0.01,10,0.01)
+modelof <- glmnet(x = as.matrix(entrena[,-1]),
+                  y = entrena[,1],
+                  alpha = 1,
+                  lambda = rejilla)
+m <- as.matrix(coef(modelof))
+m <- t(m)
+m <- m[, ncol(m):1]
+matplot(rev(rejilla), m, type="l")
             </code></pre>
         </div>
     </div>

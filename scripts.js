@@ -59,13 +59,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // ===== FUNCIÓN PARA CAMBIAR PESTAÑAS (FUERA DE TODO) =====
 function showTab(tabId) {
+    // 1. Ocultar todas las pestañas quitando la clase active y el display
     document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
         tab.style.display = 'none';
     });
+
+    // 2. Buscar la pestaña destino
     const target = document.getElementById(tabId);
     if(target) {
         target.style.display = 'block';
+        target.classList.add('active'); // Añadimos la clase active
+        
+        // 3. Renderizar fórmulas si existen y subir al inicio
         if (window.MathJax) { MathJax.typesetPromise(); }
         window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+        console.error("No se encontró la pestaña con ID: " + tabId);
     }
 }

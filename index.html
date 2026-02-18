@@ -1107,12 +1107,6 @@ plot(rl4,colorize=T,main=paste("AUC:",(rl1@y.values)))
             <div style="background: #fdfdfd; border-left: 5px solid var(--warning); padding: 20px; margin: 20px 0;">
                 <h4>Lógica del Algoritmo:</h4>
                 <p>Se utiliza un proceso iterativo para minimizar la suma de los cuadrados de los residuales mediante aproximaciones de Taylor.</p>
-                <div class="code-container" style="margin-top: 15px;">
-                    <pre><code class="language-r"># Estimación en R usando nls (Non-linear Least Squares)
-modelo_no_lineal <- nls(y ~ theta1 * (1 - exp(-theta2 * x)), 
-                        start = list(theta1 = 1, theta2 = 0.1))
-summary(modelo_no_lineal)</code></pre>
-                </div>
             </div>
         </div>
 

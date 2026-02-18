@@ -852,403 +852,159 @@ abline(v=quantile(b2, probs = 0.975), col='red')
 
 </div> 
 
-<div id="proyecto3-detalle" class="tab-content" style="display: none;">
+<div id="proyecto3-detalle" class="tab-content">
     <a onclick="showTab('proyectos')" style="color: #e74c3c; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; font-weight: bold;">
         <i class="fas fa-arrow-left"></i> Volver a Proyectos
     </a>
 
     <div style="background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; padding: 30px; border-radius: 12px; margin-bottom: 30px;">
-        <h2 style="margin: 0; color: white;">Modelo Churn </h2>
-        <p style="margin: 10px 0 0 0; opacity: 0.9;">Modelo de regresión logística para predicción de deserción de clientes en un servicio financiero para una empresa</p>
+        <h2 style="margin: 0; color: white;">Modelo Churn</h2>
+        <p style="margin: 10px 0 0 0; opacity: 0.9;">Modelo de regresión logística para predicción de deserción de clientes</p>
     </div>
 
     <div style="line-height: 1.8; color: #333;">
-        <h3>Head de los datos</h3>
-        <p>Se analizó una base de datos de <strong>4,835 observaciones</strong> para identificar patrones de abandono. El modelo utiliza variables como género, antigüedad y cargos mensuales para calcular la probabilidad de default.</p>
-<div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee;">
-            <img src="head_churn.png" alt="Head del dataset" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Figura 1: Head de los datos.</i></p>
-        </div>
-        <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee; margin: 20px 0;">
+        <h3>Análisis de Datos</h3>
+        <p>Se analizó una base de datos de <strong>4,835 observaciones</strong>. El modelo utiliza variables como género, antigüedad y cargos mensuales.</p>
+        
+        <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee;">
             <p style="font-size: 1.2rem; background: white; padding: 10px; display: inline-block; border-radius: 5px;">
                 $$p_i = \frac{e^{Z}}{1+e^{Z}}$$
             </p>
-            <p style="font-size: 0.8rem; color: #888;"><i>Ecuación logística implementada</i></p>
-        </div>
-      <div style="margin-top: 10px; margin-bottom: 30px;">
-    <p>Donde el exponente <b>$Z$</b> (conocido como <i>Logit</i>) es la combinación lineal de las variables independientes:</p>
-    
-    <div style="background: #fdfdfd; padding: 15px; border-radius: 8px; border-left: 4px solid #e74c3c; font-family: 'Courier New', monospace; font-size: 1.1rem; text-align: center;">
-        $$Z = \beta_0 + \beta_1(\text{Tenure}) + \beta_2(\text{MonthlyCharges}) + \dots + \beta_n(X_n)$$
-    </div>
-
-
-    <div style="line-height: 1.8; color: #333;">
-        <h3>Estimación inicial</h3>
-        <p>Ahora, procedemos a estimar el modelo usando la familia binomial. Obtenemos lo siguiente:</p>
-        
-<div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee;">
-            <img src="summary_churn.png" alt="Summary Churn" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"></p>
-    </div>
-    <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee;">
-            <img src="summary2_churn.png" alt="Summary Churn" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Summary del modelo estimado</i></p>
-        </div>
-        <h3>Resultados y Coeficientes Significativos</h3>
-<p>Tras entrenar el modelo, se identificaron los factores con mayor impacto en el <i>Churn</i>:</p>
-    <ul style="line-height: 1.6;">
-    <li><b>Tenure (Antigüedad):</b> Coeficiente negativo. Indica una relación inversa: a más meses de contrato, menor probabilidad de fuga.</li>
-    <li><b>Senior Citizen:</b> Factor de riesgo positivo. Los adultos mayores tienen una mayor probabilidad estadística de cancelar el servicio.</li>
-    <li><b>Monthly Charges:</b> En este conjunto de datos, cargos mensuales más altos mostraron una correlación con una mayor retención, sugiriendo una mayor valoración del servicio premium.</li>
-</ul>
-
-    
-    <h3 style="color: #c0392b; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 30px;">4. Evaluación de Capacidad Predictiva</h3>
-        <p>Para validar el modelo, se analizó el comportamiento de un individuo de prueba (Sujeto 1164), donde el modelo estimó una probabilidad de abandono del <strong>78.57%</strong>, coincidiendo con su comportamiento real.</p>
-<div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee;">
-            <img src="prediccion_churn.png" alt="Predicción" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Salida de la predicción del sujeto 1164</i></p>
         </div>
 
+        <h3>Resultados y Coeficientes</h3>
+        <ul style="line-height: 1.6;">
+            <li><b>Tenure:</b> Relación inversa (a más meses, menor probabilidad de fuga).</li>
+            <li><b>Senior Citizen:</b> Mayor probabilidad de cancelar el servicio.</li>
+        </ul>
 
+        <h4>Evaluación del Modelo</h4>
+        <p>El modelo presenta un <strong>AUC de 0.817</strong>, lo que indica una buena capacidad de discriminación.</p>
 
-    
-        <h4>Matriz de Confusión</h4>
-        <p>Al evaluar el modelo con los datos de prueba, se obtuvieron los siguientes resultados de clasificación:</p>
-        
-        <div style="display: flex; justify-content: center; margin: 20px 0;">
-            <table style="border-collapse: collapse; text-align: center; font-family: sans-serif; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
-                <thead>
-                    <tr style="background-color: #f2f2f2;">
-                        <th style="padding: 12px; border: 1px solid #ddd;">Predicción / Real</th>
-                        <th style="padding: 12px; border: 1px solid #ddd; color: #276749;">No Abandona (0)</th>
-                        <th style="padding: 12px; border: 1px solid #ddd; color: #c53030;">Abandona (1)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold; background: #f9f9f9;">Clasificado 0</td>
-                        <td style="padding: 12px; border: 1px solid #ddd; background: #e6fffa;">279</td>
-                        <td style="padding: 12px; border: 1px solid #ddd;">68</td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold; background: #f9f9f9;">Clasificado 1</td>
-                        <td style="padding: 12px; border: 1px solid #ddd;">45</td>
-                        <td style="padding: 12px; border: 1px solid #ddd; background: #fff5f5;">90</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <p style="font-size: 0.9rem; color: #666; text-align: center;"><i>Se identificaron 45 falsos positivos y 68 falsos negativos. Se concluye que el modelo necesita ajustarse mejor ya que tuvo 45 falsos positivos y 68 falsos negativos, que son números considerables.</i></p>
-
-
-        <h4>Curva ROC y AUC</h4>
-        <p>El modelo presenta un <strong>AUC de 0.817</strong>. Esto significa que existe un 81.7% de probabilidad de que el modelo asigne una mayor probabilidad de abandono a un cliente que realmente abandonará en comparación con uno que no lo hará.</p>
-
-        <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee; margin: 20px 0;">
-            <img src="auc_churn.png" alt="Curva ROC" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>imagen 3. Curva ROC (AUC: 0.817).</i></p>
-        </div>
-        
-        
-
-        <h3 style="color: #c0392b; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 30px;">5. Optimización: Balanceo de Datos</h3>
-        <p>Debido a que el modelo inicial presentaba dificultades para clasificar correctamente a quienes abandonan, se procedió a realizar un balanceo de la muestra al 50% (proporción equilibrada entre clientes que se van y los que se quedan).</p>
-
-        <div style="background: #ebf8ff; padding: 20px; border-radius: 8px; border-left: 5px solid #3182ce; margin: 20px 0;">
-            <p style="margin: 0; font-weight: bold; color: #2c5282;">Resultado del ajuste:</p>
-            <p style="margin: 5px 0 0 0;">La precisión para identificar clientes que efectivamente abandonan mejoró significativamente, pasando del <strong>56.96% al 77.93%</strong>.</p>
-        </div>
-  <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee; margin: 20px 0;">
-            <img src="50_50_churn.png" alt="Matriz de confusión con equilibrio" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Nueva matriz de confusión</i></p>
-        </div>
-        <p>Este ajuste permite a la empresa tomar decisiones preventivas mucho más precisas, enfocando sus recursos en el 78% de los clientes en riesgo real de fuga.</p>
-    <h3>Código Implementado en R</h3>
-            <div class="code-container">
-                <pre class="language-r"><code class="language-r">
-library(readxl)
-datos <- read_excel(file.choose())
-datos <- data.frame(datos)
-datos <- datos[,-1]
-datos <- datos[,-6]
-str(datos)
-datos$MonthlyCharges <- as.numeric(datos$MonthlyCharges)
-datos$TotalCharges <- as.numeric(datos$TotalCharges)
-str(datos)
-Abandona <- subset(datos, Churn == 1)
-Permanece <- subset(datos, Churn == 0)
-set.seed(4569)
-r1 <- sample(seq_len(nrow(Abandona)), size = 0.1 * nrow(Abandona))
-r2 <- sample(seq_len(nrow(Permanece)), size = 0.1 * nrow(Permanece))
-entrenamiento <- rbind(Abandona[-r1, ], Permanece[-r2, ])
-prueba <- rbind(Abandona[r1, ], Permanece[r2, ])
-modelo <- glm(
-  Churn ~ .,
-  data = entrenamiento,
-  family = binomial()
-)
+        <h3>Código Implementado en R</h3>
+        <div class="code-container">
+            <pre class="language-r"><code class="language-r">
+modelo <- glm(Churn ~ ., data = entrenamiento, family = binomial())
 summary(modelo)
-p <- predict(modelo,newdata=prueba[1,],type='response')
-p
-p <- predict(modelo,newdata=prueba,type='response')
-p
-p1 <- round(p,0)
-tp <- table(prueba$Churn)
-tp
-t1 <- table(prueba$Churn,p1)
-t1
-accuracy <- (t1[1,1] + t1[2,2])/(tp[1]+tp[2])
-accuracy
-library(ROCR)
-curva1 <- prediction(data.frame(p),prueba$Churn)
-rl1 <- performance(curva1,measure="auc",x.measure ="cutoff")
-rl2 <- performance(curva1, "tpr","fpr")
-plot(rl2,colorize=T,main=paste("AUC:",(rl1@y.values)))
-r3 <- sample(seq_len(nrow(Abandona)), size = 241)
-r4 <- sample(seq_len(nrow(Permanece)), size = 241)
-entrenamiento1 <- rbind(Abandona[-r3, ], Permanece[-r4, ])
-prueba1 <- rbind(Abandona[r3, ], Permanece[r4, ])
-modelo1 <- glm(
-  Churn ~ .,
-  data = entrenamiento1,
-  family = binomial()
-)
-summary(modelo1)
-p2 <- predict(modelo,newdata=prueba1[1,],type='response')
-p2
-p2 <- predict(modelo,newdata=prueba1,type='response')
-p2
-p2 <- round(p2,0)
-p2
-tp2 <- table(prueba1$Churn)
-t3 <- table(prueba1$Churn,p2)
-accuracy1 <- (t3[1,1] + t3[2,2])/(tp2[1]+tp2[2])
-accuracy1
-accuracy
-curva2 <- prediction(data.frame(p2),prueba1$Churn)
-rl3 <- performance(curva2,measure="auc",x.measure ="cutoff")
-rl4 <- performance(curva2, "tpr","fpr")
-plot(rl4,colorize=T,main=paste("AUC:",(rl1@y.values)))
-                </code></pre>
-        
-    </div>
-</div>
-    </div>
- <!-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
-
-
-
-
-
-
-
-
-    
-
-
-
-<!---------------------------------------------------------------------------- otros ------------------------------------------------------------------------------------------------------------------------->
-</div> </div> <div id="habilidades" class="tab-content">
-            <h2 class="section-title" style="margin-bottom: 25px; color: var(--secondary);">Mis Habilidades</h2>
-            <div class="projects-grid">
-                <div class="project-card-detailed" style="padding: 25px; border-top: 5px solid var(--primary);">
-                    <h3><i class="fas fa-chart-line" style="color: var(--primary);"></i> Econometría</h3>
-                    <p>Dominio de modelos lineales (MCO), logística (Logit/Probit) y modelos no lineales. Experto en validación de supuestos de Gauss-Markov.</p>
-                </div>
-                <div class="project-card-detailed" style="padding: 25px; border-top: 5px solid var(--success);">
-                    <h3><i class="fas fa-code" style="color: var(--success);"></i> Herramientas</h3>
-                    <p>Programación avanzada en <strong>R</strong> (Tidyverse, ggplot2), gestión de bases de datos con <strong>SQL</strong> y redacción técnica en <strong>LaTeX</strong>.</p>
-                </div>
-            </div>
+# Evaluación de precisión
+t1 <- table(prueba$Churn, round(predict(modelo, newdata=prueba, type='response')))
+            </code></pre>
         </div>
-
-
-<!---------------------------------------------------------------------------- Modelo ultrasónico ------------------------------------------------------------------------------------------------------------------------->
-
-
-    
-        <div id="proyecto4-detalle" class="tab-content">
+    </div>
+</div> <div id="proyecto4-detalle" class="tab-content">
     <a onclick="showTab('proyectos')" style="color: #f39c12; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; font-weight: bold;">
         <i class="fas fa-arrow-left"></i> Volver a Proyectos
     </a>
 
     <div style="background: linear-gradient(135deg, #f39c12, #d35400); color: white; padding: 30px; border-radius: 12px; margin-bottom: 30px;">
         <h2 style="margin: 0; color: white;">Modelo de Respuesta Ultrasónica</h2>
-        <p style="margin: 10px 0 0 0; opacity: 0.9;">Estimación de parámetros mediante el Algoritmo Gauss-Newton</p>
+        <p style="margin: 10px 0 0 0; opacity: 0.9;">Algoritmo Gauss-Newton</p>
     </div>
 
     <div style="line-height: 1.8; color: #333;">
-        <h3>Análisis No Lineal</h3>
-        <p>Este proyecto aborda la estimación de parámetros en modelos donde la relación funcional no es lineal en los parámetros y las derivadas no pueden despejarse directamente.</p>
-        
-        <div style="background: #fff8e1; border-left: 5px solid #f39c12; padding: 20px; margin: 25px 0; border-radius: 0 8px 8px 0;">
-            <h4 style="color: #e67e22; margin-bottom: 10px;"><i class="fas fa-microchip"></i> Lógica del Algoritmo:</h4>
-            <p>Implementamos un proceso iterativo que minimiza la suma de los cuadrados de los residuales mediante aproximaciones de primer orden de la serie de Taylor.</p>
-            
-            <p style="margin-top: 15px; font-weight: bold;">Actualización iterativa de parámetros:</p>
-            <div style="text-align: center; background: #ffffff; padding: 15px; border-radius: 8px; border: 1px solid #ffe082;">
-                <p style="font-size: 1.1rem; margin: 0;">
-                    $$\hat{\beta}_i = \hat{\beta}_{i-1} + \left[ (x_{\hat{\beta}_{i-1}}^0)' x_{\hat{\beta}_{i-1}}^0 \right]^{-1} (x_{\hat{\beta}_{i-1}}^0)' (y - H(x; \hat{\beta}_{i-1}))$$
-                </p>
-            </div>
+        <div style="background: #fff8e1; border-left: 5px solid #f39c12; padding: 20px; margin: 25px 0;">
+            <p>$$\hat{\beta}_i = \hat{\beta}_{i-1} + \left[ (x_{\hat{\beta}_{i-1}}^0)' x_{\hat{\beta}_{i-1}}^0 \right]^{-1} (x_{\hat{\beta}_{i-1}}^0)' (y - H(x; \hat{\beta}_{i-1}))$$</p>
         </div>
 
-        <h3>Definición del Modelo de Respuesta</h3>
-        <p>Para este análisis, se define el modelo de regresión no lineal considerando la respuesta ultrasónica en función de la distancia del metal:</p>
-        
-        <div style="text-align: center; background: #fafafa; padding: 25px; border-radius: 8px; margin: 20px 0; border: 1px solid #eee;">
-            <p style="font-size: 1.3rem; margin-bottom: 15px;">
-                $$y_t = \frac{e^{-\beta_1 x_t}}{\beta_2 + \beta_3 x_t} + \epsilon_t, \quad h_t = \frac{e^{-\beta_1 x_t}}{\beta_2 + \beta_3 x_t}$$
-            </p>
-            <hr style="border: 0; border-top: 1px solid #ddd; margin: 20px 0;">
-            <div style="text-align: left; display: inline-block; font-size: 0.95rem;">
-                <ul style="list-style: none; padding: 0; margin: 0;">
-                    <li>y_t: Respuesta ultrasónica de la observación t.</li>
-                    <li>x_t: Distancia del metal de la observación t.</li>
-                    <li>epsilon_t: Error aleatorio.</li>
-                </ul>
-            </div>
+        <h3>Modelo Matemático</h3>
+        <div style="text-align: center; background: #fafafa; padding: 25px; border-radius: 8px; border: 1px solid #eee;">
+            $$y_t = \frac{e^{-\beta_1 x_t}}{\beta_2 + \beta_3 x_t} + \epsilon_t$$
         </div>
 
-        <div style="background: #e8f4fd; border-left: 5px solid #3498db; padding: 20px; margin: 25px 0; border-radius: 0 8px 8px 0;">
-            <h4 style="color: #2980b9; margin-bottom: 10px;"><i class="fas fa-code"></i> Estimación en R:</h4>
-            <p>Aplicando directamente la función <code>nls</code> con los valores iniciales establecidos para la convergencia: c0(0.02, 0.01, 0.01), obtenemos:</p>
-            <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee; margin: 20px 0;">
-            <img src="Summary_ultrasonico.png" alt="Summary por Gauss-Newton" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Estimación por iteraciones</i></p>
-                <p>Vemos que la estimación para el intercepto y las dos variables explicativas converge a partir de la iteración número 7, lo que muestra buenos valores iniciales</p>
-                <h4 style="margin-bottom: 10px; color: white;"><i class="fas fa-trophy"></i> Conclusión del método Bootstrap</h4>
-        <p style="font-size: 1rem; opacity: 0.95; line-height: 1.6;">
-            En caso de no tener un modelo no lineal, para poder resolver el problema de despeje de los estimadores de las derivadas, procedemos a usar el algoritmo Gauss-Newton, uno de muchos métodos que hay.
-        </div>
-            
+        <h3>Código en R</h3>
+        <div class="code-container">
+            <pre class="language-r"><code class="language-r">
+modelo <- nls(y ~ exp(-b1 * x) / (b2 + b3 * x), data = datos, start = c(b1 = 0.2, b2 = 0.1, b3 = 0.1))
+summary(modelo)
+            </code></pre>
         </div>
     </div>
-        <h3>Código Implementado en R</h3>
-            <div class="code-container">
-                <pre class="language-r"><code class="language-r">
-set.seed(457)
-library(readxl)
-datos <- read_excel(file.choose())
-datos <- data.frame(datos)
-str(datos)
-datos$y <- as.numeric(datos$y)
-datos$x <- as.numeric(datos$x)
-modelo <- nls( y ~ exp(-b1 * x) / (b2 + b3 * x), 
-               data = datos, start = c(b1 = 0.2, b2 = 0.1, b3 = 0.1) )
-summary(modelo)
+</div> <div id="proyecto5-detalle" class="tab-content">
+    <a onclick="showTab('proyectos')" style="color: #9b59b6; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; font-weight: bold;">
+        <i class="fas fa-arrow-left"></i> Volver a Proyectos
+    </a>
 
-                </code></pre>     
+    <div style="background: linear-gradient(135deg, #9b59b6, #8e44ad); color: white; padding: 30px; border-radius: 12px; margin-bottom: 30px;">
+        <h2 style="margin: 0; color: white;">Predicción de Precios (LASSO)</h2>
+        <p style="margin: 10px 0 0 0; opacity: 0.9;">Regresión Penalizada para Precios de Vivienda</p>
+    </div>
+
+    <div style="line-height: 1.8; color: #333;">
+        <h3>Optimización de Lambda</h3>
+        <p>Se identificaron los puntos de equilibrio óptimos para la penalización:</p>
+        <ul>
+            <li>$\lambda$ Óptimo MAPE: <strong>0.073</strong></li>
+            <li>$\lambda$ Óptimo MSE: <strong>0.201</strong></li>
+        </ul>
+        
+        <div style="text-align: center; background: #fafafa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            $$RSS_{LASSO} = \sum_{t=1}^{n} (y_t - \hat{y}_t)^2 + \lambda \sum_{j=2}^{k} |\beta_j|$$
+        </div>
+
+        <h3>Desempeño</h3>
+        <p>El modelo obtuvo un <strong>MAPE de 9.33%</strong> en el conjunto de prueba, demostrando una alta precisión predictiva.</p>
+    </div>
+</div> <div id="proyecto6-detalle" class="tab-content">
+    <a onclick="showTab('proyectos')" style="color: #1abc9c; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; font-weight: bold;">
+        <i class="fas fa-arrow-left"></i> Volver a Proyectos
+    </a>
+
+    <div style="background: linear-gradient(135deg, #1abc9c, #16a085); color: white; padding: 30px; border-radius: 12px; margin-bottom: 30px;">
+        <h2 style="margin: 0; color: white;">Análisis de Datos de Panel</h2>
+        <p style="margin: 10px 0 0 0; opacity: 0.9;">Estimación de Efectos Fijos y Aleatorios</p>
+    </div>
+
+    <div style="line-height: 1.8; color: #333;">
+        <h3>Metodología</h3>
+        <p>Se aplicó el Test de Hausman para determinar la consistencia de los estimadores entre Efectos Fijos y Aleatorios.</p>
+    </div>
+</div> <div id="sobre-mi" class="tab-content">
+    <h2 style="margin-bottom: 20px;">Sobre Mí</h2>
+    <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+        <p>Soy <strong>David Ernesto Rubio</strong>, estudiante de Economía en la Universidad de Antioquia. Mi enfoque es la transformación de datos en conocimiento aplicable mediante rigor estadístico.</p>
+    </div>
 </div>
 
-<!--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+<div id="contacto" class="tab-content">
+    <h2 style="margin-bottom: 20px;">Contacto</h2>
+    <div style="background: #34495e; color: white; padding: 30px; border-radius: 12px;">
+        <p style="margin-bottom: 15px;"><i class="fas fa-envelope"></i> david.rubio@udea.edu.co</p>
+        <p><i class="fab fa-github"></i> github.com/Daruvio17</p>
+    </div>
+</div>
 
-<div id="proyecto5-detalle" class="tab-content">
-            <a onclick="showTab('proyectos')" style="color: #9b59b6; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; font-weight: bold;">
-                <i class="fas fa-arrow-left"></i> Volver a Proyectos
-            </a>
+</div> 
 
-            <div style="background: linear-gradient(135deg, #9b59b6, #8e44ad); color: white; padding: 30px; border-radius: 12px; margin-bottom: 30px;">
-                <h2 style="margin: 0; color: white;">Análisis de Series de Tiempo</h2>
-                <p style="margin: 10px 0 0 0; opacity: 0.9;">Pronóstico de variables macroeconómicas con modelos ARIMA/VAR</p>
-            </div>
+<footer style="text-align: center; padding: 40px; color: #888;">
+    <p>&copy; 2026 David Ernesto Rubio - Portafolio de Econometría</p>
+</footer>
 
-            <div style="line-height: 1.8; color: #333;">
-                <h3>1. Contexto del Problema</h3>
-                <p>Describe aquí qué variable estás analizando (ej. Inflación, PIB, Precio de una acción) y por qué es importante su pronóstico.</p>
-                
-                <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee; margin: 20px 0;">
-                    <img src="grafico_serie.png" alt="Serie de tiempo" style="max-width: 100%; height: auto; border-radius: 4px;">
-                    <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Figura: Comportamiento histórico de la variable.</i></p>
-                </div>
-
-                <h3>2. Metodología y Código en R</h3>
-                <div class="code-container">
-                    <pre class="language-r"><code class="language-r">
-# Ejemplo de código para tu proyecto
-library(tseries)
-library(forecast)
-# mi_serie <- ts(datos, start=c(2020, 1), frequency=12)
-# modelo <- auto.arima(mi_serie)
-# summary(modelo)
-                    </code></pre>
-                </div>
-            </div>
-        </div>
-
-        <div id="proyecto6-detalle" class="tab-content">
-            <a onclick="showTab('proyectos')" style="color: #1abc9c; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; font-weight: bold;">
-                <i class="fas fa-arrow-left"></i> Volver a Proyectos
-            </a>
-
-            <div style="background: linear-gradient(135deg, #1abc9c, #16a085); color: white; padding: 30px; border-radius: 12px; margin-bottom: 30px;">
-                <h2 style="margin: 0; color: white;">Análisis de Datos de Panel</h2>
-                <p style="margin: 10px 0 0 0; opacity: 0.9;">Estimación de Efectos Fijos y Aleatorios</p>
-            </div>
-
-            <div style="line-height: 1.8; color: #333;">
-                <h3>1. Estructura de los Datos</h3>
-                <p>Explica aquí tu conjunto de datos (ej. países a través de los años, empresas por trimestres, etc.).</p>
-
-                <div style="background: #e6fffa; border-left: 5px solid #1abc9c; padding: 20px; margin: 25px 0; border-radius: 0 8px 8px 0;">
-                    <p><b>Nota técnica:</b> Se aplicó el Test de Hausman para decidir entre modelos de efectos fijos o aleatorios.</p>
-                </div>
-
-                <h3>2. Resultados del Modelo</h3>
-                <p>Comenta aquí los hallazgos principales y la significancia de los coeficientes.</p>
-            </div>
-        </div>
-
-
-
-    
-
-        <div id="sobre-mi" class="tab-content">
-            <h2 style="margin-bottom: 20px;">Sobre Mí</h2>
-            <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-                <p>Soy <strong>David Ernesto Rubio</strong>, estudiante de Economía en la Universidad de Antioquia. Mi enfoque es la transformación de datos en conocimiento aplicable mediante rigor estadístico.</p>
-            </div>
-        </div>
-
-        <div id="contacto" class="tab-content">
-            <h2 style="margin-bottom: 20px;">Contacto</h2>
-            <div style="background: var(--secondary); color: white; padding: 30px; border-radius: 12px;">
-                <p style="margin-bottom: 15px;"><i class="fas fa-envelope"></i> david.rubio@udea.edu.co</p>
-                <p><i class="fab fa-github"></i> github.com/Daruvio17</p>
-            </div>
-        </div>
-
-    </div> <footer style="text-align: center; padding: 40px; color: #888;">
-        <p>&copy; 2026 David Ernesto Rubio - Portafolio de Econometría</p>
-    </footer>
-
-    <script>
-    function showTab(tabId) {
-        const tabs = document.querySelectorAll('.tab-content');
-        tabs.forEach(tab => {
-            tab.style.display = 'none';
-            tab.classList.remove('active');
-        });
-        
-        const targetTab = document.getElementById(tabId);
-        if (targetTab) {
-            targetTab.style.display = 'block';
-            setTimeout(() => {
-                targetTab.classList.add('active');
-            }, 10);
-            
-            if (window.MathJax && window.MathJax.typeset) {
-                window.MathJax.typeset();
-            }
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        showTab('inicio');
+<script>
+function showTab(tabId) {
+    const tabs = document.querySelectorAll('.tab-content');
+    tabs.forEach(tab => {
+        tab.style.display = 'none';
+        tab.classList.remove('active');
     });
-    </script>
+    
+    const targetTab = document.getElementById(tabId);
+    if (targetTab) {
+        targetTab.style.display = 'block';
+        setTimeout(() => {
+            targetTab.classList.add('active');
+        }, 10);
+        
+        if (window.MathJax && window.MathJax.typeset) {
+            window.MathJax.typeset();
+        }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Aquí puedes cambiar 'inicio' por la pestaña que quieras que se vea primero
+    showTab('inicio'); 
+});
+</script>
 </body>
 </html>

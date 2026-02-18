@@ -1435,36 +1435,51 @@ phtest(fe_model, re_model)
 </footer>
 
 <script>
-function showTab(tabId) {
-    // 1. Ocultar todos los contenidos
+// ===== FUNCIÓN ÚNICA PARA CAMBIAR PESTAÑAS =====
+function showTab(tabId, saveHistory = true) {
     const tabs = document.querySelectorAll('.tab-content');
     tabs.forEach(tab => {
         tab.style.display = 'none';
         tab.classList.remove('active');
     });
     
-    // 2. Mostrar la pestaña seleccionada
     const targetTab = document.getElementById(tabId);
     if (targetTab) {
         targetTab.style.display = 'block';
-        // Pequeño delay para que la transición CSS funcione
         setTimeout(() => {
             targetTab.classList.add('active');
         }, 10);
         
-        // 3. Forzar a MathJax a procesar fórmulas si existen en la pestaña
         if (window.MathJax && window.MathJax.typeset) {
             window.MathJax.typeset();
         }
 
-        // 4. Scroll suave al inicio
         window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        // GESTIÓN DEL HISTORIAL (Esto es lo que faltaba)
+        if (saveHistory) {
+            if (!history.state || history.state.tabId !== tabId) {
+                history.pushState({ tabId: tabId }, "", "#" + tabId);
+            }
+        }
     }
 }
 
-// Inicializar la pestaña de inicio al cargar
+// ESCUCHAR BOTÓN ATRÁS
+window.addEventListener('popstate', function(event) {
+    if (event.state && event.state.tabId) {
+        showTab(event.state.tabId, false);
+    } else {
+        showTab('inicio', false);
+    }
+});
+
+// INICIALIZACIÓN AL CARGAR LA PÁGINA
 document.addEventListener('DOMContentLoaded', () => {
-    showTab('inicio');
+    const hash = window.location.hash.replace('#', '') || 'inicio';
+    // Marcamos el punto de inicio en el historial
+    history.replaceState({ tabId: hash }, "", window.location.hash || "#inicio");
+    showTab(hash, false);
 });
 </script>
 </body>

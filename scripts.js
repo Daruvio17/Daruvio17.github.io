@@ -1,5 +1,6 @@
-// ===== NAVBAR MOBILE TOGGLE =====
+// ===== CONTROL DE CARGA INICIAL Y NAVEGACIÓN =====
 document.addEventListener('DOMContentLoaded', function() {
+    // 1. MENU MOBILE TOGGLE
     const menuToggle = document.querySelector('.menu-toggle');
     const navLinks = document.querySelector('.nav-links');
     
@@ -22,59 +23,58 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-    
-    // Cerrar menú al hacer clic fuera
-    document.addEventListener('click', function(event) {
-        if (navLinks && !event.target.closest('.navbar')) {
-            navLinks.classList.remove('active');
-            if (menuToggle) {
-                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-            }
-        }
-    });
-    
-    // ===== ANIMACIÓN DE BARRAS DE HABILIDADES =====
+
+    // 2. INICIALIZAR PESTAÑA POR DEFECTO
+    // Esto evita que la página cargue en blanco
+    showTab('proyectos'); 
+
+    // 3. ANIMACIÓN DE BARRAS DE HABILIDADES
     const skillBars = document.querySelectorAll('.skill-level');
-    
     function animateSkillBars() {
         skillBars.forEach(bar => {
             const rect = bar.getBoundingClientRect();
             const isVisible = (rect.top <= window.innerHeight && rect.bottom >= 0);
             
             if (isVisible && !bar.dataset.animated) {
-                const width = bar.style.width;
+                const finalWidth = bar.getAttribute('style').match(/width:\s*(\d+%)/)[1];
                 bar.style.width = '0';
                 setTimeout(() => {
-                    bar.style.width = width;
+                    bar.style.width = finalWidth;
                 }, 100);
                 bar.dataset.animated = 'true';
             }
         });
     }
 
-    // Ejecutar animación al cargar y al hacer scroll
     window.addEventListener('scroll', animateSkillBars);
-    animateSkillBars();
 });
 
-// ===== FUNCIÓN PARA CAMBIAR PESTAÑAS (FUERA DE TODO) =====
+// ===== FUNCIÓN PARA CAMBIAR PESTAÑAS (GLOBAL) =====
 function showTab(tabId) {
-    // 1. Ocultar todas las pestañas quitando la clase active y el display
-    document.querySelectorAll('.tab-content').forEach(tab => {
+    // 1. Ocultar todas las pestañas
+    const allTabs = document.querySelectorAll('.tab-content');
+    allTabs.forEach(tab => {
         tab.classList.remove('active');
         tab.style.display = 'none';
     });
 
-    // 2. Buscar la pestaña destino
+    // 2. Mostrar la pestaña seleccionada
     const target = document.getElementById(tabId);
     if(target) {
         target.style.display = 'block';
-        target.classList.add('active'); // Añadimos la clase active
+        // Pequeño delay para que la transición de opacidad del CSS funcione
+        setTimeout(() => {
+            target.classList.add('active');
+        }, 10);
         
-        // 3. Renderizar fórmulas si existen y subir al inicio
-        if (window.MathJax) { MathJax.typesetPromise(); }
+        // 3. Renderizar fórmulas matemáticas (MathJax)
+        if (window.MathJax && window.MathJax.typesetPromise) { 
+            window.MathJax.typesetPromise(); 
+        }
+        
+        // 4. Volver al inicio suavemente
         window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-        console.error("No se encontró la pestaña con ID: " + tabId);
+        console.warn("La pestaña '" + tabId + "' no existe en el HTML.");
     }
 }

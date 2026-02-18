@@ -1082,24 +1082,42 @@ plot(rl4,colorize=T,main=paste("AUC:",(rl1@y.values)))
     <div style="line-height: 1.8; color: #333;">
         <h3>Análisis No Lineal</h3>
         <p>Este proyecto aborda la estimación de parámetros en modelos donde la relación funcional no es lineal en los parámetros y las derivadas no pueden despejarse directamente.</p>
-
+        
         <div style="background: #fff8e1; border-left: 5px solid #f39c12; padding: 20px; margin: 25px 0; border-radius: 0 8px 8px 0;">
             <h4 style="color: #e67e22; margin-bottom: 10px;"><i class="fas fa-microchip"></i> Lógica del Algoritmo:</h4>
             <p>Implementamos un proceso iterativo que minimiza la suma de los cuadrados de los residuales mediante aproximaciones de primer orden de la serie de Taylor.</p>
             
             <p style="margin-top: 15px; font-weight: bold;">Actualización iterativa de parámetros:</p>
             <div style="text-align: center; background: #ffffff; padding: 15px; border-radius: 8px; border: 1px solid #ffe082;">
-                <p style="font-size: 1.2rem; margin: 0;">
+                <p style="font-size: 1.1rem; margin: 0;">
                     $$\hat{\beta}_i = \hat{\beta}_{i-1} + \left[ (x_{\hat{\beta}_{i-1}}^0)' x_{\hat{\beta}_{i-1}}^0 \right]^{-1} (x_{\hat{\beta}_{i-1}}^0)' (y - H(x; \hat{\beta}_{i-1}))$$
                 </p>
             </div>
         </div>
 
-        <h3>Fórmula del Modelo</h3>
-        <div style="text-align: center; background: #fafafa; padding: 20px; border-radius: 8px; margin: 20px 0;">
-            <p style="font-size: 1.3rem; margin: 0;">
-                $$Y_i = f(X_i, \beta) + \epsilon_i$$
+        <h3>Definición del Modelo de Respuesta</h3>
+        <p>Para este análisis, se define el modelo de regresión no lineal considerando la respuesta ultrasónica en función de la distancia del metal:</p>
+        
+        <div style="text-align: center; background: #fafafa; padding: 25px; border-radius: 8px; margin: 20px 0; border: 1px solid #eee;">
+            <p style="font-size: 1.3rem; margin-bottom: 15px;">
+                $$y_t = \frac{e^{-\beta_1 x_t}}{\beta_2 + \beta_3 x_t} + \epsilon_t, \quad h_t = \frac{e^{-\beta_1 x_t}}{\beta_2 + \beta_3 x_t}$$
             </p>
+            <hr style="border: 0; border-top: 1px solid #ddd; margin: 20px 0;">
+            <div style="text-align: left; display: inline-block; font-size: 0.95rem;">
+                <ul style="list-style: none; padding: 0; margin: 0;">
+                    <li><strong>$y_t$:</strong> Respuesta ultrasónica de la observación $t$.</li>
+                    <li><strong>$x_t$:</strong> Distancia del metal de la observación $t$.</li>
+                    <li><strong>$\epsilon_t$:</strong> Error aleatorio.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div style="background: #e8f4fd; border-left: 5px solid #3498db; padding: 20px; margin: 25px 0; border-radius: 0 8px 8px 0;">
+            <h4 style="color: #2980b9; margin-bottom: 10px;"><i class="fas fa-code"></i> Estimación en R:</h4>
+            <p>Aplicando directamente la función <code>nls</code> con los valores iniciales establecidos para la convergencia:</p>
+            <code style="background: #fff; padding: 5px 10px; border-radius: 4px; border: 1px solid #b3d7ff; color: #c0392b;">
+                nls(formula, start = list(b1 = 0.02, b2 = 0.01, b3 = 0.01))
+            </code>
         </div>
     </div>
 </div>

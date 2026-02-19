@@ -1105,7 +1105,7 @@ plot(perf, colorize = TRUE, main = "Curva ROC - Modelo Churn")
 
 
     
-      <div id="proyecto4-detalle" class="tab-content" style="display: none;">
+     <div id="proyecto4-detalle" class="tab-content" style="display: none;">
     <a onclick="showTab('proyectos')" style="color: #f39c12; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; font-weight: bold;">
         <i class="fas fa-arrow-left"></i> Volver a Proyectos
     </a>
@@ -1121,30 +1121,33 @@ plot(perf, colorize = TRUE, main = "Curva ROC - Modelo Churn")
         
         <div style="background: #fff8e1; border-left: 5px solid #f39c12; padding: 20px; margin: 25px 0; border-radius: 0 8px 8px 0;">
             <h4 style="color: #e67e22; margin-bottom: 10px;"><i class="fas fa-microchip"></i> Lógica del Algoritmo Gauss-Newton:</h4>
-            <p>Se utiliza para minimizar la suma de cuadrados de los residuales ($SSE$) mediante una aproximación lineal de la Serie de Taylor alrededor de un valor inicial.</p>
+            <p>Se utiliza para minimizar la suma de cuadrados de los residuales (SSE) mediante una aproximación lineal de la Serie de Taylor alrededor de un valor inicial.</p>
             
             <p style="margin-top: 15px; font-weight: bold;">Ecuación de actualización iterativa:</p>
-            <div style="text-align: center; background: #ffffff; padding: 15px; border-radius: 8px; border: 1px solid #ffe082;">
-                <p style="font-size: 1.1rem; margin: 0;">
-                    $$\hat{\beta}_{i} = \hat{\beta}_{i-1} + (J^T J)^{-1} J^T (y - f(x, \hat{\beta}_{i-1}))$$
+            <div style="text-align: center; background: #ffffff; padding: 15px; border-radius: 8px; border: 1px solid #ffe082; overflow-x: auto;">
+                <p style="font-size: 1.2rem; margin: 0; font-family: 'Times New Roman', serif;">
+                    β̂<sub>i</sub> = β̂<sub>i-1</sub> + (J<sup>T</sup> J)<sup>-1</sup> J<sup>T</sup> (y - f(x, β̂<sub>i-1</sub>))
                 </p>
             </div>
-            <p style="font-size: 0.85rem; color: #7f8c8d; margin-top: 10px;"><i>Donde $J$ es la matriz Jacobiana de derivadas parciales.</i></p>
+            <p style="font-size: 0.85rem; color: #7f8c8d; margin-top: 10px;"><i>Donde <strong>J</strong> es la matriz Jacobiana de derivadas parciales.</i></p>
         </div>
 
         <h3>Definición del Modelo de Respuesta</h3>
-        <p>El modelo describe la intensidad de una señal ultrasónica en función de la distancia del metal ($x_t$):</p>
+        <p>El modelo describe la intensidad de una señal ultrasónica en función de la distancia del metal (x<sub>t</sub>):</p>
         
         <div style="text-align: center; background: #fafafa; padding: 25px; border-radius: 8px; margin: 20px 0; border: 1px solid #eee;">
-            <p style="font-size: 1.4rem; color: #2c3e50; margin-bottom: 15px;">
-                $$y_t = \frac{e^{-\beta_1 x_t}}{\beta_2 + \beta_3 x_t} + \epsilon_t$$
-            </p>
+            <div style="font-size: 1.6rem; color: #2c3e50; margin-bottom: 15px; font-family: 'Times New Roman', serif;">
+                y<sub>t</sub> = <span style="display: inline-block; vertical-align: middle; text-align: center;">
+                    <span style="display: block; border-bottom: 1px solid #2c3e50; padding: 0 10px;">e <sup>-β<sub>1</sub> x<sub>t</sub></sup></span>
+                    <span style="display: block; padding: 0 10px;">β<sub>2</sub> + β<sub>3</sub> x<sub>t</sub></span>
+                </span> + ε<sub>t</sub>
+            </div>
             <hr style="border: 0; border-top: 1px solid #ddd; margin: 20px 0;">
             <div style="text-align: left; display: inline-block; font-size: 0.95rem; color: #555;">
                 <ul style="list-style: none; padding: 0; margin: 0;">
-                    <li><i class="fas fa-dot-circle" style="color: #f39c12;"></i> <strong>$y_t$:</strong> Respuesta ultrasónica medida.</li>
-                    <li><i class="fas fa-dot-circle" style="color: #f39c12;"></i> <strong>$x_t$:</strong> Distancia al objetivo metálico.</li>
-                    <li><i class="fas fa-dot-circle" style="color: #f39c12;"></i> <strong>$\beta_{1,2,3}$:</strong> Parámetros de decaimiento y escala a estimar.</li>
+                    <li style="margin-bottom: 8px;"><i class="fas fa-dot-circle" style="color: #f39c12;"></i> <strong>y<sub>t</sub>:</strong> Respuesta ultrasónica medida.</li>
+                    <li style="margin-bottom: 8px;"><i class="fas fa-dot-circle" style="color: #f39c12;"></i> <strong>x<sub>t</sub>:</strong> Distancia al objetivo metálico.</li>
+                    <li><i class="fas fa-dot-circle" style="color: #f39c12;"></i> <strong>β<sub>1,2,3</sub>:</strong> Parámetros de decaimiento y escala a estimar.</li>
                 </ul>
             </div>
         </div>
@@ -1153,45 +1156,7 @@ plot(perf, colorize = TRUE, main = "Curva ROC - Modelo Churn")
         <p>Utilizando la función <code>nls</code> en R y estableciendo valores iniciales estratégicos para evitar óptimos locales, logramos la convergencia en solo <strong>7 iteraciones</strong>.</p>
         
         <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee; margin: 20px 0;">
-            <img src="Summary_ultrasonico.png" alt="Resumen de estimación NLS" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
-            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Figura 1: Coeficientes estimados y significancia estadística.</i></p>
-        </div>
-
-        <div style="background: #e8f4fd; border-left: 5px solid #3498db; padding: 25px; border-radius: 8px; margin-top: 30px;">
-            <h4 style="color: #2980b9; margin-top: 0;"><i class="fas fa-check-circle"></i> Conclusión Técnica</h4>
-            <p style="margin-bottom: 0;">
-                La implementación exitosa de este modelo demuestra que, ante relaciones no lineales complejas donde el despeje algebraico es imposible, el algoritmo <strong>Gauss-Newton</strong> proporciona una solución robusta y eficiente, siempre que se garantice una buena calidad en los datos y valores iniciales coherentes.
-            </p>
-        </div>
-
-        <h3 style="margin-top: 40px;">Código Implementado en R</h3>
-        <div class="code-container">
-            <pre class="language-r"><code class="language-r">
-# --- Librerías y Carga de Datos ---
-set.seed(457)
-library(readxl)
-datos <- read_excel(file.choose())
-datos <- data.frame(datos)
-
-# --- Preprocesamiento ---
-datos$y <- as.numeric(datos$y)
-datos$x <- as.numeric(datos$x)
-
-# --- Estimación No Lineal (NLS) ---
-# Definición de la función y valores iniciales (start)
-modelo_nls <- nls(
-    y ~ exp(-b1 * x) / (b2 + b3 * x), 
-    data = datos, 
-    start = list(b1 = 0.2, b2 = 0.1, b3 = 0.1),
-    trace = TRUE # Permite ver el proceso de convergencia
-)
-
-# --- Resumen del Modelo ---
-summary(modelo_nls)
-            </code></pre>
-        </div>
-    </div>
-</div>
+            <img src="Summary_ultrasonico.png
 
 <!--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 

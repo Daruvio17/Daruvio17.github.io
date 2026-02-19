@@ -410,7 +410,7 @@
         
 <!---------------------------------------------------------------------------- Contenido Modelo Toyota --------------------------------------------------------------------------------------------------------->
 
-       <div id="proyecto1-detalle" class="tab-content">
+     <div id="proyecto1-detalle" class="tab-content">
     <a onclick="showTab('proyectos')" style="color: var(--primary); cursor: pointer; text-decoration: none;">
         <i class="fas fa-arrow-left"></i> Volver a Proyectos
     </a>
@@ -427,8 +427,8 @@
 
     <div style="background: #fdfdfd; border-left: 5px solid var(--primary); padding: 20px; margin: 20px 0;">
         <h4>Especificación del Modelo Completo:</h4>
-        <div style="overflow-x: auto; padding: 10px 0;">
-            $$ \text{Precio}_i = \beta_0 + \beta_1 \text{Edad\_Meses}_i + \beta_2 \text{KM}_i + \beta_3 \text{HP}_i + \dots + \beta_{32} \text{Asistente\_Parqueo}_i + \epsilon_i $$
+        <div style="overflow-x: auto; padding: 10px 0; font-size: 1.1rem;">
+            $$ \text{Precio}_i = \beta_0 + \beta_1 \text{Edad\_Meses}_i + \beta_2 \text{KM}_i + \beta_3 \text{HP}_i + \dots + \beta_{32} \text{Asistente\_Parqueo}_i + \varepsilon_i $$
         </div>
         <p style="font-size: 0.9rem; color: #555; margin-top: 10px;">
             <strong>Nota:</strong> El modelo incluye 32 variables explicativas, abarcando características técnicas (HP, Cilindraje), seguridad (ABS, Airbags) y confort. Contamos con un total de <strong>1436 observaciones</strong>.
@@ -440,7 +440,7 @@
             Para esta primera estimación, presentamos el modelo sin realizar aún la validación exhaustiva de supuestos. Trabajamos bajo el marco de las propiedades de <strong>Gauss-Markov</strong>, asumiendo ausencia de multicolinealidad perfecta y errores homoscedásticos:
         </p>
         <div style="background: #f4f7f9; padding: 15px; border-radius: 8px; text-align: center; margin: 15px 0;">
-            $$ E(\epsilon_i | X) = 0 \quad \text{y} \quad \text{Var}(\epsilon_i | X) = \sigma^2 $$
+            $$ E(\varepsilon_i | X) = 0 \quad \text{y} \quad \text{Var}(\varepsilon_i | X) = \sigma^2 $$
             <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">
                 Bajo estos supuestos, aseguramos que nuestros estimadores MCO sean los <strong>MELI</strong> (Mejor Estimador Lineal Insesgado).
             </p>
@@ -590,14 +590,21 @@
             <i class="fas fa-chart-area" style="color: var(--primary);"></i> 2. Heteroscedasticidad
         </h3>
         <p>
-            Este problema surge cuando la varianza de los errores no es constante a lo largo de las observaciones. En nuestro caso, la dispersión del precio tiende a aumentar en ciertos rangos, lo que invalida la inferencia clásica de las pruebas t y F.
+            Este problema surge cuando la varianza de los errores no es constante a lo largo de las observaciones. En nuestro caso, la dispersión del precio tiende a aumentar en ciertos rangos, lo que invalida la inferencia clásica.
         </p>
 
         <div style="margin: 25px 0;">
             <div style="background: #fff5f5; border-left: 5px solid #e74c3c; padding: 15px; border-radius: 4px; margin-bottom: 15px;">
                 <h4 style="color: #c53030; margin: 0;"><i class="fas fa-microscope"></i> Detección: Prueba de Breusch-Pagan</h4>
-                <p style="margin: 5px 0 0 0; font-size: 0.95rem;">
-                    Ejecutamos la prueba formal donde $H_0$ es la homoscedasticidad. El p-valor obtenido ($2.2 \times 10^{-16}$) nos permite rechazar la hipótesis nula con total confianza.
+                <p style="margin: 5px 0 10px 0; font-size: 0.95rem;">
+                    Evaluamos formalmente la presencia de varianza no constante mediante el contraste:
+                </p>
+                <div style="text-align: center; margin: 10px 0; background: white; padding: 10px; border-radius: 5px; border: 1px solid #ffccd5;">
+                    $$ H_0: \text{Homoscedasticidad (Var constante)} $$
+                    $$ H_1: \text{Heteroscedasticidad (Var variable)} $$
+                </div>
+                <p style="margin: 10px 0 0 0; font-size: 0.95rem;">
+                    El p-valor obtenido ($2.2 \times 10^{-16}$) es inferior a cualquier nivel de significancia estándar ($\alpha=0.05$), lo que nos permite rechazar $H_0$ con total confianza.
                 </p>
             </div>
             <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee;">
@@ -608,20 +615,26 @@
 
         <div style="margin: 25px 0;">
             <div style="background: #f0fdf4; border-left: 5px solid #16a34a; padding: 15px; border-radius: 4px; margin-bottom: 15px;">
-                <h4 style="color: #16a34a; margin: 0;"><i class="fas fa-shield-alt"></i> Corrección: Errores Estándar Robustos (HC4)</h4>
-                <p style="margin: 5px 0 0 0; font-size: 0.95rem;">
-                    Para corregir la subestimación de los errores, implementamos la matriz de covarianza tipo <strong>HC4</strong> (Matriz Sándwich) mediante la función <code>coeftest()</code>.
+                <h4 style="color: #16a34a; margin: 0;"><i class="fas fa-shield-alt"></i> Corrección: Errores Estándar Robustos (Matriz Sándwich)</h4>
+                <p style="margin: 5px 0 10px 0; font-size: 0.95rem;">
+                    Para corregir la invalidez de la inferencia, recalculamos la matriz de varianza-covarianza de los coeficientes $\text{Var}(\hat{\beta})$ mediante el estimador robusto de White (tipo HC4):
+                </p>
+                <div style="text-align: center; margin: 15px 0; background: white; padding: 12px; border-radius: 5px; border: 1px solid #b7ebc1; font-size: 1.1rem;">
+                    $$ \widehat{\text{Var}}(\hat{\beta})_{\text{robusta}} = (X'X)^{-1} (X' \Omega X) (X'X)^{-1} $$
+                </div>
+                <p style="margin: 0; font-size: 0.95rem;">
+                    Esta corrección "Sándwich" permite obtener pruebas $t$ válidas incluso en presencia de varianza no constante.
                 </p>
             </div>
             <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee;">
                 <img src="Correcion_toyotaHC4.png" alt="Corrección HC4 en R" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-                <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Figura 6: Coeficientes con errores estándar ajustados. Nótese el cambio en la significancia de algunas variables.</i></p>
+                <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Figura 6: Coeficientes con errores estándar ajustados mediante HC4.</i></p>
             </div>
         </div>
 
         <div style="background: #eef2ff; padding: 15px; border-radius: 8px; font-size: 0.9rem; color: #3730a3; border: 1px solid #c7d2fe;">
             <i class="fas fa-exclamation-circle"></i> 
-            <strong>Nota de Inferencia:</strong> Al usar <strong>HC4</strong>, los errores estándar suelen ser más altos y realistas. Esto asegura que solo las variables genuinamente relacionadas con el precio sean consideradas significativas, evitando conclusiones falsas debido a la dispersión de los datos.
+            <strong>Nota de Inferencia:</strong> Al usar <strong>HC4</strong>, los errores estándar suelen ser más altos y realistas. Esto asegura que solo las variables genuinamente relacionadas con el precio sean consideradas significativas.
         </div>
     </div>
 
@@ -630,14 +643,14 @@
             <i class="fas fa-exclamation-triangle" style="color: var(--primary);"></i> 3. Valores Atípicos e Influyentes
         </h3>
         <p>
-            Los <i>outliers</i> son observaciones que se alejan significativamente del patrón del resto de los datos, pudiendo sesgar los coeficientes y distorsionar las predicciones del modelo de precios.
+            Los <i>outliers</i> son observaciones que se alejan significativamente del patrón del resto de los datos, pudiendo sesgar los coeficientes.
         </p>
 
         <div style="margin: 25px 0;">
             <div style="background: #fff5f5; border-left: 5px solid #e74c3c; padding: 15px; border-radius: 4px; margin-bottom: 15px;">
                 <h4 style="color: #c53030; margin: 0;"><i class="fas fa-search-plus"></i> Detección: Criterio de Distancia de Cook</h4>
                 <p style="margin: 5px 0 0 0; font-size: 0.95rem;">
-                    Identificamos datos influyentes mediante una matriz lógica. Detectamos una <strong>Distancia de Cook de 48.4</strong> (superior al umbral de 1), residuos absolutos mayores a 3 y <i>hat-values</i> superiores a 0.2.
+                    Identificamos datos influyentes mediante una matriz lógica. Detectamos una <strong>Distancia de Cook de 48.4</strong> (superior al umbral de 1).
                 </p>
             </div>
             <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee;">
@@ -650,7 +663,7 @@
             <div style="background: #f0fdf4; border-left: 5px solid #16a34a; padding: 15px; border-radius: 4px; margin-bottom: 15px;">
                 <h4 style="color: #16a34a; margin: 0;"><i class="fas fa-magic"></i> Corrección: Estimador Robusto de Yohai</h4>
                 <p style="margin: 5px 0 0 0; font-size: 0.95rem;">
-                    En lugar de eliminar datos, utilizamos la función <code>robustRegBS</code> para aplicar el estimador de Yohai, el cual reduce automáticamente el peso de las observaciones atípicas en la estimación.
+                    Utilizamos el estimador de Yohai, el cual reduce automáticamente el peso de las observaciones atípicas en la estimación.
                 </p>
             </div>
 
@@ -664,13 +677,13 @@
                     <p style="font-size: 0.75rem; color: #777; margin-top: 5px;">Modelo Robusto (Yohai)</p>
                 </div>
             </div>
-            <p style="font-size: 0.8rem; color: #888; text-align: center; margin-top: 10px;"><i>Figura 8: Comparativa de residuos. El modelo robusto muestra una distribución mucho más estable y controlada.</i></p>
+            <p style="font-size: 0.8rem; color: #888; text-align: center; margin-top: 10px;"><i>Figura 8: Comparativa de residuos. El modelo robusto muestra una distribución mucho más estable.</i></p>
         </div>
 
         <div style="background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); padding: 25px; border-radius: 12px; color: white; margin-top: 30px;">
             <h4 style="margin-bottom: 10px; color: white;"><i class="fas fa-trophy"></i> Conclusión del Diagnóstico</h4>
             <p style="font-size: 1rem; opacity: 0.95; line-height: 1.6;">
-                Tras corregir la <strong>multicolinealidad</strong> (vía AIC), la <strong>heteroscedasticidad</strong> (vía HC4) y los <strong>datos atípicos</strong> (vía Yohai), hemos logrado un modelo que no solo tiene un alto poder explicativo, sino que también cumple con el rigor estadístico necesario para realizar inferencias confiables sobre el mercado de vehículos Toyota.
+                Tras corregir la <strong>multicolinealidad</strong> (AIC), la <strong>heteroscedasticidad</strong> (HC4) y los <strong>datos atípicos</strong> (Yohai), hemos logrado un modelo estadísticamente riguroso para realizar inferencias confiables sobre el mercado de vehículos Toyota.
             </p>
         </div>
     </div>

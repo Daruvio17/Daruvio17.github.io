@@ -995,7 +995,7 @@ abline(v = quantile(b2, probs = c(0.025, 0.975)), col = 'red', lty = 2)
 
 <!---------------------------------------------------------------------------- Contenido Modelo Churn ------------------------------------------------------------------------------------------------------->
 
-<div id="proyecto3-detalle" class="tab-content" style="display: none;">
+<div id="proyecto3-detalle" class="tab-content">
     <a onclick="showTab('proyectos')" style="color: #e74c3c; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; font-weight: bold;">
         <i class="fas fa-arrow-left"></i> Volver a Proyectos
     </a>
@@ -1016,8 +1016,6 @@ abline(v = quantile(b2, probs = c(0.025, 0.975)), col = 'red', lty = 2)
 
         <h3>2. Fundamento Matemático</h3>
         <p>Implementamos una <strong>Regresión Logística Binomial</strong> para transformar la combinación lineal de variables en una probabilidad entre 0 y 1:</p>
-        
-        
 
         <div style="text-align: center; background: #fafafa; padding: 20px; border-radius: 8px; border: 1px solid #eee; margin: 20px 0;">
             <div style="font-size: 1.4rem; margin-bottom: 10px;">
@@ -1027,6 +1025,7 @@ abline(v = quantile(b2, probs = c(0.025, 0.975)), col = 'red', lty = 2)
                 $$Z = \beta_0 + \beta_1(\text{Tenure}) + \beta_2(\text{MonthlyCharges}) + \dots + \beta_n(X_n)$$
             </div>
         </div>
+        
 
         <h3>3. Estimación y Factores Clave</h3>
         <p>Tras entrenar el modelo, identificamos los "Drivers" o impulsores principales de la deserción:</p>
@@ -1087,6 +1086,47 @@ abline(v = quantile(b2, probs = c(0.025, 0.975)), col = 'red', lty = 2)
             <p style="margin: 0; font-size: 1.1rem;">
                 La sensibilidad (capacidad de detectar fugas reales) aumentó del <strong>56.96% al 77.93%</strong>.
             </p>
+        </div>
+
+        <div style="margin: 40px 0; background: #ffffff; border-radius: 15px; border: 2px solid #e74c3c; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+            <div style="background: #e74c3c; color: white; padding: 20px; text-align: center;">
+                <h3 style="margin: 0; font-size: 1.5rem; color: white;"><i class="fas fa-hand-holding-heart"></i> Valor de Negocio: Retención Proactiva</h3>
+            </div>
+            
+            <div style="padding: 30px;">
+                <div style="margin-bottom: 25px;">
+                    <h4 style="color: #c0392b; margin-bottom: 10px; display: flex; align-items: center;">
+                        <i class="fas fa-funnel-dollar" style="margin-right: 10px;"></i> Optimización del CAC vs LTV
+                    </h4>
+                    <p style="font-size: 1.05rem; line-height: 1.6; color: #444;">
+                        Es 5 veces más barato retener a un cliente actual que adquirir uno nuevo. Con un AUC de 0.81, este modelo permite al equipo de CRM identificar al <strong>20% de los clientes que generan el 80% del riesgo de fuga</strong>. Al aplicar el balanceo de datos, priorizamos la <strong>Sensibilidad</strong>: preferimos alertar sobre un cliente que quizá no se iba (Falso Positivo) que perder a uno que efectivamente pensaba abandonar (Falso Negativo).
+                    </p>
+                </div>
+
+                <div style="margin-bottom: 25px;">
+                    <h4 style="color: #c0392b; margin-bottom: 10px; display: flex; align-items: center;">
+                        <i class="fas fa-comments-dollar" style="margin-right: 10px;"></i> Estrategia de Micro-segmentación
+                    </h4>
+                    <p style="font-size: 1.05rem; line-height: 1.6; color: #444;">
+                        El modelo revela que los <strong>Cargos Mensuales altos</strong> y la <strong>falta de antigüedad (Tenure)</strong> son los disparadores de alerta. La recomendación táctica es implementar un "Plan de Bienvenida" reforzado durante los primeros 6 meses para clientes de alto valor, ofreciendo incentivos de permanencia antes de que el modelo detecte un incremento en su probabilidad de abandono.
+                    </p>
+                </div>
+
+                <div style="margin-bottom: 5px;">
+                    <h4 style="color: #c0392b; margin-bottom: 10px; display: flex; align-items: center;">
+                        <i class="fas fa-coins" style="margin-right: 10px;"></i> Impacto en el Bottom-Line
+                    </h4>
+                    <p style="font-size: 1.05rem; line-height: 1.6; color: #444;">
+                        Al elevar la detección de desertores al <strong>77.93%</strong>, el banco puede dirigir sus campañas de retención (descuentos, llamadas personalizadas, beneficios) con precisión quirúrgica. Esto reduce el desperdicio de presupuesto de marketing en clientes que no tenían intención de irse y asegura que los recursos se usen donde realmente hay riesgo de pérdida de cartera.
+                    </p>
+                </div>
+            </div>
+            
+            <div style="background: #fff5f5; padding: 15px; text-align: center; border-top: 1px solid #feb2b2;">
+                <span style="font-size: 0.9rem; color: #c53030; font-weight: 600;">
+                    <i class="fas fa-calculator"></i> Proyección: Una mejora del 20% en la sensibilidad puede representar la recuperación de cientos de clientes de alto valor mensualmente.
+                </span>
+            </div>
         </div>
 
         <h3>Código Implementado en R</h3>

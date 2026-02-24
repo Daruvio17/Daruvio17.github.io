@@ -1654,6 +1654,7 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
         </p>
         
          <img src="str_pipeline.jpg" alt="Head de los datos" style="max-width: 100%; height: auto; border-radius: 5px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+        <p style="font-size: 0.85rem; color: #ccc; margin-top: 10px;"><i>Figura 2: Tipología de los datos inicialmente.</i></p>
         <div style="background: #fff9db; padding: 20px; border-radius: 8px; border-left: 5px solid #fcc419; margin: 20px 0;">
             <ul style="margin: 0; font-size: 0.95rem;">
                 <li><strong>Cargo_mensual:</strong> Registrada como carácter.</li>
@@ -1713,6 +1714,29 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
         </div>
         
     </div>
+
+
+<div style="background: #f8f9fa; padding: 30px; border-radius: 12px; border: 1px solid #e9ecef; margin-top: 40px;">
+        <h3 style="color: #2c3e50; margin-top: 0;"><i class="fas fa-check-circle" style="color: #1abc9c;"></i> Resultado del Procesamiento</h3>
+        <p style="color: #666;">
+            Tras aplicar las transformaciones y correcciones de tipología, el Dataset se encuentra <strong>depurado y listo para el modelado</strong>. Se han conservado 19 variables de alto valor predictivo.
+        </p>
+
+        <div style="margin-top: 25px;">
+            <p style="font-weight: bold; color: #16a085; margin-bottom: 10px;">Estructura Técnica Final (str):</p>
+            <img src="str_pipeline2.jpg" alt="Estructura final de los datos" style="max-width: 100%; height: auto; border-radius: 5px; border: 1px solid #ddd;">
+            <p style="font-size: 0.8rem; color: #888; margin-top: 5px;"><i>Figura 3: Validación de tipos de datos numéricos y factores.</i></p>
+        </div>
+
+        <div style="margin-top: 25px;">
+            <p style="font-weight: bold; color: #16a085; margin-bottom: 10px;">Vista Previa del Dataset Depurado (Head):</p>
+            <img src="head_limpio_pipeline.jpg" alt="Head final de los datos" style="max-width: 100%; height: auto; border-radius: 5px; border: 1px solid #ddd;">
+            <p style="font-size: 0.8rem; color: #888; margin-top: 5px;"><i>Figura 4: Dataset final tras limpieza.</i></p>
+        </div>
+    </div>
+
+
+    
 </div>
 
 

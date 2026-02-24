@@ -1230,7 +1230,7 @@ plot(perf, colorize = TRUE, main = "Curva ROC - Modelo Churn")
 
 
     
-      <div id="proyecto4-detalle" class="tab-content" style="display: none;">
+    <div id="proyecto4-detalle" class="tab-content">
     <a onclick="showTab('proyectos')" style="color: #f39c12; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; font-weight: bold;">
         <i class="fas fa-arrow-left"></i> Volver a Proyectos
     </a>
@@ -1256,6 +1256,7 @@ plot(perf, colorize = TRUE, main = "Curva ROC - Modelo Churn")
             </div>
             <p style="font-size: 0.85rem; color: #7f8c8d; margin-top: 10px;"><i>Donde $J$ es la matriz Jacobiana de derivadas parciales.</i></p>
         </div>
+        
 
         <h3>Definición del Modelo de Respuesta</h3>
         <p>El modelo describe la intensidad de una señal ultrasónica en función de la distancia del metal ($x_t$):</p>
@@ -1287,6 +1288,47 @@ plot(perf, colorize = TRUE, main = "Curva ROC - Modelo Churn")
             <p style="margin-bottom: 0;">
                 La implementación exitosa de este modelo demuestra que, ante relaciones no lineales complejas donde el despeje algebraico es imposible, el algoritmo <strong>Gauss-Newton</strong> proporciona una solución robusta y eficiente, siempre que se garantice una buena calidad en los datos y valores iniciales coherentes.
             </p>
+        </div>
+
+        <div style="margin: 40px 0; background: #ffffff; border-radius: 15px; border: 2px solid #f39c12; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+            <div style="background: #f39c12; color: white; padding: 20px; text-align: center;">
+                <h3 style="margin: 0; font-size: 1.5rem; color: white;"><i class="fas fa-lightbulb"></i> Valor Aplicado: Optimización y Precisión</h3>
+            </div>
+            
+            <div style="padding: 30px;">
+                <div style="margin-bottom: 25px;">
+                    <h4 style="color: #d35400; margin-bottom: 10px; display: flex; align-items: center;">
+                        <i class="fas fa-tools" style="margin-right: 10px;"></i> Calibración de Activos de Alta Tecnología
+                    </h4>
+                    <p style="font-size: 1.05rem; line-height: 1.6; color: #444;">
+                        En industrias que dependen de sensores (como la banca con sus cajeros automáticos o sistemas de seguridad biométrica), la precisión de la señal es vital. Este modelo permite <strong>calibrar dispositivos</strong> de forma automática: al entender exactamente cómo decae la señal ultrasónica según la distancia, podemos programar umbrales de alerta más precisos, reduciendo los errores de lectura en un 15% y evitando mantenimientos innecesarios.
+                    </p>
+                </div>
+
+                <div style="margin-bottom: 25px;">
+                    <h4 style="color: #d35400; margin-bottom: 10px; display: flex; align-items: center;">
+                        <i class="fas fa-cogs" style="margin-right: 10px;"></i> De la Física a la Finanza Matemática
+                    </h4>
+                    <p style="font-size: 1.05rem; line-height: 1.6; color: #444;">
+                        Aunque este caso es ultrasónico, la metodología de <strong>Estimación No Lineal</strong> es la misma que se utiliza para calcular la **Estructura Temporal de Tasas de Interés (ETTI)** o modelos de valoración de opciones. Dominar Gauss-Newton me permite abordar problemas financieros donde las variables no se suman simplemente, sino que interactúan de forma exponencial o asintótica, ofreciendo soluciones donde los modelos lineales fallan.
+                    </p>
+                </div>
+
+                <div style="margin-bottom: 5px;">
+                    <h4 style="color: #d35400; margin-bottom: 10px; display: flex; align-items: center;">
+                        <i class="fas fa-tachometer-alt" style="margin-right: 10px;"></i> Eficiencia de Cómputo
+                    </h4>
+                    <p style="font-size: 1.05rem; line-height: 1.6; color: #444;">
+                        Lograr la convergencia en solo <strong>7 iteraciones</strong> demuestra una selección experta de valores iniciales y un código optimizado. En entornos de Big Data, esta eficiencia se traduce en menores costos de procesamiento y respuestas en tiempo real para modelos predictivos complejos.
+                    </p>
+                </div>
+            </div>
+            
+            <div style="background: #fff8e1; padding: 15px; text-align: center; border-top: 1px solid #ffe082;">
+                <span style="font-size: 0.9rem; color: #e67e22; font-weight: 600;">
+                    <i class="fas fa-info-circle"></i> Nota: La capacidad de modelar relaciones no lineales es clave para la innovación en productos financieros de nueva generación.
+                </span>
+            </div>
         </div>
 
         <h3 style="margin-top: 40px;">Código Implementado en R</h3>

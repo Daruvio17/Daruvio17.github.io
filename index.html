@@ -1605,7 +1605,7 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
     </div>
 
     <div style="background: linear-gradient(135deg, #2c3e50, #34495e); color: white; padding: 30px; border-radius: 12px; margin-bottom: 20px;">
-        <h2 style="margin: 0; color: white;"><i class="fas fa-database"></i> Proceso ETL</h2>
+        <h2 style="margin: 0; color: white;"><i class="fas fa-database"></i> Proceso ETL (Extract-Transform-load)</h2>
         <p style="font-size: 1rem; color: rgba(255,255,255,0.8); margin-top: 15px; line-height: 1.6;">
             La entidad proporciona un conjunto de datos con <strong>4,835 registros</strong>. Siguiendo el flujo de trabajo corporativo, el Dataset ha sido extraído y entregado por el equipo de Ingeniería de Datos para su análisis y modelado.
         </p>
@@ -1619,7 +1619,7 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
     <div style="text-align: center; margin-bottom: 40px;">
         </div>
     <div style="line-height: 1.8; color: #333; margin-top: 40px; padding: 0 10px;">
-        <h3 style="color: #16a085; border-bottom: 2px solid #e0f2f1; display: inline-block;">1. Definición de Variables</h3>
+        <h3 style="color: #16a085; border-bottom: 2px solid #e0f2f1; display: inline-block;">Definición de Variables</h3>
         <p>A continuación, se detalla el significado técnico de cada una de las 21 variables que componen el Dataset proporcionado, es decir, nuestro diccionario de variables:</p>
 
         <div style="background: #ffffff; border: 1px solid #eee; border-radius: 8px; padding: 25px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
@@ -1648,6 +1648,19 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
             </ul>
         </div>
     </div>
+
+
+
+    <div style="line-height: 1.8; color: #333; margin-top: 40px; padding: 0 10px;">
+        <h3 style="color: #16a085; border-bottom: 2px solid #e0f2f1; display: inline-block;">Refinando los datos</h3>
+        <p>Ahora, se procede con la fase Transform del proceso ETL</p>
+        <p>Notamos primero que en la variable de Servicio_telefonico la columna es completamente de unos, es decir, en esta variable no hay variabilidad, pues todas las personas del dataset cuentan con este servicio.</p>
+        <p>Esto puede ser problemático para un futuro, ya que la variable no aporta realmente información, pues su varianza será cero y, estadísticamente,  no puede explicar la variabilidad de la variable objetivo, entre otros problemas. De manera que vamos a eliminarla.</p>
+        <p>Otra variable que no aporta información es el ID de los clientes. Y, en general, cualquier variable de identificación como nombre o ID no terminan aportando información a los modelos y, por el contrario, complica las cosas innecesariamente.</p>
+    </div>
+
+
+    
 </div>
 
 

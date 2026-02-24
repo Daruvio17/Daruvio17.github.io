@@ -1605,7 +1605,7 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
     </div>
 
     <div style="background: linear-gradient(135deg, #2c3e50, #34495e); color: white; padding: 30px; border-radius: 12px; margin-bottom: 20px;">
-        <h2 style="margin: 0; color: white;"><i class="fas fa-database"></i> Proceso ETL (Extract-Transform-load)</h2>
+        <h2 style="margin: 0; color: white;"><i class="fas fa-database"></i> Proceso ETL (Extract-Transform-Load)</h2>
         <p style="font-size: 1rem; color: rgba(255,255,255,0.8); margin-top: 15px; line-height: 1.6;">
             La entidad proporciona un conjunto de datos con <strong>4,835 registros</strong>. Siguiendo el flujo de trabajo corporativo, el Dataset ha sido extraído y entregado por el equipo de Ingeniería de Datos para su análisis y modelado.
         </p>
@@ -1613,54 +1613,89 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
             Visualización de estructura inicial (Head):
         </p>
         <img src="head_pipeline.jpg" alt="Head de los datos" style="max-width: 100%; height: auto; border-radius: 5px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-        <p style="font-size: 0.85rem; color: #666; margin-top: 10px;"><i>Figura 1: Visualización del head de los datos extraídos.</i></p>
+        <p style="font-size: 0.85rem; color: #ccc; margin-top: 10px;"><i>Figura 1: Visualización del head de los datos extraídos.</i></p>
     </div>
 
-    <div style="text-align: center; margin-bottom: 40px;">
-        </div>
     <div style="line-height: 1.8; color: #333; margin-top: 40px; padding: 0 10px;">
         <h3 style="color: #16a085; border-bottom: 2px solid #e0f2f1; display: inline-block;">Definición de Variables</h3>
-        <p>A continuación, se detalla el significado técnico de cada una de las 21 variables que componen el Dataset proporcionado, es decir, nuestro diccionario de variables:</p>
+        <p>A continuación, se detalla el significado técnico de cada una de las 21 variables que componen nuestro diccionario de datos:</p>
 
         <div style="background: #ffffff; border: 1px solid #eee; border-radius: 8px; padding: 25px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
             <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.95rem;">
-                <li style="margin-bottom: 10px;"><strong>ID_Cliente:</strong> Identificador único alfanumérico asignado a cada cliente.</li>
-                <li style="margin-bottom: 10px;"><strong>Genero:</strong> Indica si el cliente es hombre (Male) o mujer (Female).</li>
-                <li style="margin-bottom: 10px;"><strong>Cliente_Mayor:</strong> Variable binaria que indica si el cliente tiene 60 años o más (1: Sí, mayor o igual a 60 años; 0: Menor de 60 años).</li>
-                <li style="margin-bottom: 10px;"><strong>Pareja:</strong> Indica si el cliente tiene una relación de pareja sentimental (1: Sí tiene; 0: No tiene).</li>
-                <li style="margin-bottom: 10px;"><strong>Dependientes_economicos:</strong> Indica si el cliente tiene personas que dependen económicamente de él (1: Sí tiene; 0: No tiene).</li>
-                <li style="margin-bottom: 10px;"><strong>Antiguedad:</strong> Número de meses que el cliente ha permanecido vinculado a la entidad.</li>
-                <li style="margin-bottom: 10px;"><strong>Servicio_telefonico:</strong> Indica si el cliente tiene contratado el servicio de telefonía (1: Sí tiene; 0: No tiene).</li>
-                <li style="margin-bottom: 10px;"><strong>Multiples_lineas:</strong> Indica si el cliente dispone de varias líneas telefónicas vinculadas (1: Sí tiene; 0: No tiene).</li>
-                <li style="margin-bottom: 10px;"><strong>Servicio_de_internet:</strong> Tipo de tecnología de internet contratada (DSL, Fibra óptica o No).</li>
-                <li style="margin-bottom: 10px;"><strong>Seguridad_online:</strong> Indica si el cliente cuenta con servicios de seguridad informática en línea (1: Sí tiene; 0: No tiene).</li>
-                <li style="margin-bottom: 10px;"><strong>Respaldo_en_nube:</strong> Indica si el cliente tiene contratado servicio de almacenamiento en la nube (1: Sí tiene; 0: No tiene).</li>
-                <li style="margin-bottom: 10px;"><strong>Proteccion_dispositivos:</strong> Indica si el cliente paga por protección adicional de sus equipos (1: Sí paga; 0: No paga).</li>
-                <li style="margin-bottom: 10px;"><strong>Soporte_tecnico:</strong> Indica si el cliente tiene un plan de asistencia técnica prioritaria (1: Sí tiene; 0: No tiene).</li>
-                <li style="margin-bottom: 10px;"><strong>Streaming_TV:</strong> Indica si el cliente utiliza el servicio de televisión por internet (1: Sí tiene; 0: No tiene).</li>
-                <li style="margin-bottom: 10px;"><strong>Streaming_peliculas:</strong> Indica si el cliente cuenta con el servicio de películas bajo demanda (1: Sí tiene; 0: No tiene).</li>
-                <li style="margin-bottom: 10px;"><strong>Tipo_de_contrato:</strong> Especifica la periodicidad del contrato (Mes a mes, Un año, Dos años).</li>
-                <li style="margin-bottom: 10px;"><strong>Facturacion_electronica:</strong> Indica si el cliente ha optado por recibir su factura de forma digital (1: Sí ha optado; 0: No ha optado).</li>
-                <li style="margin-bottom: 10px;"><strong>Metodo_de_pago:</strong> Modalidad utilizada para el pago (Cheque, Transferencia, Tarjeta de Crédito).</li>
-                <li style="margin-bottom: 10px;"><strong>Cargo_mensual:</strong> Valor monetario total facturado al cliente de manera mensual.</li>
-                <li style="margin-bottom: 10px;"><strong>Cargo_total:</strong> Acumulado histórico del valor facturado al cliente durante su permanencia.</li>
-                <li style="margin-bottom: 0;"><strong>Abandono:</strong> Variable objetivo (Target) que indica si el cliente dejó de usar los servicios (1: Sí, 0: No).</li>
+                <li style="margin-bottom: 8px;"><strong>ID_Cliente:</strong> Identificador único alfanumérico.</li>
+                <li style="margin-bottom: 8px;"><strong>Genero:</strong> Sexo biológico del titular.</li>
+                <li style="margin-bottom: 8px;"><strong>Cliente_Mayor:</strong> Binaria (1: ≥ 60 años, 0: < 60 años).</li>
+                <li style="margin-bottom: 8px;"><strong>Pareja:</strong> Estado civil/vinculación sentimental.</li>
+                <li style="margin-bottom: 8px;"><strong>Dependientes_economicos:</strong> Cargas familiares del titular.</li>
+                <li style="margin-bottom: 8px;"><strong>Antiguedad:</strong> Meses de permanencia en la entidad.</li>
+                <li style="margin-bottom: 8px;"><strong>Servicio_telefonico:</strong> Tenencia de plan de voz.</li>
+                <li style="margin-bottom: 8px;"><strong>Multiples_lineas:</strong> Disponibilidad de líneas adicionales.</li>
+                <li style="margin-bottom: 8px;"><strong>Servicio_de_internet:</strong> Tecnología de conexión (DSL, Fibra, No).</li>
+                <li style="margin-bottom: 8px;"><strong>Seguridad_online:</strong> Servicio de ciberseguridad activo.</li>
+                <li style="margin-bottom: 8px;"><strong>Respaldo_en_nube:</strong> Servicio de backup remoto.</li>
+                <li style="margin-bottom: 8px;"><strong>Proteccion_dispositivos:</strong> Seguro de hardware contratado.</li>
+                <li style="margin-bottom: 8px;"><strong>Soporte_tecnico:</strong> Plan de asistencia técnica.</li>
+                <li style="margin-bottom: 8px;"><strong>Streaming_TV:</strong> Suscripción a contenido de televisión.</li>
+                <li style="margin-bottom: 8px;"><strong>Streaming_peliculas:</strong> Suscripción a cine bajo demanda.</li>
+                <li style="margin-bottom: 8px;"><strong>Tipo_de_contrato:</strong> Plazo contractual (Mes a mes, 1 año, 2 años).</li>
+                <li style="margin-bottom: 8px;"><strong>Facturacion_electronica:</strong> Modalidad de facturación digital.</li>
+                <li style="margin-bottom: 8px;"><strong>Metodo_de_pago:</strong> Canal de recaudo utilizado.</li>
+                <li style="margin-bottom: 8px;"><strong>Cargo_mensual:</strong> Facturación corriente del mes.</li>
+                <li style="margin-bottom: 8px;"><strong>Cargo_total:</strong> Facturación histórica acumulada.</li>
+                <li style="margin-bottom: 0; color: #16a085; font-weight: bold;"><strong>Abandono:</strong> Variable Target (1: Sí, 0: No).</li>
             </ul>
         </div>
     </div>
 
-
-
     <div style="line-height: 1.8; color: #333; margin-top: 40px; padding: 0 10px;">
-        <h3 style="color: #16a085; border-bottom: 2px solid #e0f2f1; display: inline-block;">Refinando los datos</h3>
-        <p>Ahora, se procede con la fase Transform del proceso ETL</p>
-        <p>Notamos primero que en la variable de Servicio_telefonico la columna es completamente de unos, es decir, en esta variable no hay variabilidad, pues todas las personas del dataset cuentan con este servicio.</p>
-        <p>Esto puede ser problemático para un futuro, ya que la variable no aporta realmente información, pues su varianza será cero y, estadísticamente,  no puede explicar la variabilidad de la variable objetivo, entre otros problemas. De manera que vamos a eliminarla.</p>
-        <p>Otra variable que no aporta información es el ID de los clientes. Y, en general, cualquier variable de identificación como nombre o ID no terminan aportando información a los modelos y, por el contrario, complica las cosas innecesariamente.</p>
+        <h3 style="color: #16a085; border-bottom: 2px solid #e0f2f1; display: inline-block;">Refinando los datos (Fase Transform)</h3>
+        <p style="margin-top: 15px;">
+            Para optimizar la capacidad predictiva del pipeline, se identificaron variables que no aportan valor estadístico o que presentan redundancia informativa:
+        </p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin: 25px 0;">
+            <div style="background: #fdf2f2; padding: 20px; border-radius: 8px; border-left: 5px solid #e74c3c;">
+                <h4 style="color: #c0392b; margin-top: 0;"><i class="fas fa-trash-alt"></i> Varianza Nula</h4>
+                <p style="font-size: 0.9rem;">
+                    La variable <code>Servicio_telefonico</code> posee varianza cero, ya que el 100% de la muestra cuenta con el servicio. Estadísticamente, no puede explicar variaciones en el abandono y se elimina para evitar ruido.
+                </p>
+            </div>
+            <div style="background: #fdf2f2; padding: 20px; border-radius: 8px; border-left: 5px solid #e74c3c;">
+                <h4 style="color: #c0392b; margin-top: 0;"><i class="fas fa-id-card-alt"></i> Datos de Identificación</h4>
+                <p style="font-size: 0.9rem;">
+                    Variables como <code>ID_Cliente</code> complican el modelo innecesariamente al no poseer patrones de comportamiento, por lo que son descartadas en esta etapa.
+                </p>
+            </div>
+        </div>
+
+        <h3 style="color: #16a085; border-bottom: 2px solid #e0f2f1; display: inline-block; margin-top: 30px;">Tratamiento de Variables Dummy</h3>
+        <p>
+            Las variables categóricas (como el <code>Metodo_de_pago</code>) requieren ser transformadas a un formato binario que el algoritmo pueda interpretar. Este proceso crea columnas independientes para cada categoría.
+        </p>
+
+        <div style="background: #f4fdfb; border: 1px solid #1abc9c; border-radius: 12px; padding: 25px; margin: 25px 0;">
+            <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: center;">
+                <div style="flex: 1; min-width: 300px;">
+                    <h4 style="color: #16a085; margin-top: 0;">Gestión Automatizada vs. Manual</h4>
+                    <p style="font-size: 0.95rem;">
+                        Si bien es posible separar manualmente las categorías en columnas de ceros y unos para seleccionar la referencia, en este pipeline <strong>el modelo realiza esta gestión automáticamente</strong>. Esto garantiza un código eficiente y evita la redundancia, manteniendo la integridad estadística al ajustar los contrastes de forma interna.
+                    </p>
+                </div>
+                <div style="flex: 1; min-width: 250px; background: white; padding: 15px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); text-align: center;">
+                    <p style="font-weight: bold; margin-bottom: 10px; font-size: 0.8rem; color: #16a085;">Lógica de Codificación</p>
+                    <div style="display: flex; justify-content: center; align-items: center; gap: 10px; font-family: monospace; font-size: 0.8rem;">
+                        <div style="background: #eee; padding: 5px; border-radius: 4px;">Pago: "Tarjeta"</div>
+                        <i class="fas fa-arrow-right" style="color: #1abc9c;"></i>
+                        <div style="text-align: left;">
+                            <div style="background: #e0f2f1; padding: 2px 5px; margin: 2px; border-radius: 4px;">Pago_Cheque: 0</div>
+                            <div style="background: #1abc9c; padding: 2px 5px; margin: 2px; border-radius: 4px; color: white;">Pago_Tarjeta: 1</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
     </div>
-
-
-    
 </div>
 
 

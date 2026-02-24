@@ -882,6 +882,47 @@ plot(fitted(modelo1), residuals(modelo1), main = "Residuos Robustos", col = "blu
         </p>
     </div>
 
+    <div style="margin: 40px 0; background: #ffffff; border-radius: 15px; border: 2px solid var(--primary); overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+        <div style="background: var(--primary); color: white; padding: 20px; text-align: center;">
+            <h3 style="margin: 0; font-size: 1.5rem;"><i class="fas fa-city"></i> Impacto Estratégico y Toma de Decisiones</h3>
+        </div>
+        
+        <div style="padding: 30px;">
+            <div style="margin-bottom: 25px;">
+                <h4 style="color: var(--secondary); margin-bottom: 10px; display: flex; align-items: center;">
+                    <i class="fas fa-shield-alt" style="margin-right: 10px; color: var(--primary);"></i> ¿Para qué sirve este modelo en el negocio?
+                </h4>
+                <p style="font-size: 1.05rem; line-height: 1.6; color: #444;">
+                    En el sector de <strong>Crédito Hipotecario</strong>, la precisión en la valoración del inmueble es el corazón de la mitigación de riesgo. Este modelo permite realizar inferencias seguras incluso ante datos con comportamientos no lineales o distribuciones sesgadas. Al utilizar 5000 réplicas, garantizamos que las proyecciones de precios para peritajes internos sean estables, protegiendo al banco de sobrevaloraciones que comprometan la garantía real en momentos de volatilidad de mercado.
+                </p>
+            </div>
+
+            <div style="margin-bottom: 25px;">
+                <h4 style="color: var(--secondary); margin-bottom: 10px; display: flex; align-items: center;">
+                    <i class="fas fa-microchip" style="margin-right: 10px; color: var(--primary);"></i> Inferencia Robusta (Bootstrap)
+                </h4>
+                <p style="font-size: 1.05rem; line-height: 1.6; color: #444;">
+                    La ventaja estratégica aquí es la <strong>fiabilidad de los errores estándar</strong>. Al confirmar que ninguna variable significativa incluye el cero en sus intervalos de confianza Bootstrap, el banco puede confiar plenamente en que factores como la ubicación o los metros cuadrados tienen un impacto real y persistente en el valor, eliminando el ruido estadístico que podría llevar a aprobaciones de crédito erróneas.
+                </p>
+            </div>
+
+            <div style="margin-bottom: 5px;">
+                <h4 style="color: var(--secondary); margin-bottom: 10px; display: flex; align-items: center;">
+                    <i class="fas fa-balance-scale" style="margin-right: 10px; color: var(--primary);"></i> Una empresa tomaría esta decisión...
+                </h4>
+                <p style="font-size: 1.05rem; line-height: 1.6; color: #444;">
+                    Una entidad financiera utilizaría estos resultados para <strong>automatizar políticas de cupos de crédito</strong>. Si el intervalo de confianza Bootstrap para una zona geográfica específica es estrecho y positivo, el banco puede aumentar el apetito de riesgo en ese sector. Por el contrario, si la variabilidad Bootstrap fuera alta, la decisión estratégica sería exigir un mayor "enganche" (cuota inicial) para proteger la salud de la cartera frente a activos con precios inestables.
+                </p>
+            </div>
+        </div>
+        
+        <div style="background: #f1f8ff; padding: 15px; text-align: center; border-top: 1px solid #d1e3f8;">
+            <span style="font-size: 0.9rem; color: var(--primary); font-weight: 600;">
+                <i class="fas fa-check-double"></i> Nota: El método de remuestreo con 5000 iteraciones otorga una validación de estrés preventiva a las estimaciones de precio.
+            </span>
+        </div>
+    </div>
+
     <h3>Código Implementado en R</h3>
     <div class="code-container">
         <pre class="language-r"><code class="language-r">

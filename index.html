@@ -182,7 +182,7 @@
 
 <h1 style="font-size: 2.5rem; margin-bottom: 10px;">David Ernesto Rubio</h1>
                 <p style="font-size: 1.2rem; opacity: 0.9; margin-bottom: 30px;">
-                    Estudiante de Economía | Focalizado en Econometría y aprendizaje constante en el mundo del Data Science.
+                    Estudiante de Economía | Enfocado en Econometría y Ciencia de Datos.
                 </p>
                 <div style="display: flex; gap: 15px; justify-content: center;">
                     <a onclick="showTab('proyectos')" class="btn btn-primary">
@@ -196,7 +196,10 @@
             <div style="text-align: center; max-width: 800px; margin: 40px auto;">
                 <h2 style="color: var(--secondary); margin-bottom: 20px;">Análisis de datos con rigor econométrico</h2>
                 <p style="color: #666; font-size: 1.1rem;">
-                    Bienvenido a mi repositorio. Acá encontrarás proyectos que he realizado que van desde modelos no lineales con regresiones lineales con y sin supuestos Gauss-Markov, modelos no lineales por medio del algoritmo  Gauss-Newton, hasta regresiones logísticas para modelos default y combate de sobreajuste con el modelo LASSO.
+                    Bienvenido a mi repositorio. Acá encontrarás proyectos que he realizado, que van desde modelos no lineales con regresiones lineales con y sin supuestos Gauss-Markov, modelos no lineales por medio del algoritmo  Gauss-Newton, hasta regresiones logísticas para modelos default y combate de sobreajuste con el modelo LASSO. Esto, con la idea de dar un soporte a mi dominio teórico/práctico de modelos econométricos y de Data Science.
+                </p>
+                <p style="color: #666; font-size: 1.1rem;">
+                    También, encontrarás un Pipeline completo, para darle soporte a mi manejo del flujo de trabajo real.
                 </p>
             </div>
         </div>
@@ -410,7 +413,7 @@
         
 <!---------------------------------------------------------------------------- Contenido Modelo Toyota --------------------------------------------------------------------------------------------------------->
 
-   <div id="proyecto1-detalle" class="tab-content">
+  <div id="proyecto1-detalle" class="tab-content">
     <a onclick="showTab('proyectos')" style="color: var(--primary); cursor: pointer; text-decoration: none;">
         <i class="fas fa-arrow-left"></i> Volver a Proyectos
     </a>
@@ -685,6 +688,47 @@
             <p style="font-size: 1rem; opacity: 0.95; line-height: 1.6;">
                 Tras corregir la <strong>multicolinealidad</strong> (AIC), la <strong>heteroscedasticidad</strong> (HC4) y los <strong>datos atípicos</strong> (Yohai), hemos logrado un modelo estadísticamente riguroso para realizar inferencias confiables sobre el mercado de vehículos Toyota.
             </p>
+        </div>
+    </div>
+
+    <div style="margin: 40px 0; background: #ffffff; border-radius: 15px; border: 2px solid var(--primary); overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+        <div style="background: var(--primary); color: white; padding: 20px; text-align: center;">
+            <h3 style="margin: 0; font-size: 1.5rem;"><i class="fas fa-hand-holding-usd"></i> Impacto Estratégico y Toma de Decisiones</h3>
+        </div>
+        
+        <div style="padding: 30px;">
+            <div style="margin-bottom: 25px;">
+                <h4 style="color: var(--secondary); margin-bottom: 10px; display: flex; align-items: center;">
+                    <i class="fas fa-bullseye" style="margin-right: 10px; color: var(--primary);"></i> ¿Para qué sirve este modelo en el negocio?
+                </h4>
+                <p style="font-size: 1.05rem; line-height: 1.6; color: #444;">
+                    Este modelo funciona como un motor de **valoración de activos críticos**. En una entidad financiera, podría integrarse en las áreas de <strong>Leasing o Crédito de Vehículo</strong> para automatizar la tasación de garantías. Con un \(R^2\) de 91%, el modelo reduce la incertidumbre en la recuperación de capital, permitiendo ajustar el Loan-to-Value (LTV) de forma precisa según las características del vehículo.
+                </p>
+            </div>
+
+            <div style="margin-bottom: 25px;">
+                <h4 style="color: var(--secondary); margin-bottom: 10px; display: flex; align-items: center;">
+                    <i class="fas fa-chart-pie" style="margin-right: 10px; color: var(--primary);"></i> La variable más influyente
+                </h4>
+                <p style="font-size: 1.05rem; line-height: 1.6; color: #444;">
+                    La <strong>antigüedad (Edad_Meses)</strong> demostró ser el predictor más robusto. El mercado descuenta aproximadamente <strong>$118 USD por cada mes</strong> de vida del auto. Esta depreciación lineal y acelerada sugiere que las políticas de crédito para usados deben priorizar plazos de amortización más cortos, evitando que el saldo de la deuda supere el valor comercial del colateral en el tiempo.
+                </p>
+            </div>
+
+            <div style="margin-bottom: 5px;">
+                <h4 style="color: var(--secondary); margin-bottom: 10px; display: flex; align-items: center;">
+                    <i class="fas fa-lightbulb" style="margin-right: 10px; color: var(--primary);"></i> Decisión de Negocio Sugerida
+                </h4>
+                <p style="font-size: 1.05rem; line-height: 1.6; color: #444;">
+                    Basado en los resultados, se recomienda una <strong>segmentación de tasas por equipamiento</strong>. Dado que accesorios como el <i>Aire Acondicionado Automático</i> incrementan el valor de reventa en casi $2,400 USD, estos vehículos representan un menor riesgo de pérdida ante incumplimiento (LGD). El banco podría ofrecer condiciones preferenciales a vehículos con mejores specs de seguridad y confort, ya que preservan mejor la garantía bancaria.
+                </p>
+            </div>
+        </div>
+        
+        <div style="background: #f1f8ff; padding: 15px; text-align: center; border-top: 1px solid #d1e3f8;">
+            <span style="font-size: 0.9rem; color: var(--primary); font-weight: 600;">
+                <i class="fas fa-check-double"></i> Nota: El uso de HC4 y Yohai garantiza que estas conclusiones son resistentes a distorsiones por datos atípicos.
+            </span>
         </div>
     </div>
 

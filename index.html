@@ -1951,6 +1951,107 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
     Finalmente, el modelo es "podado" para eliminar las ramas que no contribuyen a la precisión predictiva, resultando en una estructura más parsimoniosa y fácil de interpretar para la toma de decisiones estratégicas.
 </p>
 
+
+
+<hr style="border: 0; height: 1px; background: #eee; margin: 40px 0;">
+
+<h3 style="color: #2c3e50;">Optimización mediante Métodos de Ensamble: Bagging y Random Forest</h3>
+<p>
+    Aunque un árbol de regresión es altamente interpretable, suele sufrir de <strong>alta varianza</strong>. Para mejorar la capacidad predictiva y reducir el error, implementamos algoritmos basados en <i>Bagging</i>, que son una extensión del Bootstrapping.
+</p>
+<p>
+    Este consiste en hacer un remuestreo con reemplazo, en nuestro caso con nuestros 1338 registros, haciendo cierta cantidad de árboles de decisión, en este caso de regresión, y tomar un promedio de las predicciones.
+</p>
+    <h3 style="color: #2c3e50; margin-top: 40px;">Bootstrap Aggregating (Bagging)</h3>
+<p>
+    El principal inconveniente de los árboles de regresión es su <strong>alta varianza</strong>: pequeños cambios en los datos de entrenamiento pueden generar árboles con estructuras radicalmente distintas. El Bagging es una técnica de ensamble diseñada para reducir esta varianza promediando múltiples modelos.
+</p>
+
+<div style="display: flex; gap: 20px; margin: 25px 0; align-items: center; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 300px; background: #fcfcfc; border: 1px solid #eee; padding: 20px; border-radius: 8px;">
+        <h4 style="color: #e67e22; margin-top: 0;">¿Cómo funciona el algoritmo?</h4>
+        <ol style="line-height: 1.7; font-size: 0.95rem;">
+            <li><strong>Bootstrap:</strong> Se generan \( B \) muestras aleatorias con reemplazo a partir del dataset original.</li>
+            <li><strong>Entrenamiento:</strong> Se entrena un árbol de regresión completo (sin podar) sobre cada muestra.</li>
+            <li><strong>Agregación:</strong> La predicción final es el promedio de las predicciones de los \( B \) árboles:
+                <div style="text-align: center; margin: 15px 0; font-weight: bold;">
+                    $$\hat{f}_{bag}(x) = \frac{1}{B} \sum_{b=1}^{B} \hat{f}^{*b}(x)$$
+                </div>
+            </li>
+        </ol>
+    </div>
+    
+    <div style="flex: 1; min-width: 300px;">
+        <h4 style="color: #2c3e50; margin-top: 0;">Ventajas Clave</h4>
+        <ul style="list-style: none; padding: 0;">
+            <li style="margin-bottom: 10px;">
+                <strong style="color: #27ae60;">Estabilidad:</strong> Al promediar, los errores individuales de cada árbol (ruido) tienden a cancelarse.
+            </li>
+            <li style="margin-bottom: 10px;">
+                <strong style="color: #27ae60;">Out-of-Bag (OOB):</strong> Permite estimar el error de prueba sin necesidad de validación cruzada externa, usando las observaciones que no fueron seleccionadas en cada muestra bootstrap.
+            </li>
+            <li style="margin-bottom: 10px;">
+                <strong style="color: #d35400;">Limitación:</strong> Si hay un predictor muy dominante (como <i>smoker</i>), todos los árboles se parecerán entre sí, lo que limita la reducción de varianza.
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+
+<p style="background: #fff9db; padding: 15px; border-radius: 5px; border-left: 5px solid #f1c40f; font-size: 0.95rem;">
+    <strong>Nota Teórica:</strong> En el contexto de los seguros, el Bagging nos permite obtener una estimación del costo médico mucho más "suave" y menos sensible a casos atípicos que un solo árbol de decisión.
+</p>
+
+<div style="background: #fdfefe; border: 1px solid #e1e8ed; padding: 25px; border-radius: 12px; margin: 25px 0;">
+    <h4 style="color: #2980b9; margin-top: 0;">Fundamento Metodológico</h4>
+    <p style="font-size: 0.95rem; line-height: 1.6;">
+        El <strong>Random Forest</strong> mejora el Bagging estándar mediante la <i>decorrelación</i> de los árboles. En cada división (split) de cada árbol, el algoritmo solo considera un subconjunto aleatorio de \(m\) predictores de entre el total de \(p\) variables disponibles. 
+    </p>
+    
+    <div style="background: #ffffff; padding: 15px; border-radius: 8px; border: 1px solid #eee; text-align: center; margin: 15px 0;">
+        <p style="margin: 0; font-family: serif; font-size: 1.1rem;">
+            Regla de selección de predictores: \( m \approx \frac{p}{3} \) (para regresión)
+        </p>
+    </div>
+
+    <p style="font-size: 0.95rem; line-height: 1.6;">
+        Este enfoque evita que predictores muy dominantes (como <i>smoker</i> en nuestro caso) oculten la importancia de otras variables, permitiendo que el ensamble capture una visión más rica y variada de la estructura de los datos.
+    </p>
+</div>
+
+<h4 style="color: #2c3e50;">Implementación en R</h4>
+<p>Utilizamos la librería <code>randomForest</code> para entrenar un modelo con 500 árboles iterativos, evaluando la importancia de cada variable en la reducción de la impureza del nodo.</p>
+
+<div style="background: #2d3436; color: #dfe6e9; padding: 20px; border-radius: 8px; font-family: 'Courier New', Courier, monospace; margin: 20px 0;">
+    <p style="margin: 0; color: #55efc4;"># Entrenamiento del modelo Random Forest</p>
+    <p style="margin: 0;">library(randomForest)</p>
+    <p style="margin: 0;">set.seed(1)</p>
+    <p style="margin: 0;">rf.insurance <- randomForest(charges_usd ~ ., data = datos, subset = entrenamiento, mtry = 2, importance = TRUE)</p>
+    
+    <p style="margin: 0; color: #55efc4; margin-top: 10px;"># Evaluación de importancia de variables</p>
+    <p style="margin: 0;">importance(rf.insurance)</p>
+    <p style="margin: 0;">varImpPlot(rf.insurance)</p>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 25px;">
+    <div style="background: #fff5f5; padding: 15px; border-radius: 8px; border-left: 5px solid #ff7675;">
+        <h5 style="margin: 0; color: #d63031;">IncNodePurity</h5>
+        <p style="font-size: 0.85rem; margin-top: 5px;">Mide cuánto disminuye la suma de cuadrados de los residuos (RSS) al incluir una variable específica. Es clave para identificar los motores del costo.</p>
+    </div>
+    <div style="background: #f0fdf4; padding: 15px; border-radius: 8px; border-left: 5px solid #2ecc71;">
+        <h5 style="margin: 0; color: #27ae60;">%IncMSE</h5>
+        <p style="font-size: 0.85rem; margin-top: 5px;">Indica cuánto aumentaría el error de predicción del modelo si esa variable fuera omitida o permutada al azar.</p>
+    </div>
+</div>
+
+<div style="text-align: center; margin-top: 30px;">
+    <div style="background: #fafafa; border: 1px solid #ddd; padding: 20px; border-radius: 12px;">
+        <p style="color: #999; margin: 0; font-style: italic;">[Insertar aquí el gráfico varImpPlot]</p>
+    </div>
+    <p style="font-size: 0.85rem; color: #7f8c8d; margin-top: 10px;"><i>Figura 3: Importancia relativa de los predictores en el modelo Random Forest.</i></p>
+</div>
+    
     
     
 </div>

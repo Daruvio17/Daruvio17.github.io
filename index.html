@@ -1840,62 +1840,46 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
         <p style="color: #999; font-size: 0.8em; margin-top: 5px;">Visualización de las primeras 6 filas procesadas en R.</p>
     </div>
 </div>
+
+
+
+
 <h3>Metodología: Particionamiento Binario Recursivo</h3>
         <p>Siguiendo el enfoque de <i>An Introduction to Statistical Learning (ISLR)</i>, el árbol de regresión segmenta el espacio de los predictores en regiones rectangulares de alta dimensión mediante un proceso <strong>top-down</strong> y <strong>greedy</strong>.</p>
         
         <div style="background: #e8f4fd; border-left: 5px solid #3498db; padding: 20px; margin: 25px 0; border-radius: 0 8px 8px 0;">
             <h4 style="color: #2980b9; margin-bottom: 10px;"><i class="fas fa-project-diagram"></i> La Lógica del Algoritmo CART:</h4>
-            <p>El objetivo es encontrar regiones $R_1, ..., R_J$ que minimicen la suma de cuadrados de los residuales (RSS):</p>
+            <p>El objetivo es encontrar regiones $R_1, \dots, R_J$ que minimicen la suma de cuadrados de los residuales ($RSS$):</p>
             
             <div style="text-align: center; background: #ffffff; padding: 15px; border-radius: 8px; border: 1px solid #bbdefb; margin: 15px 0;">
                 <p style="font-size: 1.1rem; margin: 0;">
                     $$RSS = \sum_{j=1}^{J} \sum_{i \in R_j} (y_i - \hat{y}_{R_j})^2$$
                 </p>
             </div>
-            <p style="font-size: 0.85rem; color: #7f8c8d;"><i>Donde $\hat{y}_{R_j}$ es la respuesta promedio para las observaciones de entrenamiento dentro de la j-ésima región.</i></p>
+            <p style="font-size: 0.85rem; color: #7f8c8d;"><i>Donde $\hat{y}_{R_j}$ es la respuesta promedio para las observaciones dentro de la región $R_j$.</i></p>
         </div>
 
         <h3>Estrategia de Optimización</h3>
-        <p>Dado que es computacionalmente inviable considerar todas las particiones posibles, utilizamos un enfoque <strong>Greedy (Voraz)</strong> conocido como división binaria recursiva:</p>
+        <p>Dado que es computacionalmente costoso evaluar todas las particiones posibles, se utiliza un enfoque <strong>Greedy</strong> conocido como división binaria recursiva:</p>
         
         <div style="text-align: left; background: #fafafa; padding: 20px; border-radius: 8px; margin: 20px 0; border: 1px solid #eee;">
             <ul style="list-style: none; padding: 0; margin: 0;">
-                <li style="margin-bottom: 12px;"><i class="fas fa-cut" style="color: #3498db;"></i> <strong>Corte Óptimo ($s$):</strong> En cada paso, seleccionamos el predictor $X_j$ y el punto de corte $s$ que divide el espacio en las regiones $\{X|X_j < s\}$ y $\{X|X_j \geq s\}$ buscando la mayor reducción posible del RSS.</li>
-                <li style="margin-bottom: 12px;"><i class="fas fa-layer-group" style="color: #3498db;"></i> <strong>Complejidad del Modelo:</strong> Un árbol muy profundo tiende al <i>Overfitting</i>. Para Talento B, implementamos la <strong>Poda del Árbol (Pruning)</strong>.</li>
-                <li><i class="fas fa-balance-scale" style="color: #3498db;"></i> <strong>Costo-Complejidad:</strong> Se utiliza un parámetro de ajuste $\alpha$ para equilibrar la fidelidad de los datos y la simplicidad del modelo (Ecuación de penalización):
-                    <div style="text-align: center; margin-top: 10px; font-weight: bold;">$\sum_{m=1}^{|T|} \sum_{i: x_i \in R_m} (y_i - \hat{y}_{R_m})^2 + \alpha|T|$</div>
+                <li style="margin-bottom: 12px;"><i class="fas fa-cut" style="color: #3498db;"></i> <strong>Corte Óptimo ($s$):</strong> En cada paso, se selecciona el predictor $X_j$ y el punto de corte $s$ que divide el espacio en las regiones $\{X | X_j < s\}$ y $\{X | X_j \geq s\}$ minimizando el $RSS$.</li>
+                <li style="margin-bottom: 12px;"><i class="fas fa-layer-group" style="color: #3498db;"></i> <strong>Control de Sobreajuste:</strong> Un árbol con excesiva profundidad tiende al <i>Overfitting</i>. Para asegurar la generalización, se implementa la <strong>Poda del Árbol (Pruning)</strong>.</li>
+                <li><i class="fas fa-balance-scale" style="color: #3498db;"></i> <strong>Criterio de Costo-Complejidad:</strong> Se utiliza un parámetro de ajuste $\alpha$ para equilibrar la fidelidad a los datos y la simplicidad del modelo mediante la función de penalización:
+                    <div style="text-align: center; margin-top: 15px; background: #ffffff; padding: 10px; border-radius: 8px;">
+                        $\sum_{m=1}^{|T|} \sum_{i: x_i \in R_m} (y_i - \hat{y}_{R_m})^2 + \alpha|T|$
+                    </div>
                 </li>
             </ul>
         </div>
-
-        <div style="margin: 40px 0; background: #ffffff; border-radius: 15px; border: 2px solid #3498db; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
-            <div style="background: #3498db; color: white; padding: 20px; text-align: center;">
-                <h3 style="margin: 0; font-size: 1.5rem; color: white;"><i class="fas fa-chart-line"></i> Valor Aplicado: ¿Por qué Árboles en el Sector Bancario?</h3>
-            </div>
-            
-            <div style="padding: 30px;">
-                <div style="margin-bottom: 25px;">
-                    <h4 style="color: #2980b9; margin-bottom: 10px; display: flex; align-items: center;">
-                        <i class="fas fa-search-dollar" style="margin-right: 10px;"></i> Identificación de Umbrales Críticos de Riesgo
-                    </h4>
-                    <p style="font-size: 1.05rem; line-height: 1.6; color: #444;">
-                        En la gestión de riesgos de Bancolombia, la relación entre variables no suele ser lineal. Un árbol de regresión nos permite detectar <strong>puntos de inflexión automáticos</strong>. Por ejemplo, identificar el nivel exacto de IMC o Edad donde el riesgo de siniestralidad se dispara, permitiendo ajustar las provisiones de capital de forma más eficiente que una regresión lineal estándar.
-                    </p>
-                </div>
-
-                <div style="margin-bottom: 5px;">
-                    <h4 style="color: #2980b9; margin-bottom: 10px; display: flex; align-items: center;">
-                        <i class="fas fa-user-check" style="margin-right: 10px;"></i> Interpretabilidad y Reglas de Negocio
-                    </h4>
-                    <p style="font-size: 1.05rem; line-height: 1.6; color: #444;">
-                        La transparencia es vital en modelos de crédito y seguros. Los árboles generan <strong>reglas de decisión explícitas</strong> (Ej: <i>"Si fumador = Sí y edad > 45, entonces Gasto Estimado = $X$"</i>). Esto facilita la comunicación con las áreas de cumplimiento y permite explicar claramente al cliente el porqué de su perfil de riesgo.
-                    </p>
-                </div>
-            </div>
-        </div>
+    
 
 
 
+
+
+    
 
     
 </div>

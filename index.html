@@ -1845,36 +1845,33 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
 
 
 
-<div style="line-height: 1.8; color: #333; font-family: sans-serif;">
-    <h3>Metodología: Particionamiento Binario Recursivo</h3>
-    <p>Siguiendo el enfoque de <i>An Introduction to Statistical Learning (ISLR)</i>, el árbol de regresión segmenta el espacio de los predictores en regiones rectangulares de alta dimensión mediante un proceso <strong>top-down</strong> y <strong>greedy</strong>.</p>
+<div style="line-height: 1.8; color: #333; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <h3 style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px;">Metodología: Particionamiento Binario Recursivo</h3>
+    <p>Basado en el marco teórico, el árbol de regresión segmenta el espacio de los predictores en regiones rectangulares mediante un proceso <strong>top-down</strong> y <strong>greedy</strong>.</p>
     
-    <div style="background: #f4f7f9; border-left: 5px solid #3498db; padding: 20px; margin: 25px 0; border-radius: 0 8px 8px 0;">
-        <h4 style="color: #2c3e50; margin-bottom: 10px;">Lógica del Algoritmo CART</h4>
-        <p>El objetivo es encontrar regiones $$R_1, \dots, R_J$$ que minimicen la suma de cuadrados de los residuales ($$RSS$$):</p>
+    <div style="background: #f8f9fa; border-left: 5px solid #3498db; padding: 20px; margin: 25px 0; border-radius: 4px;">
+        <h4 style="margin-top: 0;">Lógica del Algoritmo CART</h4>
+        <p>El objetivo es encontrar regiones \( R_1, \dots, R_J \) que minimicen la suma de cuadrados de los residuales (RSS):</p>
         
-        <div style="text-align: center; background: #ffffff; padding: 15px; border-radius: 8px; border: 1px solid #d6eaf8; margin: 15px 0;">
-            <p style="font-size: 1.2rem; margin: 0;">
-                $$RSS = \sum_{j=1}^{J} \sum_{i \in R_j} (y_i - \hat{y}_{R_j})^2$$
-            </p>
+        <div style="text-align: center; margin: 20px 0;">
+            $$RSS = \sum_{j=1}^{J} \sum_{i \in R_j} (y_i - \hat{y}_{R_j})^2$$
         </div>
-        <p style="font-size: 0.85rem; color: #7f8c8d;"><i>Donde $$\hat{y}_{R_j}$$ es la respuesta promedio para las observaciones dentro de la región $$R_j$$.</i></p>
+        <p style="font-size: 0.9rem; color: #666;">Donde \( \hat{y}_{R_j} \) representa la respuesta promedio de las observaciones dentro de la región \( R_j \).</p>
     </div>
 
-    <h3>Estrategia de Optimización</h3>
-    <p>Dado que es computacionalmente costoso evaluar todas las particiones posibles, se utiliza la división binaria recursiva:</p>
+    <h4 style="color: #2c3e50;">Estrategia de Optimización</h4>
+    <p>Debido a la imposibilidad computacional de evaluar todas las particiones posibles, se utiliza la división binaria recursiva:</p>
     
-    <div style="background: #fafafa; padding: 20px; border-radius: 8px; margin: 20px 0; border: 1px solid #eee;">
-        <p><strong>1. Corte Óptimo ($$s$$):</strong> En cada nodo, se selecciona el predictor $$X_j$$ y el punto de corte $$s$$ que divide el espacio en las regiones $$\{X | X_j < s\}$$ y $$\{X | X_j \geq s\}$$ buscando la mayor reducción del $$RSS$$.</p>
+    <div style="padding-left: 15px;">
+        <p><strong>1. Selección del Punto de Corte:</strong> En cada nodo, se identifica el predictor \( X_j \) y el punto de corte \( s \) que minimiza el RSS resultante al dividir el espacio en las regiones \( \{X | X_j < s\} \) y \( \{X | X_j \geq s\} \).</p>
         
-        <p><strong>2. Control de Sobreajuste:</strong> Un árbol con excesiva profundidad tiende al error de varianza (Overfitting). Se implementa la <strong>Poda del Árbol (Pruning)</strong> para simplificar la estructura.</p>
+        <p><strong>2. Control de Complejidad:</strong> Para evitar el sobreajuste (overfitting), se aplica una penalización por la cantidad de nodos terminales mediante el parámetro \( \alpha \):</p>
         
-        <p><strong>3. Criterio de Costo-Complejidad:</strong> Se utiliza un parámetro de ajuste $$\alpha$$ para equilibrar la fidelidad a los datos y la simplicidad del modelo:</p>
-        
-        <div style="text-align: center; margin-top: 15px; background: #ffffff; padding: 15px; border-radius: 8px; border: 1px solid #ddd;">
+        <div style="text-align: center; background: #ffffff; padding: 15px; border: 1px solid #eee; border-radius: 8px; margin: 15px 0;">
             $$\sum_{m=1}^{|T|} \sum_{i: x_i \in R_m} (y_i - \hat{y}_{R_m})^2 + \alpha|T|$$
         </div>
     </div>
+</div>
 </div>
 
 

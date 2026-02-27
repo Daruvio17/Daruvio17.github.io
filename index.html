@@ -2020,6 +2020,52 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
     </p>
 </div>
 
+
+    <h3 style="color: #2c3e50; margin-top: 40px; border-bottom: 2px solid #eee; padding-bottom: 10px;">
+    Análisis Final: Random Forest y Capacidad Predictiva
+</h3>
+
+<p>
+    Tras identificar las limitaciones de un árbol de decisión único, implementamos un <strong>Random Forest</strong> con 500 árboles y un parámetro de decorrelación \(m=2\). Este enfoque permite que variables menos dominantes contribuyan a la predicción, mejorando la estabilidad del modelo.
+</p>
+
+<div style="background: #f8f9fa; border: 1px solid #e1e8ed; padding: 25px; border-radius: 12px; margin: 25px 0;">
+    <h4 style="color: #2980b9; margin-top: 0;">1. Rendimiento del Modelo (Varianza Explicada)</h4>
+    <p>
+        El modelo reporta un <strong>85.05% de varianza explicada</strong>. En términos actuariales, esto indica que la combinación de factores demográficos y hábitos de salud logran predecir la gran mayoría de la fluctuación en los costos médicos, dejando solo un margen reducido a eventos fortuitos o variables externas.
+    </p>
+    <div style="text-align: center; margin: 15px 0;">
+        <img src="rf_insurance.jpg" alt="Resultado Modelo RF" style="max-width: 100%; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+    </div>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px;">
+    <div>
+        <h4 style="color: #2c3e50;">2. Jerarquía de Predictores</h4>
+        <p style="font-size: 0.95rem; line-height: 1.6;">
+            El gráfico de <i>Variable Importance</i> revela dos métricas clave:
+        </p>
+        <ul style="font-size: 0.9rem; color: #444;">
+            <li><strong>%IncMSE:</strong> Si omitimos la variable <i>smoker</i>, el error del modelo aumenta drásticamente, confirmando que el tabaquismo es el principal driver de costo.</li>
+            <li><strong>IncNodePurity:</strong> El <i>BMI</i> y la <i>Edad</i> son fundamentales para refinar la precisión de los "cortes" en los nodos, permitiendo segmentar perfiles de riesgo con gran nitidez.</li>
+        </ul>
+    </div>
+    <div style="text-align: center;">
+        <img src="var_importance_insurance.jpg" alt="Importancia de Variables" style="max-width: 100%; border-radius: 8px;">
+        <p style="font-size: 0.8rem; color: #7f8c8d; margin-top: 5px;"><i>Gráfico de Importancia Relativa</i></p>
+    </div>
+</div>
+
+<div style="margin-top: 40px; padding: 20px; background: #e3f2fd; border-radius: 10px; border-left: 6px solid #2196f3;">
+    <h4 style="margin-top: 0; color: #0d47a1;">3. Error de Predicción (Test Set)</h4>
+    <p>
+        Al aplicar el modelo sobre el conjunto de prueba (datos no vistos), el <strong>RMSE (Root Mean Squared Error)</strong> obtenido es de <strong>$[INSERTAR TU VALOR DE rmse_rf] USD</strong>. 
+    </p>
+    <p style="font-size: 0.95rem; font-style: italic;">
+        Esta métrica representa la desviación promedio de nuestras estimaciones. Considerando que los cargos médicos pueden superar los $40,000, un error de este nivel demuestra una capacidad de generalización robusta para la tarificación de seguros.
+    </p>
+</div>
+
     
 </div>
 

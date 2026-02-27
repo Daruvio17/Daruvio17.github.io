@@ -1843,16 +1843,15 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
 
 
 
-
 <h3>Metodología: Particionamiento Binario Recursivo</h3>
-        <p>Siguiendo el enfoque de <i>An Introduction to Statistical Learning (ISLR)</i>, el árbol de regresión segmenta el espacio de los predictores en regiones rectangulares de alta dimensión mediante un proceso <strong>top-down</strong> y <strong>greedy</strong>.</p>
+        <p>El árbol de regresión segmenta el espacio de los predictores en regiones rectangulares de alta dimensión mediante un proceso <strong>top-down</strong> y <strong>greedy</strong>.</p>
         
         <div style="background: #e8f4fd; border-left: 5px solid #3498db; padding: 20px; margin: 25px 0; border-radius: 0 8px 8px 0;">
             <h4 style="color: #2980b9; margin-bottom: 10px;"><i class="fas fa-project-diagram"></i> La Lógica del Algoritmo CART:</h4>
             <p>El objetivo es encontrar regiones $R_1, \dots, R_J$ que minimicen la suma de cuadrados de los residuales ($RSS$):</p>
             
             <div style="text-align: center; background: #ffffff; padding: 15px; border-radius: 8px; border: 1px solid #bbdefb; margin: 15px 0;">
-                <p style="font-size: 1.1rem; margin: 0;">
+                <p style="font-size: 1.2rem; margin: 0;">
                     $$RSS = \sum_{j=1}^{J} \sum_{i \in R_j} (y_i - \hat{y}_{R_j})^2$$
                 </p>
             </div>
@@ -1867,20 +1866,13 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
                 <li style="margin-bottom: 12px;"><i class="fas fa-cut" style="color: #3498db;"></i> <strong>Corte Óptimo ($s$):</strong> En cada paso, se selecciona el predictor $X_j$ y el punto de corte $s$ que divide el espacio en las regiones $\{X | X_j < s\}$ y $\{X | X_j \geq s\}$ minimizando el $RSS$.</li>
                 <li style="margin-bottom: 12px;"><i class="fas fa-layer-group" style="color: #3498db;"></i> <strong>Control de Sobreajuste:</strong> Un árbol con excesiva profundidad tiende al <i>Overfitting</i>. Para asegurar la generalización, se implementa la <strong>Poda del Árbol (Pruning)</strong>.</li>
                 <li><i class="fas fa-balance-scale" style="color: #3498db;"></i> <strong>Criterio de Costo-Complejidad:</strong> Se utiliza un parámetro de ajuste $\alpha$ para equilibrar la fidelidad a los datos y la simplicidad del modelo mediante la función de penalización:
-                    <div style="text-align: center; margin-top: 15px; background: #ffffff; padding: 10px; border-radius: 8px;">
-                        $\sum_{m=1}^{|T|} \sum_{i: x_i \in R_m} (y_i - \hat{y}_{R_m})^2 + \alpha|T|$
+                    <div style="text-align: center; margin-top: 15px; background: #ffffff; padding: 15px; border-radius: 8px; border: 1px solid #ddd;">
+                        $$\sum_{m=1}^{|T|} \sum_{i: x_i \in R_m} (y_i - \hat{y}_{R_m})^2 + \alpha|T|$$
                     </div>
                 </li>
             </ul>
         </div>
     
-
-
-
-
-
-    
-
     
 </div>
 

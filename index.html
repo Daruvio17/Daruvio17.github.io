@@ -1796,22 +1796,34 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
 <div id="proyecto7-detalle" class="tab-content" style="display:none;">
     <button onclick="showTab('proyectos')" class="project-btn" style="margin-bottom:20px; border:none; background:none; cursor:pointer;">← Volver a Proyectos</button>
     
-    <h2 style="color: var(--secondary);">Análisis Predictivo: Árbol de Regresión</h2>
+    <h2 style="color: var(--secondary);">Modelado de Siniestralidad: Árbol de Regresión para Gastos Médicos</h2>
     <hr style="border: 0; height: 1px; background: #eee; margin: 20px 0;">
     
-    <h3>Introducción</h3>
+    <h3>Introducción y Contexto de Negocio</h3>
     <p>
-        Este proyecto implementa un modelo de árbol de regresión para predecir variables de naturaleza continua. 
-        A diferencia de los modelos lineales tradicionales, este enfoque permite capturar interacciones complejas 
-        y no linealidades en los datos mediante el particionamiento recursivo del espacio de características.
+        En el sector asegurador, la estimación precisa de los gastos médicos (siniestros) es fundamental para garantizar la solvencia técnica y la competitividad en la tarificación de pólizas. Este proyecto aborda la problemática de predecir el costo prestacional anual de un asegurado mediante el uso de un árbol de regresión</b>.
     </p>
     
-    <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin-top: 20px;">
-        <p style="color: #666; font-style: italic;">[Espacio reservado para el desarrollo del modelo, métricas de error RMSE/MAE y visualización del árbol podado]</p>
+    <p>
+        A diferencia de los modelos lineales, este enfoque permite identificar <b>umbrales críticos y segmentaciones no lineales</b>, como el impacto exponencial del tabaquismo combinado con el IMC, facilitando la creación de reglas de negocio claras para la gestión de riesgos en entidades financieras y de salud.
+    </p>
+
+    <div style="background: #f9f9f9; padding: 25px; border-radius: 12px; margin-top: 20px; border-left: 5px solid var(--secondary);">
+        <h4 style="margin-top:0;">Ficha Técnica del Proyecto</h4>
+        <ul style="color: #555; line-height: 1.6;">
+            <li><b>Dataset:</b> Medical Cost Personal Datasets (1,338 registros).</li>
+            <li><b>Variable Objetivo:</b> Gastos médicos facturados (<i>Charges</i>).</li>
+            <li><b>Algoritmo:</b> Árbol de Regresión (Librería <code>rpart</code> en R).</li>
+            <li><b>Enfoque:</b> Identificación de perfiles de riesgo mediante poda del árbol (Pruning) para optimizar la generalización del modelo.</li>
+        </ul>
+    </div>
+
+    <div style="margin-top: 30px;">
+        <p style="color: #666; font-style: italic; text-align: center;">
+            [Aquí insertaremos el Análisis Exploratorio, el Árbol Final Graficado y las métricas RMSE / MAE]
+        </p>
     </div>
 </div>
-
-
 
 
     <!--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->

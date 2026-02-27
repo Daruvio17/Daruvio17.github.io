@@ -1918,6 +1918,32 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
             <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Figura 3. Partición del modelo gráficamente.</i></p>
         </div>
 
+
+    
+    <h3 style="color: #2c3e50; margin-top: 40px;">Optimización mediante Poda (Cost-Complexity Pruning)</h3>
+<p>
+    Un árbol demasiado profundo corre el riesgo de sobreajuste. Para mitigar esto, aplicamos la técnica de <strong>Poda por Complejidad de Costo</strong>, utilizando Validación Cruzada para identificar el número óptimo de nodos terminales que equilibra el sesgo y la varianza.
+</p>
+
+<div style="background: #e1f5fe; border-left: 5px solid #0288d1; padding: 20px; margin: 25px 0;">
+    <h4 style="margin-top: 0; color: #01579b;">El proceso de Validación Cruzada</h4>
+    <p style="font-size: 0.95rem; line-height: 1.6;">
+        Evaluamos el rendimiento del modelo para diferentes niveles de complejidad. El gráfico de <i>Deviance vs Size</i> nos permite identificar el punto de inflexión donde un incremento en el número de nodos ya no reduce significativamente el error en datos no observados.
+    </p>
+    <p style="font-size: 0.9rem; font-weight: bold; color: #0277bd;">
+        Resultado: El modelo alcanzó su rendimiento óptimo con un tamaño de 5 nodos, lo que permite una mayor generalización.
+    </p>
+</div>
+
+<div style="text-align: center; margin-bottom: 30px;">
+    <div style="background: #ffffff; border: 1px solid #ddd; padding: 15px; border-radius: 8px; display: inline-block;">
+        <p style="color: #666; font-style: italic;">[Insertar aquí la Gráfica de Deviance vs Size]</p>
+    </div>
+</div>
+
+<p>
+    Finalmente, el modelo es "podado" para eliminar las ramas que no contribuyen a la precisión predictiva, resultando en una estructura más parsimoniosa y fácil de interpretar para la toma de decisiones estratégicas.
+</p>
     
 </div>
 

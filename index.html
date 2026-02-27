@@ -1882,8 +1882,14 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
 <div style="background: #2d3436; color: #dfe6e9; padding: 20px; border-radius: 8px; font-family: 'Courier New', Courier, monospace; margin: 20px 0;">
     <p style="margin: 0; color: #55efc4;"># Ajuste del modelo original (Árbol Crecido)</p>
     <p style="margin: 0;">tree.insurance <- tree(charges_usd ~ age + sex + bmi + children + smoker + region, data = datos_train)</p>
-    <p style="margin: 0; color: #55efc4; margin-top: 10px;"># Resumen estadístico del ajuste</p>
-    <p style="margin: 0;">summary(tree.insurance)</p>
+      <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee;">
+            <img src="summary_tree_insurance.jpg" alt="Summary del modelo" style="max-width: 100%; height: auto; border-radius: 4px;">
+            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Figura 1: Summary del árbol de regresión.</i></p>
+        </div>
+    <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee;">
+            <img src="tree_insurance.jpg" alt="Summary del modelo" style="max-width: 100%; height: auto; border-radius: 4px;">
+            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Figura 2: Árbol estimado sin corrección del α.</i></p>
+        </div>
 </div>
 
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px;">
@@ -1907,14 +1913,10 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
     </div>
 </div>
 
-<div style="text-align: center; margin-top: 30px;">
-    <div style="background: #fafafa; border: 2px dashed #ccc; padding: 40px; border-radius: 12px;">
-        <p style="color: #999; margin: 0;">[Insertar aquí la Gráfica de Partición de Rectángulos generada con partition.tree]</p>
-    </div>
-    <p style="font-size: 0.85rem; color: #7f8c8d; margin-top: 10px;">
-        <i>Figura 2: Visualización de las regiones \(R_j\) para las variables IMC y Edad.</i>
-    </p>
-</div>
+ <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee;">
+            <img src="particion_tree_insurance.jpg" alt="Partición del modelo" style="max-width: 100%; height: auto; border-radius: 4px;">
+            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;"><i>Figura 3. Partición del modelo gráficamente.</i></p>
+        </div>
 
     
 </div>

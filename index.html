@@ -2066,6 +2066,52 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
     </p>
 </div>
 
+
+<h3 style="color: #2c3e50; margin-top: 40px; border-bottom: 2px solid #eee; padding-bottom: 10px;">
+    Interacciones Críticas y Reservas Técnicas
+</h3>
+
+<div style="background: #ffffff; border: 1px solid #e1e8ed; padding: 25px; border-radius: 12px; margin: 20px 0;">
+    <p>
+        El modelo Random Forest permite identificar que el tabaquismo no afecta a todos los asegurados por igual, sino que actúa como un <strong>multiplicador de riesgo exponencial</strong> cuando se cruzan ciertos umbrales detectados en la estructura del árbol:
+    </p>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 25px 0;">
+        <div style="background: #fff5f5; padding: 20px; border-radius: 8px; border-top: 4px solid #ff7675;">
+            <h4 style="color: #d63031; margin-top: 0;">Umbrales de Interacción</h4>
+            <ul style="font-size: 0.95rem; line-height: 1.6;">
+                <li><strong>IMC Crítico (30.01):</strong> Para fumadores, superar un IMC de 30 no solo suma costos, sino que los duplica. Un fumador con IMC > 30 tiene una predicción base de <strong>$45,900</strong> vs <strong>$21,320</strong> si está por debajo de ese umbral.</li>
+                <li><strong>Edad de Inflexión (41.5 años):</strong> En el segmento de fumadores con alto IMC, el riesgo se agrava significativamente después de los 41 años, donde el modelo detecta el gasto máximo del dataset.</li>
+            </ul>
+        </div>
+        
+        <div style="background: #f0fdf4; padding: 20px; border-radius: 8px; border-top: 4px solid #2ecc71;">
+            <h4 style="color: #27ae60; margin-top: 0;">Ventaja sobre el Modelo Lineal</h4>
+            <p style="font-size: 0.95rem; line-height: 1.6;">
+                A diferencia de una Regresión Lineal (que asume que cada kilo de IMC o año de edad suma siempre la misma cantidad), el <strong>Random Forest detecta discontinuidades</strong>.
+            </p>
+            <p style="font-size: 0.9rem; font-style: italic;">
+                "Un modelo lineal subestimaría el riesgo de los fumadores con obesidad, mientras que el RF ajusta la reserva de forma no lineal ante la presencia simultánea de ambos factores."
+            </p>
+        </div>
+    </div>
+
+    <h4 style="color: #2c3e50;">Impacto en Reservas Técnicas</h4>
+    <p style="line-height: 1.6;">
+        Para una aseguradora, esta precisión es vital para la estimación de <strong>Reservas Técnicas</strong>. Utilizar las interacciones detectadas por este modelo permite:
+    </p>
+    <ul style="list-style-type: none; padding: 0;">
+        <li style="margin-bottom: 10px; padding-left: 25px; position: relative;">
+            <span style="position: absolute; left: 0; color: #3498db;">➔</span>
+            <strong>Tarificación Personalizada:</strong> Ajustar primas específicas para el "clúster de alto riesgo" (Fumador + IMC > 30), evitando el subsidio cruzado ineficiente.
+        </li>
+        <li style="margin-bottom: 10px; padding-left: 25px; position: relative;">
+            <span style="position: absolute; left: 0; color: #3498db;">➔</span>
+            <strong>Solvencia:</strong> Evitar la infra-reserva en casos complejos, garantizando que el capital disponible sea suficiente para cubrir los picos de gasto detectados en las hojas terminales del árbol.
+        </li>
+    </ul>
+</div>
+    
     
 </div>
 

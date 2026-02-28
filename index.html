@@ -2250,17 +2250,28 @@ varImpPlot(modelo_rf)
     
 
 
-<div style="background: #ffffff; border: 2px solid #3498db; padding: 30px; border-radius: 15px; margin: 30px 0;">
-    <h3 style="color: #2980b9; margin-top: 0; font-family: 'Segoe UI', sans-serif;">
-        <i class="fas fa-lightbulb"></i> Pregunta Problematizadora del Proyecto
+<div style="background: #ffffff; border: 2px solid #3498db; padding: 30px; border-radius: 15px; margin: 30px 0; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+    <h3 style="color: #2980b9; margin-top: 0;">
+        <i class="fas fa-microscope"></i> Pregunta Problematizadora Seleccionada
     </h3>
     <p style="font-size: 1.15rem; color: #2c3e50; line-height: 1.6; font-style: italic;">
-        "¿Cuáles son los umbrales críticos de insatisfacción laboral y sobrecarga horaria que actúan como catalizadores de la deserción, y de qué manera el uso de <strong>Gradient Boosting Trees</strong> permite a la gerencia de Talento Humano anticipar la salida de colaboradores estratégicos con mayor precisión que los métodos lineales tradicionales?"
+        "¿En qué medida el desbalance entre la carga de trabajo (Overtime) y la compensación emocional (Job Satisfaction) predice la fuga de talento clave, y cómo puede el Gradient Boosting identificar el 'punto de no retorno' antes de que un empleado decida renunciar?"
     </p>
-    <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
-    <p style="font-size: 0.95rem; color: #7f8c8d;">
-        <strong>Impacto en el Negocio:</strong> Esta investigación busca transformar la analítica de personas de un modelo descriptivo (qué pasó) a uno prescriptivo (qué hacer), optimizando los costos de reclutamiento y manteniendo el conocimiento crítico dentro de la organización.
-    </p>
+</div>
+
+<h4 style="color: #2c3e50;">Metodología de Resolución</h4>
+<p>
+    Para resolver esta incógnita, el modelo de <strong>Gradient Boosting (GBM)</strong> evalúa de forma iterativa cómo interactúan las variables de estrés laboral con las de retribución. A diferencia de un análisis correlacional simple, el GBM nos permite observar el <i>efecto marginal</i> de cada variable, aislando el impacto real de las horas extra sobre la permanencia del colaborador.
+</p>
+
+<div style="background: #f8f9fa; border-radius: 8px; padding: 20px; border: 1px solid #eee;">
+    <h5 style="margin-top: 0; color: #7f8c8d;">Variables Críticas bajo Observación:</h5>
+    <ul style="column-count: 2; font-size: 0.9rem;">
+        <li><code>OverTime</code> (Carga horaria)</li>
+        <li><code>MonthlyIncome</code> (Compensación)</li>
+        <li><code>JobSatisfaction</code> (Bienestar)</li>
+        <li><code>YearsAtCompany</code> (Lealtad)</li>
+    </ul>
 </div>
 
 

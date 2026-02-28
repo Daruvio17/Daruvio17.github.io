@@ -2322,61 +2322,59 @@ varImpPlot(modelo_rf)
     Fundamentos del Modelo: Gradient Boosting Tree
 </h3>
 
+<p>
+    El <strong>Gradient Boosting</strong> es un método de ensamble que, a diferencia del Bagging, no construye árboles de forma independiente, sino secuencial. El modelo aprende lentamente ajustándose a los errores del árbol anterior.
+</p>
 
-<div style="background: #fdfefe; border: 1px solid #e1e8ed; padding: 25px; border-radius: 12px; margin: 25px 0;">
-    <h4 style="color: #2c3e50; margin-top: 0;">Lógica del Algoritmo</h4>
-    
-    <p style="font-size: 0.95rem; line-height: 1.6;">
-        La construcción del modelo de predicción de deserción sigue un proceso aditivo definido por los siguientes pasos técnicos:
-    </p>
+<div style="background: #fdfefe; border: 1px solid #e1e8ed; padding: 30px; border-radius: 12px; margin: 25px 0;">
+    <h4 style="color: #2c3e50; margin-top: 0; text-align: center;">Algoritmo 8.2: Boosting para Árboles de Regresión</h4>
+    <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
 
-    <div style="background: #ffffff; padding: 20px; border-radius: 8px; border: 1px solid #eee; margin: 15px 0;">
-        <ul style="list-style: none; padding: 0; font-size: 0.95rem; line-height: 1.8; color: #34495e;">
+    <div style="font-size: 1rem; line-height: 1.8; color: #34495e;">
+        <p><strong>1. Inicialización:</strong></p>
+        <p style="padding-left: 20px;">
+            Se establece un modelo nulo y los residuos iniciales ($r_i$) se igualan a los valores observados de deserción ($y_i$):
+            <br>
+            <span style="display: block; text-align: center; margin: 15px 0; font-size: 1.2rem; color: #2c3e50;">
+                $\hat{f}(x) = 0$ y $r_i = y_i$ para todo $i$ en el conjunto de entrenamiento.
+            </span>
+        </p>
+
+        <p><strong>2. Proceso Iterativo:</strong></p>
+        <p style="padding-left: 20px;">
+            Para cada árbol $b = 1, 2, \dots, B$, se repiten los siguientes pasos:
+        </p>
+        
+        <ul style="list-style: lower-alpha; padding-left: 60px;">
             <li>
-                <strong>1. Inicialización:</strong> Se establece un modelo inicial nulo y los residuos se igualan a los valores observados:
-                <div style="text-align: center; margin: 10px 0; font-family: 'Times New Roman', serif; font-size: 1.1rem;">
-                    $\hat{f}(x) = 0$ y $r_i = y_i$ para todo $i$ en el conjunto de entrenamiento.
+                <strong>Ajuste:</strong> Se entrena un árbol $\hat{f}^b$ con $d$ divisiones (<code>interaction.depth = 4</code>) utilizando los residuos actuales $(X, r)$ como respuesta.
+            </li>
+            <li>
+                <strong>Actualización del modelo:</strong> Se añade el nuevo árbol al modelo general aplicando el factor de <i>shrinkage</i> ($\lambda = 0.01$):
+                <div style="text-align: center; margin: 15px 0; font-size: 1.2rem; color: #2980b9;">
+                    $$\hat{f}(x) \leftarrow \hat{f}(x) + \lambda\hat{f}^b(x)$$
                 </div>
             </li>
-            
             <li>
-                <strong>2. Proceso Iterativo:</strong> Para $b = 1, 2, \dots, B$, se repite:
-                <ul style="list-style: lower-alpha; padding-left: 40px; margin-top: 10px;">
-                    <li>
-                        <strong>Ajuste del árbol:</strong> Se entrena un árbol $\hat{f}^b$ con $d$ divisiones (en nuestro caso, <code>interaction.depth = 4</code>) utilizando los residuos actuales $(X, r)$ como variable objetivo.
-                    </li>
-                    <li>
-                        <strong>Actualización del modelo:</strong> Se añade una versión contraída (shrunken) del nuevo árbol al modelo existente:
-                        <div style="text-align: center; margin: 10px 0; font-family: 'Times New Roman', serif; font-size: 1.1rem;">
-                            $$\hat{f}(x) \leftarrow \hat{f}(x) + \lambda\hat{f}^b(x)$$
-                        </div>
-                        Donde $\lambda$ es el <i>shrinkage</i> (0.01), que controla la velocidad de aprendizaje.
-                    </li>
-                    <li>
-                        <strong>Actualización de residuos:</strong> Se calculan los nuevos errores que el siguiente árbol intentará corregir:
-                        <div style="text-align: center; margin: 10px 0; font-family: 'Times New Roman', serif; font-size: 1.1rem;">
-                            $r_i \leftarrow r_i - \lambda\hat{f}^b(x_i)$
-                        </div>
-                    </li>
-                </ul>
-            </li>
-
-            <li style="margin-top: 15px;">
-                <strong>3. Salida Final:</strong> El modelo Boosted resultante es la suma de todos los árboles ajustados:
-                <div style="text-align: center; margin: 10px 0; font-family: 'Times New Roman', serif; font-size: 1.2rem; font-weight: bold; color: #2980b9;">
-                    $$\hat{f}(x) = \sum_{b=1}^{B} \lambda\hat{f}^b(x)$$
+                <strong>Actualización de residuos:</strong> Se calculan los nuevos residuos que servirán de entrada para el siguiente árbol:
+                <div style="text-align: center; margin: 15px 0; font-size: 1.2rem; color: #2c3e50;">
+                    $r_i \leftarrow r_i - \lambda\hat{f}^b(x_i)$
                 </div>
             </li>
         </ul>
+
+        <p><strong>3. Salida Final:</strong></p>
+        <p style="padding-left: 20px;">
+            El modelo Boosted final es la suma ponderada de todos los árboles generados:
+            <br>
+            <span style="display: block; text-align: center; margin: 15px 0; font-size: 1.4rem; font-weight: bold; color: #27ae60;">
+                $$\hat{f}(x) = \sum_{b=1}^{B} \lambda\hat{f}^b(x)$$
+            </span>
+        </p>
     </div>
 </div>
 
-<div style="background: #e8f4fd; border-left: 5px solid #3498db; padding: 20px; border-radius: 0 8px 8px 0;">
-    <h5 style="margin-top: 0; color: #0d47a1;">Interpretación para la Gestión de Talento:</h5>
-    <p style="font-size: 0.95rem; margin-bottom: 0; color: #0d47a1;">
-        Este enfoque matemático permite que el modelo identifique primero los factores de deserción más evidentes (paso 1) y luego, mediante la actualización de residuos (paso 2.c), se enfoque en los perfiles de empleados más complejos de clasificar, logrando una precisión superior a los modelos tradicionales.
-    </p>
-</div>
+
     
 </div>
 

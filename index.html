@@ -2318,7 +2318,42 @@ varImpPlot(modelo_rf)
     *El dataset original contiene otras 28 variables adicionales que el modelo de Boosting analiza para encontrar patrones de interacción complejos.
 </p>
 
+<h3 style="color: #2c3e50; margin-top: 40px; border-bottom: 2px solid #eee; padding-bottom: 10px;">
+    Fundamentos del Modelo: Gradient Boosting Tree
+</h3>
 
+<p>
+    Siguiendo la metodología propuesta en <em>An Introduction to Statistical Learning</em> (James et al.), el <strong>Gradient Boosting</strong> es una técnica de aprendizaje estadístico que construye un modelo de forma lenta y secuencial. A diferencia del <i>Bagging</i>, que crea árboles independientes, el Boosting "aprende" de los errores de los árboles previos.
+</p>
+
+<div style="background: #f8f9fa; border-radius: 12px; padding: 25px; margin: 25px 0; border-left: 6px solid #2ecc71;">
+    <h4 style="margin-top: 0; color: #27ae60;">¿Cómo funciona el algoritmo?</h4>
+    <p style="font-size: 0.95rem; line-height: 1.6;">
+        El proceso se puede resumir en tres pilares fundamentales extraídos del marco teórico de ISLR:
+    </p>
+    <ul style="font-size: 0.95rem; line-height: 1.6; color: #34495e;">
+        <li>
+            <strong>Aprendizaje sobre Residuos:</strong> En lugar de ajustar un árbol gigante a los datos originales, el modelo ajusta un árbol pequeño a los <i>residuos</i> (errores) del modelo actual. Luego, actualizamos el modelo sumando una versión "suavizada" de este nuevo árbol.
+        </li>
+        <li>
+            <strong>Parámetro de Shrinkage ($\lambda$):</strong> Utilizamos una tasa de aprendizaje (en nuestro código <code>shrinkage = 0.01</code>) que controla la velocidad a la que el modelo aprende. Según ISLR, aprender lentamente (pasos pequeños) mejora la capacidad de generalización y evita el sobreajuste.
+        </li>
+        <li>
+            <strong>Complejidad del Árbol ($d$):</strong> Definida por <code>interaction.depth = 4</code>. Esto determina el número de divisiones en cada árbol. Un valor de $d=4$ permite capturar interacciones complejas entre hasta cuatro variables de Talento Humano simultáneamente.
+        </li>
+    </ul>
+</div>
+
+<p style="font-style: italic; color: #7f8c8d; font-size: 0.9rem;">
+    "A diferencia de los métodos de una sola etapa, el Boosting no intenta 'batear un jonrón' en el primer intento; prefiere dar muchos pasos pequeños y precisos para minimizar la función de pérdida de forma óptima." 
+</p>
+
+
+
+<div style="margin-top: 30px; padding: 15px; background: #e8f4fd; border-radius: 8px;">
+    <strong>Relación con la Pregunta Problematizadora:</strong> 
+    Este enfoque secuencial es ideal para nuestra investigación, ya que la deserción laboral no suele ser causada por un solo factor aislado, sino por la acumulación de "residuos" de insatisfacción y sobrecarga que el modelo detecta iteración tras iteración.
+</div>
 
     
 </div>

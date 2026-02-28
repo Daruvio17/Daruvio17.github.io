@@ -2318,43 +2318,65 @@ varImpPlot(modelo_rf)
     *El dataset original contiene otras 28 variables adicionales que el modelo de Boosting analiza para encontrar patrones de interacción complejos.
 </p>
 
-<h3 style="color: #2c3e50; margin-top: 40px; border-bottom: 2px solid #eee; padding-bottom: 10px;">
+<h3 style="color: #2c3e50; margin-top: 40px; border-bottom: 2px solid #3498db; padding-bottom: 10px;">
     Fundamentos del Modelo: Gradient Boosting Tree
 </h3>
 
-<p>
-    Siguiendo la metodología propuesta en <em>An Introduction to Statistical Learning</em> (James et al.), el <strong>Gradient Boosting</strong> es una técnica de aprendizaje estadístico que construye un modelo de forma lenta y secuencial. A diferencia del <i>Bagging</i>, que crea árboles independientes, el Boosting "aprende" de los errores de los árboles previos.
-</p>
 
-<div style="background: #f8f9fa; border-radius: 12px; padding: 25px; margin: 25px 0; border-left: 6px solid #2ecc71;">
-    <h4 style="margin-top: 0; color: #27ae60;">¿Cómo funciona el algoritmo?</h4>
+<div style="background: #fdfefe; border: 1px solid #e1e8ed; padding: 25px; border-radius: 12px; margin: 25px 0;">
+    <h4 style="color: #2c3e50; margin-top: 0;">Lógica del Algoritmo</h4>
+    
     <p style="font-size: 0.95rem; line-height: 1.6;">
-        El proceso se puede resumir en tres pilares fundamentales extraídos del marco teórico de ISLR:
+        La construcción del modelo de predicción de deserción sigue un proceso aditivo definido por los siguientes pasos técnicos:
     </p>
-    <ul style="font-size: 0.95rem; line-height: 1.6; color: #34495e;">
-        <li>
-            <strong>Aprendizaje sobre Residuos:</strong> En lugar de ajustar un árbol gigante a los datos originales, el modelo ajusta un árbol pequeño a los <i>residuos</i> (errores) del modelo actual. Luego, actualizamos el modelo sumando una versión "suavizada" de este nuevo árbol.
-        </li>
-        <li>
-            <strong>Parámetro de Shrinkage ($\lambda$):</strong> Utilizamos una tasa de aprendizaje (en nuestro código <code>shrinkage = 0.01</code>) que controla la velocidad a la que el modelo aprende. Según ISLR, aprender lentamente (pasos pequeños) mejora la capacidad de generalización y evita el sobreajuste.
-        </li>
-        <li>
-            <strong>Complejidad del Árbol ($d$):</strong> Definida por <code>interaction.depth = 4</code>. Esto determina el número de divisiones en cada árbol. Un valor de $d=4$ permite capturar interacciones complejas entre hasta cuatro variables de Talento Humano simultáneamente.
-        </li>
-    </ul>
+
+    <div style="background: #ffffff; padding: 20px; border-radius: 8px; border: 1px solid #eee; margin: 15px 0;">
+        <ul style="list-style: none; padding: 0; font-size: 0.95rem; line-height: 1.8; color: #34495e;">
+            <li>
+                <strong>1. Inicialización:</strong> Se establece un modelo inicial nulo y los residuos se igualan a los valores observados:
+                <div style="text-align: center; margin: 10px 0; font-family: 'Times New Roman', serif; font-size: 1.1rem;">
+                    $\hat{f}(x) = 0$ y $r_i = y_i$ para todo $i$ en el conjunto de entrenamiento.
+                </div>
+            </li>
+            
+            <li>
+                <strong>2. Proceso Iterativo:</strong> Para $b = 1, 2, \dots, B$, se repite:
+                <ul style="list-style: lower-alpha; padding-left: 40px; margin-top: 10px;">
+                    <li>
+                        <strong>Ajuste del árbol:</strong> Se entrena un árbol $\hat{f}^b$ con $d$ divisiones (en nuestro caso, <code>interaction.depth = 4</code>) utilizando los residuos actuales $(X, r)$ como variable objetivo.
+                    </li>
+                    <li>
+                        <strong>Actualización del modelo:</strong> Se añade una versión contraída (shrunken) del nuevo árbol al modelo existente:
+                        <div style="text-align: center; margin: 10px 0; font-family: 'Times New Roman', serif; font-size: 1.1rem;">
+                            $$\hat{f}(x) \leftarrow \hat{f}(x) + \lambda\hat{f}^b(x)$$
+                        </div>
+                        Donde $\lambda$ es el <i>shrinkage</i> (0.01), que controla la velocidad de aprendizaje.
+                    </li>
+                    <li>
+                        <strong>Actualización de residuos:</strong> Se calculan los nuevos errores que el siguiente árbol intentará corregir:
+                        <div style="text-align: center; margin: 10px 0; font-family: 'Times New Roman', serif; font-size: 1.1rem;">
+                            $r_i \leftarrow r_i - \lambda\hat{f}^b(x_i)$
+                        </div>
+                    </li>
+                </ul>
+            </li>
+
+            <li style="margin-top: 15px;">
+                <strong>3. Salida Final:</strong> El modelo Boosted resultante es la suma de todos los árboles ajustados:
+                <div style="text-align: center; margin: 10px 0; font-family: 'Times New Roman', serif; font-size: 1.2rem; font-weight: bold; color: #2980b9;">
+                    $$\hat{f}(x) = \sum_{b=1}^{B} \lambda\hat{f}^b(x)$$
+                </div>
+            </li>
+        </ul>
+    </div>
 </div>
 
-<p style="font-style: italic; color: #7f8c8d; font-size: 0.9rem;">
-    "A diferencia de los métodos de una sola etapa, el Boosting no intenta 'batear un jonrón' en el primer intento; prefiere dar muchos pasos pequeños y precisos para minimizar la función de pérdida de forma óptima." 
-</p>
-
-
-
-<div style="margin-top: 30px; padding: 15px; background: #e8f4fd; border-radius: 8px;">
-    <strong>Relación con la Pregunta Problematizadora:</strong> 
-    Este enfoque secuencial es ideal para nuestra investigación, ya que la deserción laboral no suele ser causada por un solo factor aislado, sino por la acumulación de "residuos" de insatisfacción y sobrecarga que el modelo detecta iteración tras iteración.
+<div style="background: #e8f4fd; border-left: 5px solid #3498db; padding: 20px; border-radius: 0 8px 8px 0;">
+    <h5 style="margin-top: 0; color: #0d47a1;">Interpretación para la Gestión de Talento:</h5>
+    <p style="font-size: 0.95rem; margin-bottom: 0; color: #0d47a1;">
+        Este enfoque matemático permite que el modelo identifique primero los factores de deserción más evidentes (paso 1) y luego, mediante la actualización de residuos (paso 2.c), se enfoque en los perfiles de empleados más complejos de clasificar, logrando una precisión superior a los modelos tradicionales.
+    </p>
 </div>
-
     
 </div>
 

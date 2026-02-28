@@ -2250,29 +2250,73 @@ varImpPlot(modelo_rf)
     
 
 
-<div style="background: #ffffff; border: 2px solid #3498db; padding: 30px; border-radius: 15px; margin: 30px 0; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-    <h3 style="color: #2980b9; margin-top: 0;">
-        <i class="fas fa-microscope"></i> Pregunta Problematizadora Seleccionada
-    </h3>
-    <p style="font-size: 1.15rem; color: #2c3e50; line-height: 1.6; font-style: italic;">
-        "¿En qué medida el desbalance entre la carga de trabajo (Overtime) y la compensación emocional (Job Satisfaction) predice la fuga de talento clave, y cómo puede el Gradient Boosting identificar el 'punto de no retorno' antes de que un empleado decida renunciar?"
-    </p>
-</div>
-
-<h4 style="color: #2c3e50;">Metodología de Resolución</h4>
+<h4 style="color: #2c3e50; margin-top: 30px;">Exploración Inicial de la Data</h4>
 <p>
-    Para resolver esta incógnita, el modelo de <strong>Gradient Boosting (GBM)</strong> evalúa de forma iterativa cómo interactúan las variables de estrés laboral con las de retribución. A diferencia de un análisis correlacional simple, el GBM nos permite observar el <i>efecto marginal</i> de cada variable, aislando el impacto real de las horas extra sobre la permanencia del colaborador.
+    A continuación, se presenta una muestra de las primeras filas del dataset tras el preprocesamiento, donde la variable <strong>Attrition_Binary</strong> se ha codificado como (1) para abandono y (0) para permanencia:
 </p>
 
-<div style="background: #f8f9fa; border-radius: 8px; padding: 20px; border: 1px solid #eee;">
-    <h5 style="margin-top: 0; color: #7f8c8d;">Variables Críticas bajo Observación:</h5>
-    <ul style="column-count: 2; font-size: 0.9rem;">
-        <li><code>OverTime</code> (Carga horaria)</li>
-        <li><code>MonthlyIncome</code> (Compensación)</li>
-        <li><code>JobSatisfaction</code> (Bienestar)</li>
-        <li><code>YearsAtCompany</code> (Lealtad)</li>
-    </ul>
+<div style="text-align: center; margin: 20px 0;">
+    <img src="RUTA_A_TU_IMAGEN_HEAD.png" alt="Head del Dataset de Empleados" style="max-width: 100%; border-radius: 8px; border: 1px solid #ddd;">
+    <p style="font-size: 0.8rem; color: #7f8c8d; margin-top: 5px;"><i>Tabla 1: Estructura de datos preprocesada para el modelo GBM.</i></p>
 </div>
+
+<h4 style="color: #2c3e50; margin-top: 40px;">Diccionario de Variables Críticas</h4>
+<p>
+    Para resolver nuestra pregunta problematizadora sobre el balance vida-trabajo y la deserción, nos enfocaremos en las siguientes dimensiones del dataset:
+</p>
+
+<div style="overflow-x: auto;">
+    <table style="width: 100%; border-collapse: collapse; margin: 20px 0; font-family: 'Segoe UI', sans-serif; font-size: 0.9rem;">
+        <thead>
+            <tr style="background-color: #34495e; color: white; text-align: left;">
+                <th style="padding: 12px; border: 1px solid #ddd;">Variable</th>
+                <th style="padding: 12px; border: 1px solid #ddd;">Descripción</th>
+                <th style="padding: 12px; border: 1px solid #ddd;">Categoría</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Attrition_Binary</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Variable objetivo (Target). 1 si el empleado renunció, 0 si continúa.</td>
+                <td style="padding: 10px; border: 1px solid #ddd;"><span style="color: #e74c3c; font-weight: bold;">Target</span></td>
+            </tr>
+            <tr style="background-color: #f9f9f9;">
+                <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">OverTime</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Indica si el empleado trabaja horas extra frecuentemente (Yes/No).</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Estrés Laboral</td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">MonthlyIncome</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Ingreso mensual bruto del colaborador en dólares.</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Compensación</td>
+            </tr>
+            <tr style="background-color: #f9f9f9;">
+                <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">JobSatisfaction</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Nivel de satisfacción con el puesto (Escala 1-4).</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Bienestar Psicológico</td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">WorkLifeBalance</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Evaluación del equilibrio entre vida personal y laboral (1-4).</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Bienestar Psicológico</td>
+            </tr>
+            <tr style="background-color: #f9f9f9;">
+                <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">YearsWithCurrManager</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Años trabajando bajo la supervisión del gerente actual.</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Liderazgo</td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">TotalWorkingYears</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Años totales de experiencia laboral del individuo.</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Trayectoria</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<p style="font-size: 0.9rem; color: #7f8c8d; font-style: italic;">
+    *El dataset original contiene otras 28 variables adicionales que el modelo de Boosting analiza para encontrar patrones de interacción complejos.
+</p>
 
 
 

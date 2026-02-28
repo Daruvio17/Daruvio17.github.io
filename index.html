@@ -2111,6 +2111,116 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
         </li>
     </ul>
 </div>
+
+
+
+<h3>Código Completo en R</h3>
+        <div class="code-container">
+            <pre class="language-r"><code class="language-r">
+library(readxl)
+datos <- read_excel(file.choose())
+datos <- data.frame(datos)
+str(datos)
+datos$charges_usd <- as.numeric(datos$charges_usd)
+datos$bmi <- as.numeric(datos$bmi)
+head(datos)
+library(tree)                
+datos$sex <- as.factor(datos$sex)
+datos$smoker <- as.factor(datos$smoker)
+datos$region <- as.factor(datos$region)
+
+
+set.seed(1)
+entrenamiento <- sample(1:nrow(datos), nrow(datos)*0.8)
+prueba <- datos[-entrenamiento, ]
+
+modelo <- tree(charges_usd ~ ., 
+                       data = datos, 
+                       subset = entrenamiento)
+
+plot(modelo)
+text(modelo, pretty = 0, cex = 0.7)
+par(mar=c(1,1,3,1)) 
+
+plot(modelo, type = "uniform") #
+text(modelo, 
+     pretty = 0,      
+     cex = 0.8,       
+     col = "darkblue") 
+title("Estructura de Decisión: Gastos Médicos")
+summary(modelo)
+
+modelo_rectangulos <- tree(charges_usd ~ bmi + age, data = datos)
+plot(datos$bmi, datos$age, col = "gray", pch = 20,
+     xlab = "Índice de Masa Corporal (BMI)", 
+     ylab = "Edad (Age)",
+     main = "Partición del Espacio de Predictores (Metodología ISLR)")
+partition.tree(modelo_rectangulos, add = TRUE, col = "red", lwd = 2)
+
+
+
+
+
+
+#Hallando alpha
+
+set.seed(43)
+cv_modelo <- cv.tree(modelo)
+
+par(mar = c(5, 6, 4, 2)) 
+
+plot(cv_modelo$size, cv_modelo$dev, type = "b", 
+     pch = 19, col = "darkblue",
+     xlab = "Número de Nodos Terminales (Tamaño del Árbol)",
+     ylab = "Deviance (Error de Validación)",
+     main = "Determinación del Parámetro de Complejidad Óptimo",
+     las = 1,      
+     cex.lab = 0.9,
+     cex.axis = 0.8) 
+
+abline(v = tamano_optimo, col = "red", lty = 2)
+tamano_optimo <- cv_modelo$size[which.min(cv_modelo$dev)]
+tamano_optimo
+abline(v = tamano_optimo, col = "red", lty = 2)
+modelo_final <- prune.tree(modelo, best = tamano_optimo)
+plot(modelo_final, type = "uniform")
+text(modelo_final, pretty = 0, cex = 0.9, col = "darkgreen")
+title(paste("Modelo Optimizado (Poda a", tamano_optimo, "nodos)"))
+data.frame(Nodos = cv_modelo$size, Error = cv_modelo$dev, Alpha = cv_modelo$k)
+summary(modelo_final)
+
+plot(modelo_final)
+text(modelo_final, pretty = 0, cex = 0.7)
+par(mar=c(1,1,3,1)) 
+
+plot(modelo_final, type = "uniform") #
+text(modelo_final, 
+     pretty = 0,      
+     cex = 0.8,       
+     col = "darkblue") 
+title("Estructura de Decisión II: Penalización por alpha")
+
+
+
+library(randomForest)
+
+set.seed(1)
+
+modelo_rf <- randomForest(charges_usd ~ ., data = datos, 
+                             subset = entrenamiento, 
+                             mtry = 2, 
+                             importance = TRUE)
+modelo_rf
+predicciones_rf <- predict(modelo_rf, newdata = prueba)
+predicciones_rf
+mse_rf <- mean((predicciones_rf - prueba$charges_usd)^2)
+importance(modelo_rf)
+rmse_rf <- sqrt(mse_rf)
+varImpPlot(modelo_rf)
+
+            </code></pre>
+        </div>
+
     
     
 </div>

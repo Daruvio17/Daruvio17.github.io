@@ -2323,56 +2323,58 @@ varImpPlot(modelo_rf)
 </h3>
 
 <p>
-    El <strong>Gradient Boosting</strong> es un método de ensamble que, a diferencia del Bagging, no construye árboles de forma independiente, sino secuencial. El modelo aprende lentamente ajustándose a los errores del árbol anterior.
+    El <strong>Gradient Boosting</strong> es un método de ensamble que construye árboles de forma secuencial. El modelo aprende lentamente ajustándose a los errores (residuos) del árbol anterior.
 </p>
 
-<div style="background: #fdfefe; border: 1px solid #e1e8ed; padding: 30px; border-radius: 12px; margin: 25px 0;">
-    <h4 style="color: #2c3e50; margin-top: 0; text-align: center;">Algoritmo 8.2: Boosting para Árboles de Regresión</h4>
+<div style="background: #fdfefe; border: 1px solid #e1e8ed; padding: 30px; border-radius: 12px; margin: 25px 0; font-family: 'Times New Roman', Times, serif;">
+    <h4 style="color: #2c3e50; margin-top: 0; text-align: center; font-family: sans-serif;">Algoritmo 8.2: Boosting para Árboles de Regresión</h4>
     <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
 
-    <div style="font-size: 1rem; line-height: 1.8; color: #34495e;">
+    <div style="font-size: 1.1rem; line-height: 1.8; color: #34495e;">
         <p><strong>1. Inicialización:</strong></p>
         <p style="padding-left: 20px;">
-            Se establece un modelo nulo y los residuos iniciales ($r_i$) se igualan a los valores observados de deserción ($y_i$):
+            Se establece un modelo nulo y los residuos iniciales (<i>r<sub>i</sub></i>) se igualan a los valores observados:
             <br>
-            <span style="display: block; text-align: center; margin: 15px 0; font-size: 1.2rem; color: #2c3e50;">
-                $\hat{f}(x) = 0$ y $r_i = y_i$ para todo $i$ en el conjunto de entrenamiento.
+            <span style="display: block; text-align: center; margin: 15px 0; font-size: 1.3rem; color: #2c3e50;">
+                <i>f&#770;(x) = 0</i> &nbsp; y &nbsp; <i>r<sub>i</sub> = y<sub>i</sub></i>
             </span>
         </p>
 
         <p><strong>2. Proceso Iterativo:</strong></p>
         <p style="padding-left: 20px;">
-            Para cada árbol $b = 1, 2, \dots, B$, se repiten los siguientes pasos:
+            Para cada árbol <i>b = 1, 2, ..., B</i>, se repiten los siguientes pasos:
         </p>
         
         <ul style="list-style: lower-alpha; padding-left: 60px;">
-            <li>
-                <strong>Ajuste:</strong> Se entrena un árbol $\hat{f}^b$ con $d$ divisiones (<code>interaction.depth = 4</code>) utilizando los residuos actuales $(X, r)$ como respuesta.
+            <li style="margin-bottom: 15px;">
+                <strong>Ajuste:</strong> Se entrena un árbol <i>f&#770; <sup>b</sup></i> con <i>d</i> divisiones utilizando los residuos actuales como variable respuesta.
             </li>
-            <li>
-                <strong>Actualización del modelo:</strong> Se añade el nuevo árbol al modelo general aplicando el factor de <i>shrinkage</i> ($\lambda = 0.01$):
-                <div style="text-align: center; margin: 15px 0; font-size: 1.2rem; color: #2980b9;">
-                    $$\hat{f}(x) \leftarrow \hat{f}(x) + \lambda\hat{f}^b(x)$$
+            <li style="margin-bottom: 15px;">
+                <strong>Actualización del modelo:</strong> Se añade el nuevo árbol al modelo general aplicando el factor de <i>shrinkage</i> (&lambda;):
+                <div style="text-align: center; margin: 15px 0; font-size: 1.3rem; color: #2980b9;">
+                    <i>f&#770;(x) &larr; f&#770;(x) + &lambda;f&#770; <sup>b</sup>(x)</i>
                 </div>
             </li>
-            <li>
-                <strong>Actualización de residuos:</strong> Se calculan los nuevos residuos que servirán de entrada para el siguiente árbol:
-                <div style="text-align: center; margin: 15px 0; font-size: 1.2rem; color: #2c3e50;">
-                    $r_i \leftarrow r_i - \lambda\hat{f}^b(x_i)$
+            <li style="margin-bottom: 15px;">
+                <strong>Actualización de residuos:</strong> Se calculan los nuevos errores que servirán de entrada para el siguiente árbol:
+                <div style="text-align: center; margin: 15px 0; font-size: 1.3rem; color: #2c3e50;">
+                    <i>r<sub>i</sub> &larr; r<sub>i</sub> - &lambda;f&#770; <sup>b</sup>(x<sub>i</sub>)</i>
                 </div>
             </li>
         </ul>
 
         <p><strong>3. Salida Final:</strong></p>
         <p style="padding-left: 20px;">
-            El modelo Boosted final es la suma ponderada de todos los árboles generados:
+            El modelo final es la suma ponderada de todos los árboles generados:
             <br>
-            <span style="display: block; text-align: center; margin: 15px 0; font-size: 1.4rem; font-weight: bold; color: #27ae60;">
-                $$\hat{f}(x) = \sum_{b=1}^{B} \lambda\hat{f}^b(x)$$
+            <span style="display: block; text-align: center; margin: 15px 0; font-size: 1.5rem; font-weight: bold; color: #27ae60;">
+                <i>f&#770;(x) = &sum; <sub>b=1</sub><sup>B</sup> &lambda;f&#770; <sup>b</sup>(x)</i>
             </span>
         </p>
     </div>
 </div>
+
+
 
 
     

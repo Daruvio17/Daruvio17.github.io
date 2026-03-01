@@ -1961,6 +1961,9 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
             <p style="font-size: 0.9rem; line-height: 1.5;">
                 El modelo presenta un <strong>Recall (Sensibilidad)</strong> sobresaliente del <strong>86.7%</strong> (137/158). 
             </p>
+            <p style="font-size: 0.85rem; color: #bdc3c7; border-top: 1px solid #3e4f5f; padding-top: 10px;">
+                Para el banco, esto es un éxito: estamos capturando a la gran mayoría de clientes en riesgo, con un margen de error de solo 21 casos no detectados (Falsos Negativos).
+            </p>
         </div>
     </div>
 </div>
@@ -1968,7 +1971,7 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
 
 
 <div style="line-height: 1.8; color: #333; margin-top: 40px; padding: 0 10px;">
- <h3 style="color: #16a085; border-bottom: 2px solid #e0f2f1; display: inline-block;">Evaluación del modelo Logit</h3>
+ <h3 style="color: #16a085; border-bottom: 2px solid #e0f2f1; display: inline-block;">2. Revisión de modelo Logit</h3>
     <p style="margin-top: 15px;">
     A diferencia del modelo Probit, el Logit utiliza la función de distribución acumulada de una variable logística. Esta elección es el estándar debido a su flexibilidad y a la facilidad para interpretar sus coeficientes mediante <em>Odds Ratios</em>.
     </p>
@@ -1978,112 +1981,15 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
             $$P(Y = 1|X) = \frac{e^{X^T\beta}}{1 + e^{X^T\beta}} = \frac{1}{1 + e^{-X^T\beta}}$$
         </p>
         <p style="font-size: 0.8rem; color: #7f8c8d; margin-top: 10px;">
-            <i>Ecuación 2. Función Logística.</i>
+            <i>Ecuación: Función Logística (Sigmoide) utilizada para mapear el riesgo a una probabilidad entre 0 y 1.</i>
         </p>
     </div>
-<p>
-        Al igual que el modelo Probit, el modelo Logit se estimará teniendo en cuenta un balanceo de datos de 50%/50%, para evitar que el modelo se decante más por una categoría que otra.
-</p>
+
     
 </div>   
 
-     <div style="line-height: 1.8; color: #333; margin-top: 40px; padding: 0 10px;">
- <h3 style="color: #16a085; border-bottom: 2px solid #e0f2f1; display: inline-block;">2. Estimación de modelo Logit</h3>
-     <img src="(End-to-End)_summary_logit.jpg" alt="Estimación del modelo Logit balanceado" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-<p style="font-size: 0.85rem; color: #ccc; margin-top: 10px;"><i>Summary del modelo Probit Balanceado.</i></p>
 
-     <div style="line-height: 1.8; color: #333; margin-top: 40px; padding: 0 10px;">
-    <h3 style="color: #16a085; border-bottom: 2px solid #e0f2f1; display: inline-block;">Análisis de Significancia: Modelo Logit</h3>
-    
-    <p style="margin-top: 15px;">
-        Al igual que en el modelo Probit, el análisis de los p-valores en la regresión Logit confirma que el comportamiento del cliente y su estructura contractual son los motores principales del abandono. Un dato relevante es que los coeficientes Logit son sistemáticamente mayores (en valor absoluto) que los Probit, debido a la mayor varianza de la distribución logística.
-    </p>
-
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 25px 0;">
-        
-        <div style="background: #eafaf1; padding: 20px; border-radius: 8px; border: 1px solid #2ecc71;">
-            <h4 style="color: #27ae60; margin-top: 0;"><i class="fas fa-check-circle"></i> Predictores de Alta Confianza (***)</h4>
-            <ul style="font-size: 0.85rem; padding-left: 18px;">
-                <li><strong>Antiguedad:</strong> (p < 5.76e-10) Sigue siendo el factor de retención más potente.</li>
-                <li><strong>Tipo_de_contratoTwo year:</strong> (p < 6.84e-09) El nivel de significancia es extremo, consolidándose como la mejor barrera contra el churn.</li>
-                <li><strong>Metodo_de_pago (Electronic check):</strong> (p = 0.0008) Altamente significativo; este método de pago está fuertemente ligado a la fuga.</li>
-                <li><strong>Cargo_total:</strong> (p = 0.0001) A diferencia del modelo anterior, aquí su significancia es aún mayor (tres asteriscos), indicando que el volumen de facturación histórica es crucial.</li>
-            </ul>
-        </div>
-
-        <div style="background: #fef9e7; padding: 20px; border-radius: 8px; border: 1px solid #f1c40f;">
-            <h4 style="color: #d4ac0d; margin-top: 0;"><i class="fas fa-exclamation-circle"></i> Variables sin Evidencia Estadística</h4>
-            <p style="font-size: 0.85rem; color: #7d6608;">
-                Factores que, a pesar de intuirse relevantes, no muestran un efecto estadístico claro en la probabilidad de abandono:
-            </p>
-            <ul style="font-size: 0.85rem; padding-left: 18px; color: #7d6608;">
-                <li><strong>GeneroMale (p=0.83) y Pareja (p=0.18):</strong> Las variables demográficas y personales vuelven a quedar fuera del modelo explicativo.</li>
-                <li><strong>Cargo_mensual (p=0.51):</strong> Se mantiene la tendencia; el costo del mes actual no es un detonante de fuga por sí mismo.</li>
-                <li><strong>Servicios de Valor Agregado:</strong> Variables como <em>Seguridad_online</em> o <em>Respaldo_en_nube</em> no logran alcanzar el umbral de significancia.</li>
-            </ul>
-        </div>
-    </div>
-
-    <div style="background: #f4f6f7; padding: 20px; border-radius: 12px; border-left: 5px solid #2c3e50; margin-top: 20px;">
-        <h4 style="color: #2c3e50; margin-top: 0;"><i class="fas fa-lightbulb"></i> Insight Comparativo</h4>
-        <p style="font-size: 0.95rem; margin-bottom: 0;">
-            Es notable que la variable <strong>Facturacion_electronica</strong> ganó fuerza en este modelo (p = 0.007), lo que sugiere que los clientes digitales o con procesos automatizados de facturación tienen un perfil de riesgo distinto que la regresión logística captura con mayor precisión que el modelo Probit.
-        </p>
-    </div>
-</div>
-
-<div style="line-height: 1.8; color: #333; margin-top: 40px; padding: 0 10px;">
-    <h3 style="color: #16a085; border-bottom: 2px solid #e0f2f1; display: inline-block;">Evaluación del Modelo Logit</h3>
-    
-    <p style="margin-top: 15px;">
-        Los resultados del modelo Logit confirman la estabilidad de nuestro análisis. Al igual que el Probit, este modelo alcanza un <strong>Accuracy del 75.52%</strong>, demostrando que la estructura de riesgo identificada es consistente independientemente del supuesto de distribución de los errores.
-    </p>
-
-    <div style="display: flex; flex-wrap: wrap; gap: 20px; margin: 25px 0; align-items: stretch;">
-        
-        <div style="flex: 1.2; min-width: 320px; background: #ffffff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #e0f2f1;">
-            <h4 style="color: #2c3e50; margin-top: 0; text-align: center; margin-bottom: 20px;">Matriz de Confusión (Test)</h4>
-            <table style="width: 100%; border-collapse: collapse; text-align: center;">
-                <thead>
-                    <tr>
-                        <th style="padding: 12px; border-bottom: 2px solid #3498db;">Real \ Pred.</th>
-                        <th style="padding: 12px; border-bottom: 2px solid #3498db; background: #f8f9fa;">0 (Permanece)</th>
-                        <th style="padding: 12px; border-bottom: 2px solid #3498db; background: #f8f9fa;">1 (Abandona)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td style="padding: 15px; font-weight: bold; border-right: 2px solid #3498db; background: #f8f9fa;">0 (Permanece)</td>
-                        <td style="padding: 15px; color: #27ae60; font-weight: bold; font-size: 1.2rem; border: 1px solid #eee;">228</td>
-                        <td style="padding: 15px; color: #e67e22; border: 1px solid #eee;">96</td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 15px; font-weight: bold; border-right: 2px solid #3498db; background: #f8f9fa;">1 (Abandona)</td>
-                        <td style="padding: 15px; color: #c0392b; border: 1px solid #eee;">22</td>
-                        <td style="padding: 15px; color: #27ae60; font-weight: bold; font-size: 1.2rem; border: 1px solid #eee;">136</td>
-                    </tr>
-                </tbody>
-            </table>
-            <p style="font-size: 0.8rem; color: #7f8c8d; margin-top: 15px; text-align: center;">
-                <i>Dato: El Logit clasificó correctamente a 228 clientes leales, superando por uno al modelo Probit.</i>
-            </p>
-        </div>
-
-        <div style="flex: 1; min-width: 280px; background: #34495e; color: white; padding: 25px; border-radius: 12px; display: flex; flex-direction: column; justify-content: center;">
-            <h4 style="margin-top: 0; color: #3498db;"><i class="fas fa-equals"></i> Consistencia Técnica</h4>
-            <div style="margin-bottom: 15px;">
-                <span style="display: block; font-size: 0.8rem; color: #bdc3c7;">Accuracy Global</span>
-                <span style="font-size: 1.8rem; font-weight: bold; color: #3498db;">75.52%</span>
-            </div>
-           
-            <p style="font-size: 0.85rem; color: #bdc3c7; border-top: 1px solid #5d6d7e; padding-top: 10px;">
-                La mínima variación entre matrices (un cliente de diferencia) valida que ambos modelos econométricos son igual de aptos para la toma de decisiones inicial.
-            </p>
-        </div>
-    </div>
-</div>
-
-         
+     
  </div>
 
 

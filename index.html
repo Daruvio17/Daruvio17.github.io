@@ -1831,8 +1831,19 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
     <p style="font-size: 0.8rem; color: #7f8c8d; margin-top: 10px;">
         <i>Ecuación 1: Función de probabilidad acumulada del modelo Probit.</i>
     </p>
+              <div style="background: #fff; padding: 10px; border-radius: 5px; border-left: 4px solid #e74c3c; display: inline-block; font-family: monospace;">
+                $$Z = \beta_0 + \beta_1(\text{Gen\_Male}) + \beta_2(\text{Clie\_Mayor}) + \beta_3(\text{Antiguedad}) + \dots + \beta_{18}(\text{C\_Mensual}) + \beta_{19}(\text{C\_Total})$$
+            </div>
+              <p>
+                Para la estimación del modelo Probit se hará un balanceo de la muestra, ya que si hay una inclinación significativa en los datos, el modelo se volverá flojo, que es el caso de nuestro dataset, ya que el número de personas que permaneció fue de 3249, mientras que las que abandonaron fue de 1586.
+              </p>
 </div>
-     </p>
+
+
+
+
+
+          
  </div>
 
 

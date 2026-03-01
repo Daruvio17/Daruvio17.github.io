@@ -1817,9 +1817,23 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
       
  </div>
 
-
-
-
+ <div style="line-height: 1.8; color: #333; margin-top: 40px; padding: 0 10px;">
+ <h3 style="color: #16a085; border-bottom: 2px solid #e0f2f1; display: inline-block;">1. Revisión de modelo Probit</h3>
+     <p>
+    El modelo Probit se aplica, usualmente, cuando creemos o tenemos motivos para pensar que hay normalidad en los errores de los datos y linealidad entre la variable Y*, que en este caso es la propensión marginal al abandono del servicio, y X, las variables explicativas.
+     </p>
+      <p>
+    Su función de distribución de probabilidad acumulada está dada por:
+          <div style="background: #ffffff; border: 1px solid #e0f2f1; border-radius: 8px; padding: 20px; margin: 25px 0; text-align: center; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);">
+    <p style="font-family: 'serif'; font-size: 1.3rem; color: #2c3e50; margin: 0;">
+        $$P(Y = 1|X) = \Phi(X^T\beta) = \int_{-\infty}^{X^T\beta} \frac{1}{\sqrt{2\pi}} e^{-\frac{z^2}{2}} dz$$
+    </p>
+    <p style="font-size: 0.8rem; color: #7f8c8d; margin-top: 10px;">
+        <i>Ecuación 1: Función de probabilidad acumulada del modelo Probit.</i>
+    </p>
+</div>
+     </p>
+ </div>
 
 
     

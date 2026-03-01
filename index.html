@@ -1781,12 +1781,12 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
         
         <div style="display: flex; align-items: center; background: #ffffff; border: 1px solid #e9ecef; border-left: 5px solid #1abc9c; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
             <span style="background: #1abc9c; color: white; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 50%; margin-right: 15px; font-weight: bold; font-size: 0.9rem;">1</span>
-            <strong style="color: #2c3e50;">Regresión Logística (Probit)</strong>
+            <strong style="color: #2c3e50;">Modelo Probit</strong>
         </div>
 
         <div style="display: flex; align-items: center; background: #ffffff; border: 1px solid #e9ecef; border-left: 5px solid #1abc9c; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
             <span style="background: #1abc9c; color: white; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 50%; margin-right: 15px; font-weight: bold; font-size: 0.9rem;">2</span>
-            <strong style="color: #2c3e50;">Regresión Logística (Logit)</strong>
+            <strong style="color: #2c3e50;">Regresión Logística/ Logit</strong>
         </div>
 
         <div style="display: flex; align-items: center; background: #ffffff; border: 1px solid #e9ecef; border-left: 5px solid #3498db; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
@@ -1910,20 +1910,86 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
     <div style="background: #f4fdfb; border-left: 5px solid #1abc9c; padding: 20px; border-radius: 8px; margin-top: 20px;">
         <h4 style="color: #16a085; margin-top: 0;"><i class="fas fa-microscope"></i> Análisis del Intercepto ($\beta_0$)</h4>
         <p style="font-size: 0.95rem; margin-bottom: 0;">
-            El intercepto de <strong>0.852</strong> representa el punto de partida del riesgo para el grupo de referencia (en este caso, clientes con contrato mes a mes y métodos de pago automáticos). Es importante notar que, debido al <strong>balanceo de la muestra (50/50)</strong>, este valor está desplazado hacia arriba para capturar mejor la probabilidad en una base donde el abandono ha sido artificialmente equiparado a la permanencia.
+            El intercepto de <strong>0.852</strong> representa el punto de partida del riesgo para el grupo de referencia (en este caso, clientes con contrato mes a mes y métodos de pago automáticos). 
         </p>
     </div>
 </div>
-</div>
-
-
-
+</div>    
+    <div style="line-height: 1.8; color: #333; margin-top: 40px; padding: 0 10px;">
+    <h3 style="color: #16a085; border-bottom: 2px solid #e0f2f1; display: inline-block;">Evaluación del Modelo Probit</h3>
     
+    <p style="margin-top: 15px;">
+        Tras aplicar el modelo sobre el set de prueba, obtenemos una visión clara de su capacidad predictiva. El modelo Probit alcanzó un <strong>Accuracy del 75.52%</strong>, demostrando una sólida capacidad para distinguir entre clientes leales y potenciales fugas.
+    </p>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 20px; margin: 25px 0; align-items: stretch;">
+        
+        <div style="flex: 1.2; min-width: 320px; background: #ffffff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #e0f2f1;">
+            <h4 style="color: #2c3e50; margin-top: 0; text-align: center; margin-bottom: 20px;">Matriz de Confusión (Test)</h4>
+            <table style="width: 100%; border-collapse: collapse; text-align: center; font-family: sans-serif;">
+                <thead>
+                    <tr>
+                        <th style="padding: 12px; border-bottom: 2px solid #1abc9c;">Real \ Pred.</th>
+                        <th style="padding: 12px; border-bottom: 2px solid #1abc9c; background: #f8f9fa;">0 (Permanece)</th>
+                        <th style="padding: 12px; border-bottom: 2px solid #1abc9c; background: #f8f9fa;">1 (Abandona)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 15px; font-weight: bold; border-right: 2px solid #1abc9c; background: #f8f9fa;">0 (Permanece)</td>
+                        <td style="padding: 15px; color: #27ae60; font-weight: bold; font-size: 1.2rem; border: 1px solid #eee;">227</td>
+                        <td style="padding: 15px; color: #e67e22; border: 1px solid #eee;">97</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 15px; font-weight: bold; border-right: 2px solid #1abc9c; background: #f8f9fa;">1 (Abandona)</td>
+                        <td style="padding: 15px; color: #c0392b; border: 1px solid #eee;">21</td>
+                        <td style="padding: 15px; color: #27ae60; font-weight: bold; font-size: 1.2rem; border: 1px solid #eee;">137</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="font-size: 0.8rem; color: #7f8c8d; margin-top: 15px; text-align: center;">
+                <i>Interpretación: El modelo identificó correctamente a 137 de 158 clientes que efectivamente abandonaron.</i>
+            </p>
+        </div>
+
+        <div style="flex: 1; min-width: 280px; background: #2c3e50; color: white; padding: 25px; border-radius: 12px; display: flex; flex-direction: column; justify-content: center;">
+            <h4 style="margin-top: 0; color: #1abc9c;"><i class="fas fa-chart-pie"></i> Desempeño Estratégico</h4>
+            <div style="margin-bottom: 15px;">
+                <span style="display: block; font-size: 0.8rem; color: #bdc3c7;">Accuracy Global</span>
+                <span style="font-size: 1.8rem; font-weight: bold; color: #1abc9c;">75.52%</span>
+            </div>
+            <p style="font-size: 0.9rem; line-height: 1.5;">
+                El modelo presenta un <strong>Recall (Sensibilidad)</strong> sobresaliente del <strong>86.7%</strong> (137/158). 
+            </p>
+            <p style="font-size: 0.85rem; color: #bdc3c7; border-top: 1px solid #3e4f5f; padding-top: 10px;">
+                Para el banco, esto es un éxito: estamos capturando a la gran mayoría de clientes en riesgo, con un margen de error de solo 21 casos no detectados (Falsos Negativos).
+            </p>
+        </div>
+    </div>
+</div>
 </div>    
 
 
+<div style="line-height: 1.8; color: #333; margin-top: 40px; padding: 0 10px;">
+ <h3 style="color: #16a085; border-bottom: 2px solid #e0f2f1; display: inline-block;">2. Revisión de modelo Logit</h3>
+    <p style="margin-top: 15px;">
+    A diferencia del modelo Probit, el Logit utiliza la función de distribución acumulada de una variable logística. Esta elección es el estándar debido a su flexibilidad y a la facilidad para interpretar sus coeficientes mediante <em>Odds Ratios</em>.
+    </p>
 
-          
+    <div style="background: #ffffff; border: 1px solid #e0f2f1; border-radius: 8px; padding: 25px; margin: 25px 0; text-align: center; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);">
+        <p style="font-family: 'serif'; font-size: 1.4rem; color: #2c3e50; margin: 0;">
+            $$P(Y = 1|X) = \frac{e^{X^T\beta}}{1 + e^{X^T\beta}} = \frac{1}{1 + e^{-X^T\beta}}$$
+        </p>
+        <p style="font-size: 0.8rem; color: #7f8c8d; margin-top: 10px;">
+            <i>Ecuación: Función Logística (Sigmoide) utilizada para mapear el riesgo a una probabilidad entre 0 y 1.</i>
+        </p>
+    </div>
+
+    
+</div>   
+
+
+     
  </div>
 
 

@@ -2445,9 +2445,12 @@ varImpPlot(modelo_rf)
         </p>
     </div>
 
-    <h3 style="margin-top: 40px; color: #2c3e50;">Código Completo en R</h3>
-    <div style="background: #2d3436; color: #dfe6e9; padding: 20px; border-radius: 8px; font-family: 'Courier New', Courier, monospace; overflow-x: auto;">
-        <pre style="margin: 0; line-height: 1.5;">
+  
+
+
+<h3>Código Completo en R</h3>
+        <div class="code-container">
+            <pre class="language-r"><code class="language-r">
 library(gbm)
 library(dplyr)
 library(readxl)
@@ -2576,10 +2579,10 @@ print(importancia_gbm)
 tabla_confusion_gbm <- table(Real = prueba$Attrition, Predicho = predicciones_gbm)
 print(tabla_confusion_gbm)
 accuracy_gbm <- sum(diag(tabla_confusion_gbm)) / sum(tabla_confusion_gbm)
-print(paste("Accuracy del Modelo GBM:", round(accuracy_gbm, 4)))</pre>
-    </div>
+print(paste("Accuracy del Modelo GBM:", round(accuracy_gbm, 4)))
 
-
+            </code></pre>
+        </div>
     
 
     

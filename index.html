@@ -1774,47 +1774,43 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
         Ya con los datos listos, procedemos a hacer una selección de modelos candidatos para ser el modelo para enviar a producción, desde el más básico hasta el más avanzado estadísticamente hablando. Estos son los siguientes:
         </p>
         
-<div style="background: #f8f9fa; padding: 20px; border-radius: 10px; border-top: 4px solid #1abc9c; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-            <h4 style="margin-top: 0; color: #2c3e50;">1. Regresión Logística probit</h4>
-            <p style="font-size: 0.85rem; color: #666;">
-                <strong>Baseline:</strong> Nuestro punto de partida. Es fundamental en banca por su <strong>interpretabilidad</strong> (Odds Ratios), permitiendo explicar legal y técnicamente por qué se clasifica a un cliente en riesgo.
-            </p>
+<div style="line-height: 1.8; color: #333; margin-top: 20px; padding: 0 10px;">
+    <h4 style="color: #16a085; margin-bottom: 20px;"><i class="fas fa-list-ul"></i> Modelos Candidatos</h4>
+    
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+        
+        <div style="display: flex; align-items: center; background: #ffffff; border: 1px solid #e9ecef; border-left: 5px solid #1abc9c; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+            <span style="background: #1abc9c; color: white; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 50%; margin-right: 15px; font-weight: bold; font-size: 0.9rem;">1</span>
+            <strong style="color: #2c3e50;">Regresión Logística (Probit)</strong>
         </div>
 
-        <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; border-top: 4px solid #3498db; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-            <h4 style="margin-top: 0; color: #2c3e50;">2. Regresión Logística logit</h4>
-            <p style="font-size: 0.85rem; color: #666;">
-                <strong>Reglas de Negocio:</strong> Útil para extraer reglas visuales (ej. "Si el contrato es mes a mes y el cargo > $X, entonces..."). Sensible al ruido, pero gran apoyo para comunicación con áreas no técnicas.
-            </p>
+        <div style="display: flex; align-items: center; background: #ffffff; border: 1px solid #e9ecef; border-left: 5px solid #1abc9c; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+            <span style="background: #1abc9c; color: white; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 50%; margin-right: 15px; font-weight: bold; font-size: 0.9rem;">2</span>
+            <strong style="color: #2c3e50;">Regresión Logística (Logit)</strong>
         </div>
 
-        <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; border-top: 4px solid #9b59b6; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-            <h4 style="margin-top: 0; color: #2c3e50;">3. Árbol de clasificación sin metodología Bagging</h4>
-            <p style="font-size: 0.85rem; color: #666;">
-                <strong>Robustez:</strong> Mediante <em>Bagging</em>, reducimos la varianza del modelo. Ideal para capturar interacciones complejas entre variables que los modelos lineales ignoran.
-            </p>
+        <div style="display: flex; align-items: center; background: #ffffff; border: 1px solid #e9ecef; border-left: 5px solid #3498db; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+            <span style="background: #3498db; color: white; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 50%; margin-right: 15px; font-weight: bold; font-size: 0.9rem;">3</span>
+            <strong style="color: #2c3e50;">Árbol de Clasificación (Sin Bagging)</strong>
         </div>
 
-        <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; border-top: 4px solid #e67e22; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-            <h4 style="margin-top: 0; color: #2c3e50;">4. Árboles de clasificación con metodología Bagging</h4>
-            <p style="font-size: 0.85rem; color: #666;">
-                <strong>Alta Precisión:</strong> Técnica de <em>Boosting</em> secuencial para minimizar errores residuales. Es nuestro candidato más fuerte para maximizar la detección de fugas reales.
-            </p>
+        <div style="display: flex; align-items: center; background: #ffffff; border: 1px solid #e9ecef; border-left: 5px solid #9b59b6; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+            <span style="background: #9b59b6; color: white; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 50%; margin-right: 15px; font-weight: bold; font-size: 0.9rem;">4</span>
+            <strong style="color: #2c3e50;">Árboles de Clasificación con metodología Bagging</strong>
         </div>
 
-<div style="background: #f8f9fa; padding: 20px; border-radius: 10px; border-top: 4px solid #e67e22; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-            <h4 style="margin-top: 0; color: #2c3e50;">5. Árboles de clasificación con metodología Random Forest</h4>
-            <p style="font-size: 0.85rem; color: #666;">
-                <strong>Alta Precisión:</strong> Técnica de <em>Boosting</em> secuencial para minimizar errores residuales. Es nuestro candidato más fuerte para maximizar la detección de fugas reales.
-            </p>
+        <div style="display: flex; align-items: center; background: #ffffff; border: 1px solid #e9ecef; border-left: 5px solid #9b59b6; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+            <span style="background: #9b59b6; color: white; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 50%; margin-right: 15px; font-weight: bold; font-size: 0.9rem;">5</span>
+            <strong style="color: #2c3e50;">Árboles de Clasificación con metodología Random Forest</strong>
         </div>
 
-<div style="background: #f8f9fa; padding: 20px; border-radius: 10px; border-top: 4px solid #e67e22; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-            <h4 style="margin-top: 0; color: #2c3e50;">6. Árboles de clasificación con metodología Gradient Boosting Tree</h4>
-            <p style="font-size: 0.85rem; color: #666;">
-                <strong>Alta Precisión:</strong> Técnica de <em>Boosting</em> secuencial para minimizar errores residuales. Es nuestro candidato más fuerte para maximizar la detección de fugas reales.
-            </p>
+        <div style="display: flex; align-items: center; background: #ffffff; border: 1px solid #e9ecef; border-left: 5px solid #e67e22; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+            <span style="background: #e67e22; color: white; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 50%; margin-right: 15px; font-weight: bold; font-size: 0.9rem;">6</span>
+            <strong style="color: #2c3e50;">Árboles de Clasificación con metodología Gradient Boosting Tree</strong>
         </div>
+
+    </div>
+</div>
       
  </div>
 

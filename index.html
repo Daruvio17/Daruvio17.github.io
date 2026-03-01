@@ -1610,7 +1610,7 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
 
 
     
-<!------------------------------------------------------------------------------------------------------------ Pipeline --------------------------------------------------------------------------------------->
+<!------------------------------------------------------------------------------------------------------------ End-to-End --------------------------------------------------------------------------------------->
 
 <div id="proyecto6-detalle" class="tab-content" style="display: none;">
     <a onclick="showTab('proyectos')" style="color: #1abc9c; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; font-weight: bold;">
@@ -1766,6 +1766,64 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
     </div>
 
 
+
+  <div style="line-height: 1.8; color: #333; margin-top: 40px; padding: 0 10px;">
+        <h3 style="color: #16a085; border-bottom: 2px solid #e0f2f1; display: inline-block;">Modelación</h3>
+      
+        <p style="margin-top: 15px;">
+        Ya con los datos listos, procedemos a hacer una selección de modelos candidatos para ser el modelo para enviar a producción, desde el más básico hasta el más avanzado estadísticamente hablando. Estos son los siguientes:
+        </p>
+        
+<div style="background: #f8f9fa; padding: 20px; border-radius: 10px; border-top: 4px solid #1abc9c; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+            <h4 style="margin-top: 0; color: #2c3e50;">1. Regresión Logística probit</h4>
+            <p style="font-size: 0.85rem; color: #666;">
+                <strong>Baseline:</strong> Nuestro punto de partida. Es fundamental en banca por su <strong>interpretabilidad</strong> (Odds Ratios), permitiendo explicar legal y técnicamente por qué se clasifica a un cliente en riesgo.
+            </p>
+        </div>
+
+        <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; border-top: 4px solid #3498db; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+            <h4 style="margin-top: 0; color: #2c3e50;">2. Regresión Logística logit</h4>
+            <p style="font-size: 0.85rem; color: #666;">
+                <strong>Reglas de Negocio:</strong> Útil para extraer reglas visuales (ej. "Si el contrato es mes a mes y el cargo > $X, entonces..."). Sensible al ruido, pero gran apoyo para comunicación con áreas no técnicas.
+            </p>
+        </div>
+
+        <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; border-top: 4px solid #9b59b6; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+            <h4 style="margin-top: 0; color: #2c3e50;">3. Árbol de clasificación sin metodología Bagging</h4>
+            <p style="font-size: 0.85rem; color: #666;">
+                <strong>Robustez:</strong> Mediante <em>Bagging</em>, reducimos la varianza del modelo. Ideal para capturar interacciones complejas entre variables que los modelos lineales ignoran.
+            </p>
+        </div>
+
+        <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; border-top: 4px solid #e67e22; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+            <h4 style="margin-top: 0; color: #2c3e50;">4. Árboles de clasificación con metodología Bagging</h4>
+            <p style="font-size: 0.85rem; color: #666;">
+                <strong>Alta Precisión:</strong> Técnica de <em>Boosting</em> secuencial para minimizar errores residuales. Es nuestro candidato más fuerte para maximizar la detección de fugas reales.
+            </p>
+        </div>
+
+<div style="background: #f8f9fa; padding: 20px; border-radius: 10px; border-top: 4px solid #e67e22; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+            <h4 style="margin-top: 0; color: #2c3e50;">5. Árboles de clasificación con metodología Random Forest</h4>
+            <p style="font-size: 0.85rem; color: #666;">
+                <strong>Alta Precisión:</strong> Técnica de <em>Boosting</em> secuencial para minimizar errores residuales. Es nuestro candidato más fuerte para maximizar la detección de fugas reales.
+            </p>
+        </div>
+
+<div style="background: #f8f9fa; padding: 20px; border-radius: 10px; border-top: 4px solid #e67e22; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+            <h4 style="margin-top: 0; color: #2c3e50;">6. Árboles de clasificación con metodología Gradient Boosting Tree</h4>
+            <p style="font-size: 0.85rem; color: #666;">
+                <strong>Alta Precisión:</strong> Técnica de <em>Boosting</em> secuencial para minimizar errores residuales. Es nuestro candidato más fuerte para maximizar la detección de fugas reales.
+            </p>
+        </div>
+      
+ </div>
+
+
+
+
+
+
+    
     
 </div>
 

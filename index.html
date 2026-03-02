@@ -1612,6 +1612,7 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
     
 <!------------------------------------------------------------------------------------------------------------ End-to-End --------------------------------------------------------------------------------------->
 
+ 
 <div id="proyecto6-detalle" class="tab-content" style="display: none;">
     <a onclick="showTab('proyectos')" style="color: #1abc9c; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; font-weight: bold;">
         <i class="fas fa-arrow-left"></i> Volver a Proyectos
@@ -1654,8 +1655,12 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
 
     <div style="line-height: 1.8; color: #333; margin-top: 40px; padding: 0 10px;">
         <h3 style="color: #16a085; border-bottom: 2px solid #e0f2f1; display: inline-block;">1. Estimación de Modelo Probit</h3>
-        <p>Este modelo utiliza la distribución normal acumulada para estimar la probabilidad de abandono.</p>
+        <p>Este modelo utiliza la distribución normal acumulada para estimar la probabilidad de abandono:</p>
         
+        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; text-align: center; margin: 15px 0; font-family: 'Times New Roman', serif; font-size: 1.2rem; border: 1px solid #eee;">
+            $P(Y = 1 | X) = \Phi(X^T\beta) = \int_{-\infty}^{X^T\beta} \frac{1}{\sqrt{2\pi}} e^{-\frac{z^2}{2}} dz$
+        </div>
+
         <div style="text-align: center; margin: 20px 0;">
             <img src="(end-to-end)summary_probit.jpg" alt="Summary Probit" style="max-width: 100%; height: auto; border-radius: 8px; border: 1px solid #ddd; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
             <p style="font-size: 0.85rem; color: #888; margin-top: 10px;"><i>Figura: Salida estadística del Modelo Probit en R.</i></p>
@@ -1673,14 +1678,18 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
             <div style="background: #ffffff; border: 1px solid #eee; padding: 20px; border-radius: 8px; text-align: center;">
                 <h4 style="color: #2c3e50; margin-top: 0;">Accuracy Probit</h4>
                 <span style="font-size: 2rem; font-weight: bold; color: #1abc9c;">75.52%</span>
-                <p style="font-size: 0.85rem; color: #666;">Recall del 86.7% en detección de abandono.</p>
+                <p style="font-size: 0.85rem; color: #666;">Basado en la matriz de confusión del modelo probit.</p>
             </div>
         </div>
     </div>
 
     <div style="line-height: 1.8; color: #333; margin-top: 40px; padding: 0 10px;">
         <h3 style="color: #16a085; border-bottom: 2px solid #e0f2f1; display: inline-block;">2. Estimación de Modelo Logit</h3>
-        <p>El modelo Logit permite una interpretación más directa mediante Odds Ratios, asumiendo una distribución logística.</p>
+        <p>El modelo Logit permite una interpretación más directa mediante Odds Ratios, asumiendo una distribución logística:</p>
+
+        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; text-align: center; margin: 15px 0; font-family: 'Times New Roman', serif; font-size: 1.2rem; border: 1px solid #eee;">
+            $P(Y = 1 | X) = \frac{1}{1 + e^{-X^T\beta}} = \frac{e^{X^T\beta}}{1 + e^{X^T\beta}}$
+        </div>
 
         <div style="text-align: center; margin: 20px 0;">
             <img src="(End-to-End)_summary_logit.jpg" alt="Summary Logit" style="max-width: 100%; height: auto; border-radius: 8px; border: 1px solid #ddd; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
@@ -1690,7 +1699,7 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
         <div style="background: #f4fdfb; border-left: 5px solid #1abc9c; padding: 25px; border-radius: 8px; margin: 25px 0;">
             <h4 style="color: #16a085; margin-top: 0;">Análisis Comparativo de Significancia</h4>
             <p style="font-size: 0.95rem;">
-                Al observar el <strong>p-valor (Pr(>|z|))</strong> del Logit, notamos que <strong>Cargo_total</strong> aumenta su nivel de confianza (***), reafirmando que el valor histórico del cliente es un predictor más robusto en este modelo que en el Probit.
+                Al observar el <strong>p-valor (Pr(>|z|))</strong> del Logit, notamos que <strong>Cargo_total</strong> aumenta su nivel de confianza (***), reafirmando que el valor histórico del cliente es un predictor robusto.
             </p>
         </div>
 
@@ -1710,12 +1719,11 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
             <div style="flex: 1; background: #2c3e50; color: white; padding: 25px; border-radius: 12px; display: flex; flex-direction: column; justify-content: center;">
                 <h4 style="margin-top:0; color: #1abc9c;">Evaluación Logit</h4>
                 <p style="font-size: 1.8rem; font-weight: bold; margin: 10px 0;">75.52% <small style="font-size: 0.9rem; font-weight: normal;">Accuracy</small></p>
-                <p style="font-size: 0.85rem; opacity: 0.9;">Aunque el Accuracy es idéntico al Probit, el Logit clasifica correctamente un cliente adicional en la categoría de "Permanencia".</p>
+                <p style="font-size: 0.85rem; opacity: 0.9;">El modelo presenta un Accuracy idéntico al Probit (0.7552) bajo las mismas condiciones de entrenamiento.</p>
             </div>
         </div>
     </div>
-</div> ```
-
+</div>
 
 
 

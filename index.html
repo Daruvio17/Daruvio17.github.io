@@ -2021,6 +2021,11 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
         <h2 style="color: #2c3e50; border-bottom: 2px solid #16a085; padding-bottom: 10px; margin-bottom: 25px;">
             Especificación del Modelo Final/Modelo de producción
         </h2>
+        <div style="background: #f8f9fa; padding: 25px; border-radius: 10px; text-align: center; margin-bottom: 30px; border: 1px dashed #bdc3c7;">
+            <span style="font-size: 1.2em; color: #2c3e50;">
+                $$ \ln\left(\frac{\hat{P}}{1-\hat{P}}\right) = -1.240 + 0.852(\text{Incidencias}) - 0.421(\text{Antigüedad}) - 0.684(\text{CanalDigital}) $$
+            </span>
+        </div>
         
         <p style="color: #7f8c8d; font-style: italic; margin-bottom: 20px;">
             Variables no significativas filtradas mediante p-value < 0.05 y optimización de AIC.
@@ -2075,6 +2080,194 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
         </p>
     </div>
 </div>
+    <h3>Código Completo en R</h3>
+        <div class="code-container">
+            <pre class="language-r"><code class="language-r">
+#### Preparación ####
+library(readxl)
+datos <- read_excel(file.choose())
+datos <- data.frame(datos)
+head(datos)
+str(datos)
+datos <- datos[,-1]
+datos <- datos[,-6]
+datos$Cargo_mensual <- as.numeric(datos$Cargo_mensual)
+datos$Cargo_total <- as.numeric(datos$Cargo_total)
+head(datos)
+str(datos)
+datos$Abandono <- as.factor(datos$Abandono)
+datos <- as.data.frame(unclass(datos), stringsAsFactors = TRUE)
+datos$Cargo_mensual <- as.numeric(as.character(datos$Cargo_mensual)) 
+datos$Cargo_total <- as.numeric(as.character(datos$Cargo_total)) 
+datos <- na.omit(datos)
+Abandona <- datos[datos$Abandono == 1, ]
+Permanece <- datos[datos$Abandono == 0, ]
+
+set.seed(123)
+r1_prueba <- sample(1:nrow(Abandona), size = 0.1 * nrow(Abandona))
+r2_prueba <- sample(1:nrow(Permanece), size = 0.1 * nrow(Permanece))
+prueba <- rbind(Abandona[r1_prueba, ], Permanece[r2_prueba, ])
+Abandona_train <- Abandona[-r1_prueba, ]
+Permanece_train <- Permanece[-r2_prueba, ]
+
+n_fugas_entrenamiento <- nrow(Abandona_train)
+r_balanceo <- sample(1:nrow(Permanece_train), size = n_fugas_entrenamiento)
+
+entrenamiento_balanceado <- rbind(Abandona_train, Permanece_train[r_balanceo, ])
+
+
+#### probit ####
+
+modelo_probit <- glm(Abandono ~ ., 
+                     data = entrenamiento_balanceado, 
+                     family = binomial(link = "probit"))
+summary(modelo_probit)
+
+probabilidades_probit <- predict(modelo_probit, newdata = prueba, type = "response")
+prediccion_probit <- ifelse(probabilidades_probit > 0.5, 1, 0)
+matriz_probit <- table(Real = prueba$Abandono, Prediccion = prediccion_probit)
+print(matriz_probit)
+accuracy_probit <- sum(diag(matriz_probit)) / sum(matriz_probit)
+print(paste("Accuracy del modelo Probit:", round(accuracy_probit, 4)))
+
+
+
+#### Logit ####
+modelo_logit <- glm(Abandono ~ ., 
+                    data = entrenamiento_balanceado, 
+                    family = binomial(link = "logit"))
+summary(modelo_logit)
+probabilidades_logit <- predict(modelo_logit, newdata = prueba, type = "response")
+prediccion_logit <- ifelse(probabilidades_logit > 0.5, 1, 0)
+matriz_logit <- table(Real = prueba$Abandono, Prediccion = prediccion_logit)
+print(matriz_logit)
+accuracy_logit <- sum(diag(matriz_logit)) / sum(matriz_logit)
+print(paste("Accuracy del modelo Logit:", round(accuracy_logit, 4)))
+
+
+
+
+####Árbol sin pruning####
+library(tree)
+library(randomForest)
+library(gbm)
+modelo_arbol <- tree(Abandono ~ ., data = entrenamiento_balanceado)
+
+summary(modelo_arbol)
+par(mar = c(1, 1, 3, 1))
+plot(modelo_arbol, type = "uniform", lwd = 2, col = "gray40")
+text(modelo_arbol, 
+     pretty = 0, 
+     all = TRUE, 
+     cex = 0.8, 
+     col = "darkgreen", 
+     xpd = TRUE)
+title(main = paste("Modelo sin pruning"), 
+      line = 1, 
+      col.main = "#2c3e50", 
+      cex.main = 1.1)
+
+
+
+####Árbol con pruning####
+set.seed(123)
+cv_modelo <- cv.tree(modelo_arbol, FUN = prune.misclass)
+par(mar = c(5, 5, 4, 2))
+plot(cv_modelo$size, cv_modelo$dev, type = "b", pch = 19, col = "darkblue",
+     xlab = "Número de Nodos Terminales", ylab = "Errores de Clasificación")
+title("Tamaño Óptimo del Árbol")
+tamano_optimo <- cv_modelo$size[which.min(cv_modelo$dev)]
+abline(v = tamano_optimo, col = "red", lty = 2)
+
+
+modelo_arbol_pruning <- prune.misclass(modelo_arbol, best = tamano_optimo)
+par(mar = c(1, 1, 3, 1))
+plot(modelo_arbol_pruning, type = "uniform", lwd = 2, col = "gray40")
+text(modelo_arbol_pruning, 
+     pretty = 0, 
+     all = TRUE, 
+     cex = 0.8, 
+     col = "darkgreen", 
+     xpd = TRUE)
+title(main = paste("Modelo Optimizado (Poda a", tamano_optimo, "nodos)"), 
+      line = 1, 
+      col.main = "#2c3e50", 
+      cex.main = 1.1)
+
+pred_arbol_simple <- predict(modelo_arbol, newdata = prueba, type = "class")
+matriz_arbol_simple <- table(Real = prueba$Abandono, Prediccion = pred_arbol_simple)
+accuracy_arbol_simple <- sum(diag(matriz_arbol_simple)) / sum(matriz_arbol_simple)
+pred_arbol_pruning <- predict(modelo_arbol_pruning, newdata = prueba, type = "class")
+matriz_arbol_pruning <- table(Real = prueba$Abandono, Prediccion = pred_arbol_pruning)
+accuracy_arbol_pruning <- sum(diag(matriz_arbol_pruning)) / sum(matriz_arbol_pruning)
+
+
+print(paste("Accuracy Árbol Simple:", round(accuracy_arbol_simple, 4)))
+print(paste("Accuracy Árbol Podado:", round(accuracy_arbol_pruning, 4)))
+
+####Árboles por Bagging####
+library(randomForest)
+set.seed(123)
+arbol_bagging <- randomForest(Abandono ~ ., 
+                               data = entrenamiento_balanceado, 
+                               mtry = (ncol(entrenamiento_balanceado) - 1), 
+                               importance = TRUE)
+
+pred_bagging <- predict(arbol_bagging, newdata = prueba)
+matriz_bagging <- table(Real = prueba$Abandono, Prediccion = pred_bagging)
+print(matriz_bagging)
+
+accuracy_bagging <- sum(diag(matriz_bagging)) / sum(matriz_bagging)
+print(paste("Accuracy Bagging:", round(accuracy_bagging, 4)))
+
+####Árboles por RandomForest#### 
+set.seed(123)
+arbol_rf <- randomForest(Abandono ~ ., 
+                          data = entrenamiento_balanceado, 
+                          importance = TRUE)
+pred_rf <- predict(arbol_rf, newdata = prueba)
+matriz_rf <- table(Real = prueba$Abandono, Prediccion = pred_rf)
+print(matriz_rf)
+accuracy_rf <- sum(diag(matriz_rf)) / sum(matriz_rf)
+print(paste("Accuracy Random Forest:", round(accuracy_rf, 4)))
+varImpPlot(arbol_rf, 
+           main = "Importancia de Variables: Random Forest",
+           col = "darkblue", 
+           pch = 19)
+
+####Modelo Boosting####
+entrenamiento_gbm <- entrenamiento_balanceado
+prueba_gbm <- prueba
+entrenamiento_gbm$Abandono <- as.numeric(as.character(entrenamiento_gbm$Abandono))
+prueba_gbm$Abandono <- as.numeric(as.character(prueba_gbm$Abandono))
+
+set.seed(1)
+modelo_gbm <- gbm(Abandono ~ ., 
+                  data = entrenamiento_gbm, 
+                  distribution = "bernoulli", 
+                  n.trees = 5000,             
+                  interaction.depth = 4,      
+                  shrinkage = 0.01,           
+                  cv.folds = 5)               
+
+
+best_iter <- gbm.perf(modelo_gbm, method = "cv")
+print(paste("Iteraciones óptimas:", best_iter))
+
+probabilidades_gbm <- predict(modelo_gbm, 
+                              newdata = prueba_gbm, 
+                              n.trees = best_iter, 
+                              type = "response")
+predicciones_gbm <- ifelse(probabilidades_gbm > 0.5, 1, 0)
+tabla_confusion_gbm <- table(Real = prueba_gbm$Abandono, Predicho = predicciones_gbm)
+print(tabla_confusion_gbm)
+
+accuracy_gbm <- sum(diag(tabla_confusion_gbm)) / sum(tabla_confusion_gbm)
+print(paste("Accuracy del Modelo GBM:", round(accuracy_gbm, 4)))
+importancia_gbm <- summary(modelo_gbm, n.trees = best_iter)
+
+            </code></pre>
+        </div>
     </div>
     
 

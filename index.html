@@ -1854,103 +1854,86 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
     </div>
 
 
-
-
     
 <div style="line-height: 1.8; color: #333; margin-top: 40px; padding: 0 10px;">
         <h3 style="color: #16a085; border-bottom: 2px solid #e0f2f1; display: inline-block;">3. Árboles de Clasificación y Poda (Pruning)</h3>
-        <p>
-            A diferencia de los modelos paramétricos, los árboles segmentan el espacio de los datos en regiones rectangulares. Para evitar el <strong>sobreajuste (overfitting)</strong>, aplicamos una poda basada en el error de clasificación.
+        <p style="margin-top: 15px;">
+            A diferencia de los modelos lineales, los árboles segmentan el dataset mediante reglas lógicas. Tras el entrenamiento, identificamos que las variables clave para la ramificación fueron <strong>Tipo_de_contrato</strong>, <strong>Antiguedad</strong> y <strong>Servicio_de_internet</strong>.
         </p>
 
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin: 25px 0;">
-            <div style="background: white; padding: 15px; border-radius: 12px; border: 1px solid #eee; text-align: center;">
-                <h4 style="color: #2c3e50; font-size: 0.9rem;">Modelo Original (Complejo)</h4>
-                <img src="arbol_sin_pruning.jpg" alt="Árbol sin podar" style="max-width: 100%; border-radius: 8px;">
-                <p style="font-size: 0.8rem; color: #7f8c8d; mt-2">Tiende a capturar ruido del entrenamiento.</p>
+            <div style="background: white; padding: 15px; border-radius: 12px; border: 1px solid #eee; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                <h4 style="color: #2c3e50; font-size: 0.9rem; margin-bottom: 15px;">Estructura del Árbol</h4>
+                <img src="(End_toEnd)_arbol_sin.jpg" alt="Árbol de clasificación" style="max-width: 100%; border-radius: 8px;">
+                <p style="font-size: 0.8rem; color: #7f8c8d; margin-top: 10px;">Nodos terminales: 5 | Accuracy: 66.6%</p>
             </div>
-            <div style="background: white; padding: 15px; border-radius: 12px; border: 1px solid #eee; text-align: center;">
-                <h4 style="color: #16a085; font-size: 0.9rem;">Modelo Optimizado (Pruning)</h4>
-                <img src="arbol_con_pruning.jpg" alt="Árbol con poda" style="max-width: 100%; border-radius: 8px;">
-                <p style="font-size: 0.8rem; color: #7f8c8d; mt-2">Simplificado para mejorar la generalización.</p>
+            <div style="background: #fdfaf2; padding: 20px; border-radius: 12px; border-left: 5px solid #f39c12;">
+                <h4 style="color: #d35400; margin-top: 0;">Análisis de Complejidad</h4>
+                <p style="font-size: 0.9rem;">
+                    Al realizar la validación cruzada para hallar el tamaño óptimo (Pruning), se observó que el error de clasificación se estabiliza rápidamente. Dado que el árbol inicial es parsimonioso (solo 5 nodos), la poda devuelve un modelo idéntico, manteniendo un <strong>Accuracy de 66.6%</strong>.
+                </p>
+                <img src="(End_to_End)_optimo_poda.jpg" alt="Curva de error vs tamaño" style="max-width: 100%; border-radius: 8px; margin-top: 10px; border: 1px solid #ddd;">
             </div>
-        </div>
-
-        <div style="background: #fdfaf2; border-left: 5px solid #f39c12; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
-            <p style="margin: 0; font-size: 0.95rem;">
-                <strong>Hallazgo:</strong> El proceso de validación cruzada determinó un tamaño óptimo de nodos. Aunque la precisión es similar a los modelos lineales, la <strong>interpretabilidad visual</strong> de las reglas de decisión (ej. Tipo de Contrato como primer nodo) aporta un valor estratégico inmediato.
-            </p>
         </div>
     </div>
 
     <div style="line-height: 1.8; color: #333; margin-top: 40px; padding: 0 10px;">
-        <h3 style="color: #16a085; border-bottom: 2px solid #e0f2f1; display: inline-block;">4. Modelos de Ensamble: Potenciando la Predicción</h3>
-        <p>Para reducir la varianza y mejorar el sesgo, implementamos tres técnicas avanzadas de ensamble:</p>
+        <h3 style="color: #16a085; border-bottom: 2px solid #e0f2f1; display: inline-block;">4. Métodos de Ensamble (Bagging & Random Forest)</h3>
+        <p>Para superar las limitaciones de un solo árbol, implementamos técnicas de ensamble que promedian múltiples estimadores para reducir la varianza.</p>
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 25px 0;">
-            <div style="background: #ffffff; border: 1px solid #3498db; padding: 20px; border-radius: 12px; position: relative;">
-                <span style="position: absolute; top: -10px; right: 10px; background: #3498db; color: white; padding: 2px 10px; border-radius: 10px; font-size: 0.7rem;">BAGGING</span>
-                <h4 style="margin-top: 0; color: #2980b9;">Bootstrap Aggregating</h4>
-                <p style="font-size: 0.85rem;">Reduce la varianza promediando múltiples árboles construidos sobre muestras aleatorias del dataset.</p>
-                <div style="background: #ebf5fb; padding: 10px; border-radius: 6px; text-align: center;">
-                    <span style="font-weight: bold; font-size: 1.1rem;">Accuracy: 78.42%</span>
-                </div>
+            <div style="background: #ffffff; border: 1px solid #3498db; padding: 20px; border-radius: 12px; text-align: center;">
+                <h4 style="margin-top: 0; color: #2980b9;">Bagging</h4>
+                <p style="font-size: 0.85rem; color: #666;">Promedio de árboles con mtry = 19</p>
+                <div style="font-weight: bold; font-size: 1.2rem; color: #2c3e50;">Accuracy: 69.29%</div>
             </div>
-
-            <div style="background: #ffffff; border: 1px solid #8e44ad; padding: 20px; border-radius: 12px; position: relative;">
-                <span style="position: absolute; top: -10px; right: 10px; background: #8e44ad; color: white; padding: 2px 10px; border-radius: 10px; font-size: 0.7rem;">RANDOM FOREST</span>
-                <h4 style="margin-top: 0; color: #8e44ad;">Bosques Aleatorios</h4>
-                <p style="font-size: 0.85rem;">Introduce aleatoriedad en la selección de variables, decorrelando los árboles y mejorando la robustez.</p>
-                <div style="background: #f5eef8; padding: 10px; border-radius: 6px; text-align: center;">
-                    <span style="font-weight: bold; font-size: 1.1rem;">Accuracy: 79.15%</span>
-                </div>
+            <div style="background: #ffffff; border: 1px solid #8e44ad; padding: 20px; border-radius: 12px; text-align: center;">
+                <h4 style="margin-top: 0; color: #8e44ad;">Random Forest</h4>
+                <p style="font-size: 0.85rem; color: #666;">Decorrelación de árboles</p>
+                <div style="font-weight: bold; font-size: 1.2rem; color: #2c3e50;">Accuracy: 69.50%</div>
             </div>
         </div>
 
         <div style="background: #2c3e50; color: white; padding: 25px; border-radius: 12px; margin: 30px 0;">
-            <h4 style="margin-top: 0; color: #1abc9c;"><i class="fas fa-chart-bar"></i> Jerarquía de Predictores (Random Forest)</h4>
+            <h4 style="color: #1abc9c; margin-top: 0;"><i class="fas fa-microchip"></i> Importancia de Variables en RandomForest</h4>
             <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: center;">
-                <div style="flex: 1; min-width: 300px;">
-                    <img src="var_importance_rf.jpg" alt="Importancia de Variables" style="width: 100%; border-radius: 8px; border: 1px solid #444;">
-                </div>
+                <img src="(End_to_End)_importancia_randomf.jpg" alt="Variable Importance Random Forest" style="flex: 1; max-width: 450px; border-radius: 8px; border: 1px solid #444;">
                 <div style="flex: 1; min-width: 250px;">
                     <p style="font-size: 0.9rem; opacity: 0.9;">
-                        El análisis de <strong>Mean Decrease Gini</strong> identifica que las variables más influyentes en el abandono son:
+                        El análisis de <strong>Mean Decrease Gini</strong> confirma que la facturación histórica y la permanencia mensual son los motores de predicción más potentes en el bosque aleatorio.
                     </p>
-                    <ul style="font-size: 0.9rem; color: #1abc9c;">
-                        <li><strong>Cargo_total</strong> (Valor de vida del cliente)</li>
-                        <li><strong>Antiguedad</strong> (Lealtad temporal)</li>
-                        <li><strong>Cargo_mensual</strong> (Carga financiera actual)</li>
-                    </ul>
                 </div>
             </div>
-        </div>
-
-        <h4 style="color: #16a085;"><i class="fas fa-rocket"></i> 5. Gradient Boosting Machine (GBM)</h4>
-        <p>A diferencia del Bagging, el Boosting construye árboles de forma secuencial, donde cada nuevo árbol intenta corregir los errores de los anteriores.</p>
-        
-        <div style="background: white; border: 1px solid #eee; border-radius: 12px; padding: 20px;">
-            <div style="display: flex; justify-content: space-around; align-items: center; text-align: center; margin-bottom: 20px;">
-                <div>
-                    <p style="font-size: 0.7rem; color: #888; margin: 0;">Iteraciones Óptimas</p>
-                    <span style="font-weight: bold; color: #e74c3c; font-size: 1.2rem;">5000</span>
-                </div>
-                <div style="width: 1px; height: 40px; background: #eee;"></div>
-                <div>
-                    <p style="font-size: 0.7rem; color: #888; margin: 0;">Shrinkage (Learning Rate)</p>
-                    <span style="font-weight: bold; color: #e74c3c; font-size: 1.2rem;">0.01</span>
-                </div>
-                <div style="width: 1px; height: 40px; background: #eee;"></div>
-                <div>
-                    <p style="font-size: 0.7rem; color: #888; margin: 0;">Accuracy Final</p>
-                    <span style="font-weight: bold; color: #16a085; font-size: 1.2rem;">80.24%</span>
-                </div>
-            </div>
-            <p style="font-size: 0.9rem; border-top: 1px solid #f9f9f9; padding-top: 15px;">
-                <strong>Resultado del Ensamble:</strong> El modelo GBM se posiciona como el de mayor capacidad predictiva, logrando capturar relaciones no lineales complejas que los modelos Logit/Probit omitieron.
-            </p>
         </div>
     </div>
+
+    <div style="line-height: 1.8; color: #333; margin-top: 40px; padding: 0 10px;">
+        <h3 style="color: #16a085; border-bottom: 2px solid #e0f2f1; display: inline-block;">5. Gradient Boosting Machine (GBM)</h3>
+        <p>El modelo GBM construye árboles secuencialmente para minimizar el error residual. Es el modelo más sofisticado de nuestro pipeline.</p>
+        
+        <div style="background: white; border: 1px solid #e0f2f1; border-radius: 12px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            <div style="display: flex; flex-wrap: wrap; gap: 40px; justify-content: center; align-items: center;">
+                <div style="text-align: center;">
+                    <img src="(End_toEnd)_boosting_iteraciones.jpg" alt="Convergencia GBM" style="max-width: 300px; border-radius: 8px; border: 1px solid #eee;">
+                    <p style="font-size: 0.75rem; color: #999; margin-top: 10px;">Curva de aprendizaje (Deviance vs Trees)</p>
+                </div>
+                <div style="flex: 1; min-width: 280px;">
+                    <div style="background: #f4fdfb; padding: 20px; border-radius: 8px; border-left: 5px solid #1abc9c;">
+                        <h4 style="margin-top: 0; color: #16a085;">Resultados de Optimización</h4>
+                        <ul style="list-style: none; padding: 0; font-size: 0.95rem;">
+                            <li><strong>Iteraciones Óptimas:</strong> 557</li>
+                            <li><strong>Interaction Depth:</strong> 4</li>
+                            <li><strong>Shrinkage:</strong> 0.01</li>
+                            <li style="margin-top: 15px; font-size: 1.2rem; font-weight: bold; color: #2c3e50;">Accuracy Final: 71.37%</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
 
 
 

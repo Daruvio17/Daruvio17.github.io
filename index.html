@@ -1908,7 +1908,7 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
     </div>
 
     <div style="line-height: 1.8; color: #333; margin-top: 40px; padding: 0 10px;">
-        <h3 style="color: #16a085; border-bottom: 2px solid #e0f2f1; display: inline-block;">5. Gradient Boosting Machine (GBM)</h3>
+        <h3 style="color: #16a085; border-bottom: 2px solid #e0f2f1; display: inline-block;">5. Gradient Boosting Tree</h3>
         <p>El modelo GBM construye árboles secuencialmente para minimizar el error residual. Es el modelo más sofisticado de nuestro pipeline.</p>
         
         <div style="background: white; border: 1px solid #e0f2f1; border-radius: 12px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
@@ -1932,6 +1932,71 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
         </div>
     </div>
 
+
+
+    <div style="margin-top: 50px; border-top: 2px solid #e0f2f1; padding-top: 40px;">
+        <h2 style="color: #2c3e50; text-align: center; margin-bottom: 35px;">Torneo de Modelos: Evaluación de Pertinencia</h2>
+
+        <div style="overflow-x: auto; margin-bottom: 40px;">
+            <table style="width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                <thead>
+                    <tr style="background: #16a085; color: white; text-align: left;">
+                        <th style="padding: 15px;">Criterio Técnico</th>
+                        <th style="padding: 15px;">Modelos Estadísticos (Logit/Probit)</th>
+                        <th style="padding: 15px;">Modelos de Ensamble (RF/GBM)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid #eee;">
+                        <td style="padding: 15px; font-weight: bold;">Rendimiento (Accuracy)</td>
+                        <td style="padding: 15px; color: #27ae60; font-weight: bold;">75.52% (Superior)</td>
+                        <td style="padding: 15px;">71.37% (Inferior)</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #eee; background: #f9f9f9;">
+                        <td style="padding: 15px; font-weight: bold;">Escalabilidad (Data Size)</td>
+                        <td style="padding: 15px;">Óptimo para n = 4,835 registros.</td>
+                        <td style="padding: 15px;">Riesgo de suboptimización por datos limitados.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #eee;">
+                        <td style="padding: 15px; font-weight: bold;">Generalización</td>
+                        <td style="padding: 15px;">Alta (bajo riesgo de capturar ruido).</td>
+                        <td style="padding: 15px; color: #e67e22;">Riesgo de Overfitting (Sobreajuste).</td>
+                    </tr>
+                    <tr style="background: #f9f9f9;">
+                        <td style="padding: 15px; font-weight: bold;">Explicabilidad (XAI)</td>
+                        <td style="padding: 15px;">Directa (Coeficientes y Odds Ratios).</td>
+                        <td style="padding: 15px;">"Caja Negra" (Complejo de auditar).</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px;">
+            <div style="background: #ffffff; padding: 25px; border-radius: 12px; border-left: 5px solid #1abc9c; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                <h4 style="color: #16a085; margin-top: 0;"><i class="fas fa-microscope"></i> Rigor Estadístico</h4>
+                <p style="font-size: 0.9rem; color: #555; line-height: 1.6;">
+                    Aunque el <strong>Boosting (GBM)</strong> es la metodología estándar en grandes ecosistemas de datos, su aplicación en bases de datos medianas puede resultar contraproducente. Con ~4,800 registros, el modelo Logit demostró una estructura de covariables más estable, logrando una mejor separación de clases sin memorizar el ruido estadístico de la muestra.
+                </p>
+            </div>
+
+            <div style="background: #ffffff; padding: 25px; border-radius: 12px; border-left: 5px solid #3498db; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                <h4 style="color: #2980b9; margin-top: 0;"><i class="fas fa-hand-holding-usd"></i> Sentido Económico</h4>
+                <p style="font-size: 0.9rem; color: #555; line-height: 1.6;">
+                    Para una entidad como <strong>Bancolombia</strong>, el costo de un Falso Negativo (perder un cliente que se iba a fugar) es mayor al costo de gestión de un Falso Positivo. El modelo Logit minimizó los Falsos Negativos (22 casos), optimizando el presupuesto de retención al identificar con mayor precisión el riesgo real.
+                </p>
+            </div>
+        </div>
+
+        <div style="margin-top: 40px; background: #2c3e50; color: white; padding: 35px; border-radius: 15px; text-align: center;">
+            <h3 style="margin-top: 0; color: #1abc9c;">Veredicto: Modelo Logit como Ganador</h3>
+            <p style="font-size: 1rem; max-width: 800px; margin: 15px auto; opacity: 0.9;">
+                Se elige la <strong>Regresión Logística</strong> no por ser la más sencilla, sino por ser la más <strong>pertinente</strong>. Su capacidad de generalización en muestras finas, su transparencia para procesos de auditoría bancaria y su superioridad en la métrica de Accuracy la posicionan como la herramienta más robusta para la toma de decisiones estratégicas.
+            </p>
+            <div style="display: inline-block; margin-top: 20px; padding: 10px 25px; background: #1abc9c; border-radius: 50px; font-weight: bold; font-size: 1.1rem;">
+                Decisión: Despliegue en Producción (Model Logit)
+            </div>
+        </div>
+    </div>
     
 
 

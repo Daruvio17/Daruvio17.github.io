@@ -1934,42 +1934,61 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
 
 
 
-    <div style="margin-top: 50px; border-top: 2px solid #e0f2f1; padding-top: 40px;">
-        <h2 style="color: #2c3e50; text-align: center; margin-bottom: 35px;">Torneo de Modelos: Evaluación de Pertinencia</h2>
+   <div style="margin-top: 50px; border-top: 2px solid #e0f2f1; padding-top: 40px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <h2 style="color: #2c3e50; text-align: center; margin-bottom: 35px;">Torneo de Modelos: Evaluación de pertinencia</h2>
 
-        <div style="overflow-x: auto; margin-bottom: 40px;">
-            <table style="width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-                <thead>
-                    <tr style="background: #16a085; color: white; text-align: left;">
-                        <th style="padding: 15px;">Criterio Técnico</th>
-                        <th style="padding: 15px;">Modelos Estadísticos (Logit/Probit)</th>
-                        <th style="padding: 15px;">Modelos de Ensamble (RF/GBM)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr style="border-bottom: 1px solid #eee;">
-                        <td style="padding: 15px; font-weight: bold;">Rendimiento (Accuracy)</td>
-                        <td style="padding: 15px; color: #27ae60; font-weight: bold;">75.52% (Superior)</td>
-                        <td style="padding: 15px;">71.37% (Inferior)</td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid #eee; background: #f9f9f9;">
-                        <td style="padding: 15px; font-weight: bold;">Escalabilidad (Data Size)</td>
-                        <td style="padding: 15px;">Óptimo para n = 4,835 registros.</td>
-                        <td style="padding: 15px;">Riesgo de suboptimización por datos limitados.</td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid #eee;">
-                        <td style="padding: 15px; font-weight: bold;">Generalización</td>
-                        <td style="padding: 15px;">Alta (bajo riesgo de capturar ruido).</td>
-                        <td style="padding: 15px; color: #e67e22;">Riesgo de Overfitting (Sobreajuste).</td>
-                    </tr>
-                    <tr style="background: #f9f9f9;">
-                        <td style="padding: 15px; font-weight: bold;">Explicabilidad (XAI)</td>
-                        <td style="padding: 15px;">Directa (Coeficientes y Odds Ratios).</td>
-                        <td style="padding: 15px;">"Caja Negra" (Complejo de auditar).</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+    <div style="overflow-x: auto; margin-bottom: 40px;">
+        <table style="width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            <thead>
+                <tr style="background: #16a085; color: white; text-align: left;">
+                    <th style="padding: 15px;">Criterio de Evaluación</th>
+                    <th style="padding: 15px;">Modelo Logit (Final)</th>
+                    <th style="padding: 15px;">Modelos de Ensamble (RF/GBM)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom: 1px solid #eee;">
+                    <td style="padding: 15px; font-weight: bold;">Rendimiento (Accuracy)</td>
+                    <td style="padding: 15px; color: #27ae60; font-weight: bold;">75.52%</td>
+                    <td style="padding: 15px;">71.37%</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #eee; background: #fdf2f2;">
+                    <td style="padding: 15px; font-weight: bold;">Tasa de Error Global</td>
+                    <td style="padding: 15px; color: #c0392b; font-weight: bold;">24.48%</td>
+                    <td style="padding: 15px; color: #c0392b;">28.63%</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #eee;">
+                    <td style="padding: 15px; font-weight: bold;">Log-Loss (Entropía Cruzada)</td>
+                    <td style="padding: 15px; color: #27ae60; font-weight: bold;">0.51 (Bajo)</td>
+                    <td style="padding: 15px; color: #e67e22;">0.64 (Inestabilidad)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #eee; background: #f9f9f9;">
+                    <td style="padding: 15px; font-weight: bold;">Raíz del Error Cuadrático (RMSE)</td>
+                    <td style="padding: 15px;">0.42</td>
+                    <td style="padding: 15px;">0.49</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #eee;">
+                    <td style="padding: 15px; font-weight: bold;">Interpretación de Errores</td>
+                    <td style="padding: 15px;">Errores consistentes y explicables por p-values.</td>
+                    <td style="padding: 15px; color: #e67e22;">Errores aleatorios por sobreajuste al ruido.</td>
+                </tr>
+                <tr style="background: #f9f9f9;">
+                    <td style="padding: 15px; font-weight: bold;">Explicabilidad (XAI)</td>
+                    <td style="padding: 15px;">Directa (Odds Ratios confiables).</td>
+                    <td style="padding: 15px;">Caja Negra (Error difícil de auditar).</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div style="background: #ecf0f1; padding: 25px; border-radius: 12px; border-left: 5px solid #16a085;">
+        <h3 style="color: #16a085; margin-top: 0;">Conclusión del Modelo Seleccionado</h3>
+        <p style="color: #34495e; line-height: 1.6;">
+            Tras evaluar tanto la capacidad predictiva como la estructura de error, el <strong>Modelo Logit</strong> se posiciona como la solución óptima. No solo presenta un error global significativamente menor (24.48%), sino que su bajo <strong>Log-Loss</strong> garantiza que las probabilidades asignadas son más precisas y menos volátiles que las de los modelos de ensamble.
+        </p>
+      
+    </div>
+</div>
 
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px;">
             <div style="background: #ffffff; padding: 25px; border-radius: 12px; border-left: 5px solid #1abc9c; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
@@ -1982,7 +2001,7 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
             <div style="background: #ffffff; padding: 25px; border-radius: 12px; border-left: 5px solid #3498db; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
                 <h4 style="color: #2980b9; margin-top: 0;"><i class="fas fa-hand-holding-usd"></i> Sentido Económico</h4>
                 <p style="font-size: 0.9rem; color: #555; line-height: 1.6;">
-                    Para una entidad como <strong>Bancolombia</strong>, el costo de un Falso Negativo (perder un cliente que se iba a fugar) es mayor al costo de gestión de un Falso Positivo. El modelo Logit minimizó los Falsos Negativos (22 casos), optimizando el presupuesto de retención al identificar con mayor precisión el riesgo real.
+                    Para la entidad financiera, el costo de un Falso Negativo (perder un cliente que se iba a fugar) es mayor al costo de gestión de un Falso Positivo. El modelo Logit minimizó los Falsos Negativos (22 casos), optimizando el presupuesto de retención al identificar con mayor precisión el riesgo real.
                 </p>
             </div>
         </div>
@@ -1990,12 +2009,72 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
         <div style="margin-top: 40px; background: #2c3e50; color: white; padding: 35px; border-radius: 15px; text-align: center;">
             <h3 style="margin-top: 0; color: #1abc9c;">Veredicto: Modelo Logit como Ganador</h3>
             <p style="font-size: 1rem; max-width: 800px; margin: 15px auto; opacity: 0.9;">
-                Se elige la <strong>Regresión Logística</strong> no por ser la más sencilla, sino por ser la más <strong>pertinente</strong>. Su capacidad de generalización en muestras finas, su transparencia para procesos de auditoría bancaria y su superioridad en la métrica de Accuracy la posicionan como la herramienta más robusta para la toma de decisiones estratégicas.
+                Se elige la <strong>Regresión Logística</strong> no por ser la más sencilla, sino por ser la más pertinente. Su capacidad de generalización en muestras no tan masivas o de tipo big data, su transparencia para procesos de auditoría bancaria y su superioridad en la métrica de Accuracy la posicionan como la herramienta más robusta para la toma de decisiones estratégicas.
             </p>
             <div style="display: inline-block; margin-top: 20px; padding: 10px 25px; background: #1abc9c; border-radius: 50px; font-weight: bold; font-size: 1.1rem;">
                 Decisión: Despliegue en Producción (Model Logit)
             </div>
         </div>
+    <div style="margin-top: 50px; border-top: 2px solid #e0f2f1; padding-top: 40px; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+    
+    <div style="background: #ffffff; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); margin-bottom: 40px;">
+        <h2 style="color: #2c3e50; border-bottom: 2px solid #16a085; padding-bottom: 10px; margin-bottom: 25px;">
+            Especificación del Modelo Final/Modelo de producción
+        </h2>
+        
+        <p style="color: #7f8c8d; font-style: italic; margin-bottom: 20px;">
+            Variables no significativas filtradas mediante p-value < 0.05 y optimización de AIC.
+        </p>
+
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 25px;">
+            <thead>
+                <tr style="background: #f8f9fa; color: #2c3e50; border-bottom: 2px solid #dee2e6;">
+                    <th style="padding: 12px; text-align: left;">Variable Significativa</th>
+                    <th style="padding: 12px; text-align: center;">Coeficiente (β)</th>
+                    <th style="padding: 12px; text-align: center;">Odds Ratio (eᵝ)</th>
+                    <th style="padding: 12px; text-align: right;">Impacto en Probabilidad</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom: 1px solid #eee;">
+                    <td style="padding: 12px; font-weight: 500;">Intercepto (Constante)</td>
+                    <td style="padding: 12px; text-align: center;">-1.24</td>
+                    <td style="padding: 12px; text-align: center;">0.29</td>
+                    <td style="padding: 12px; text-align: right; color: #7f8c8d;">Base Logarítmica</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #eee;">
+                    <td style="padding: 12px; font-weight: 500;">Incidencias Técnicas (Mensuales)</td>
+                    <td style="padding: 12px; text-align: center; color: #c0392b;">+0.85</td>
+                    <td style="padding: 12px; text-align: center; font-weight: bold;">2.34</td>
+                    <td style="padding: 12px; text-align: right; color: #c0392b;">↑ 134% riesgo por unidad</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #eee;">
+                    <td style="padding: 12px; font-weight: 500;">Antigüedad del Contrato (Años)</td>
+                    <td style="padding: 12px; text-align: center; color: #27ae60;">-0.42</td>
+                    <td style="padding: 12px; text-align: center; font-weight: bold;">0.66</td>
+                    <td style="padding: 12px; text-align: right; color: #27ae60;">↓ 34% riesgo por año</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #eee;">
+                    <td style="padding: 12px; font-weight: 500;">Uso de Canal Digital (0-1)</td>
+                    <td style="padding: 12px; text-align: center; color: #27ae60;">-0.68</td>
+                    <td style="padding: 12px; text-align: center; font-weight: bold;">0.51</td>
+                    <td style="padding: 12px; text-align: right; color: #27ae60;">↓ 49% riesgo si es usuario</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div style="background: #f1f8e9; padding: 15px; border-radius: 8px; font-family: monospace; color: #1b5e20;">
+            <strong>Ecuación Logit:</strong> logit(p) = -1.24 + 0.85(Incidencias) - 0.42(Antigüedad) - 0.68(CanalDigital)
+        </div>
+    </div>
+
+    <div style="background: #2c3e50; color: #ecf0f1; padding: 35px; border-radius: 15px; border-right: 8px solid #16a085;">
+        <h3 style="color: #16a085; margin-top: 0; font-size: 1.5em;">Conclusión y Recomendación de Intervención</h3>
+        <p style="line-height: 1.8; font-size: 1.1em; text-align: justify;">
+            El análisis identifica que los clientes con <strong>mayor probabilidad de abandono</strong> son aquellos con menos de un año de antigüedad que han experimentado más de dos incidencias técnicas en el último mes, donde el riesgo se multiplica exponencialmente (OR=2.34). Desde una perspectiva económica e interpretativa, la intervención debe priorizar al segmento de Alto Valor en Riesgo: clientes con contratos de largo plazo que empiezan a mostrar un uso decreciente de canales digitales. Intervenir sobre este grupo mediante programas de fidelización técnica y soporte proactivo garantiza el mayor <strong>ROI de retención</strong>, ya que el costo marginal de asegurar a un cliente antiguo es significativamente menor que el Valor de Vida del Cliente (LTV) que se perdería por una falla sistémica en el servicio.
+        </p>
+    </div>
+</div>
     </div>
     
 

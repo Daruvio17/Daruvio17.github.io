@@ -2021,11 +2021,16 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
         <h2 style="color: #2c3e50; border-bottom: 2px solid #16a085; padding-bottom: 10px; margin-bottom: 25px;">
             Especificación del Modelo Final/Modelo de producción
         </h2>
-        <div style="background: #f8f9fa; padding: 25px; border-radius: 10px; text-align: center; margin-bottom: 30px; border: 1px dashed #bdc3c7;">
-            <span style="font-size: 1.2em; color: #2c3e50;">
-                $$ \ln\left(\frac{\hat{P}}{1-\hat{P}}\right) = -1.240 + 0.852(\text{Incidencias}) - 0.421(\text{Antigüedad}) - 0.684(\text{CanalDigital}) $$
-            </span>
+        <div style="background: #fdfdfd; padding: 30px; border-radius: 12px; text-align: center; margin-bottom: 30px; border: 1px solid #e8f5e9;">
+            <div style="font-size: 1.8em; color: #16a085; margin-bottom: 20px;">
+                $$p_i = \frac{e^{Z}}{1+e^{Z}}$$
+            </div>
+            <p style="color: #7f8c8d; font-weight: bold; margin-bottom: 15px;">Donde el predictor lineal Z se define como:</p>
+            <div style="font-size: 1.3em; color: #2c3e50; padding: 15px; background: #f1f8e9; border-radius: 8px; display: inline-block; border: 1px solid #c8e6c9;">
+                $$Z = \beta_0 + \beta_1(\text{Incidencias_Tecnicas}) + \beta_2(\text{Antiguedad_Contrato}) + \beta_3(\text{Uso_Canal_Digital})$$
+            </div>
         </div>
+    </div>
         
         <p style="color: #7f8c8d; font-style: italic; margin-bottom: 20px;">
             Variables no significativas filtradas mediante p-value < 0.05 y optimización de AIC.
@@ -2068,16 +2073,7 @@ matplot(rev(rejilla_traza), t(as.matrix(coef(mod_traza))[-1,]), type="l",
             </tbody>
         </table>
 
-        <div style="background: #fdfdfd; padding: 30px; border-radius: 12px; text-align: center; margin-bottom: 30px; border: 1px solid #e8f5e9;">
-            <div style="font-size: 1.8em; color: #16a085; margin-bottom: 20px;">
-                $$p_i = \frac{e^{Z}}{1+e^{Z}}$$
-            </div>
-            <p style="color: #7f8c8d; font-weight: bold; margin-bottom: 15px;">Donde el predictor lineal ($Z$) se define como:</p>
-            <div style="font-size: 1.3em; color: #2c3e50; padding: 15px; background: #f1f8e9; border-radius: 8px; display: inline-block; border: 1px solid #c8e6c9;">
-                $$Z = \beta_0 + \beta_1(\text{Incidencias\_Tecnicas}) + \beta_2(\text{Antigüedad\_Contrato}) + \beta_3(\text{Uso\_Canal\_Digital})$$
-            </div>
-        </div>
-    </div>
+       
 
     <div style="background: #2c3e50; color: #ecf0f1; padding: 35px; border-radius: 15px; border-right: 8px solid #16a085;">
         <h3 style="color: #16a085; margin-top: 0; font-size: 1.5em;">Conclusión y Recomendación de Intervención</h3>

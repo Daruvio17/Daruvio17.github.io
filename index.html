@@ -3133,11 +3133,48 @@ print(paste("Accuracy del Modelo GBM:", round(accuracy_gbm, 4)))
 
 
 
-<!--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+<!------------------------------------------------------------------------------------------Fraude transaccional--------------------------------------------------------------------------------------------------------------------------->
 <div id="proyecto9-detalle" class="tab-content" style="display:none;">
     <button onclick="showTab('proyectos')" class="project-btn" style="margin-bottom:20px; border:none; background:none; cursor:pointer;">← Volver a Proyectos</button>
 
+    <div style="background: linear-gradient(135deg, #f39c12, #d35400); color: white; padding: 30px; border-radius: 12px; margin-bottom: 30px;">
+        <h2 style="margin: 0; color: white;">End-to-End de detección de fraude transaccional</h2>
+    </div>
 
+    <div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 25px;">
+        <h3 style="color: #d35400; margin-top: 0; font-size: 1.4em;">Contexto y Problemática de Negocio</h3>
+        <p style="color: #333; line-height: 1.6;">
+            En el ecosistema financiero actual, la clonación de tarjetas y el phishing representan pérdidas millonarias anuales y afectan directamente la confianza de los clientes. El reto de un banco es interceptar estas transacciones fraudulentas en milisegundos, antes de que sean autorizadas.
+        </p>
+        
+        <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 15px;">
+            <div style="flex: 1; min-width: 250px; background: #fdf2e9; padding: 15px; border-radius: 8px; border-left: 4px solid #f39c12;">
+                <strong style="color: #d35400;">El Reto del Desbalanceo:</strong><br>
+                Menos del 1% de las transacciones diarias suelen ser fraudulentas. Los modelos deben ser capaces de detectarlas sin generar demasiadas falsas alarmas.
+            </div>
+            <div style="flex: 1; min-width: 250px; background: #fdf2e9; padding: 15px; border-radius: 8px; border-left: 4px solid #d35400;">
+                <strong style="color: #d35400;">Equilibrio de Negocio:</strong><br>
+                Dejar pasar un fraude cuesta dinero (Falso Negativo), pero bloquear la tarjeta de un cliente legítimo arruina su experiencia (Falso Positivo). Buscamos el punto óptimo.
+            </div>
+        </div>
+    </div>
+
+    <div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 25px;">
+        <h3 style="color: #2c3e50; margin-top: 0; font-size: 1.4em;">Enfoque Metodológico</h3>
+        <p style="color: #555; line-height: 1.6;">
+            Para resolver ello, desarrollé un flujo End-to-End, que abarca desde la ingesta de los datos crudos hasta la puesta en producción. Para la etapa de modelado, decidí tomar como modelos candidatos a los siguientes:
+        </p>
+
+<div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px;">
+            <span style="background: #fdf2e9; color: #d35400; padding: 8px 15px; border-radius: 20px; font-weight: 600; font-size: 0.9em; border: 1px solid #f39c12;">Probit</span>
+            <span style="background: #fdf2e9; color: #d35400; padding: 8px 15px; border-radius: 20px; font-weight: 600; font-size: 0.9em; border: 1px solid #f39c12;">Logit</span>
+            <span style="background: #ebf5fb; color: #2980b9; padding: 8px 15px; border-radius: 20px; font-weight: 600; font-size: 0.9em; border: 1px solid #3498db;">Random Forest</span>
+            <span style="background: #ebf5fb; color: #2980b9; padding: 8px 15px; border-radius: 20px; font-weight: 600; font-size: 0.9em; border: 1px solid #3498db;">GBM</span>
+            <span style="background: #ebf5fb; color: #2980b9; padding: 8px 15px; border-radius: 20px; font-weight: 600; font-size: 0.9em; border: 1px solid #3498db;">XGBoost</span>
+            <span style="background: #ebf5fb; color: #2980b9; padding: 8px 15px; border-radius: 20px; font-weight: 600; font-size: 0.9em; border: 1px solid #3498db;">LightGBM</span>
+        </div>
+        
+    </div>
 
 </div>
 

@@ -3190,10 +3190,6 @@ print(paste("Accuracy del Modelo GBM:", round(accuracy_gbm, 4)))
                 <span style="color: #2c3e50; font-size: 0.9em; font-weight: 600;">Total Variables</span>
                 <div style="color: #2980b9; font-size: 1.6em; font-weight: bold; margin-top: 5px;">23</div>
             </div>
-            <div style="flex: 1; min-width: 180px; background: #ebf5fb; padding: 15px; border-radius: 8px; text-align: center;">
-                <span style="color: #2c3e50; font-size: 0.9em; font-weight: 600;">Peso en Memoria</span>
-                <div style="color: #2980b9; font-size: 1.6em; font-weight: bold; margin-top: 5px;">~325.1 MB</div>
-            </div>
         </div>
 
         <h4 style="color: #2980b9; margin-bottom: 10px;">Clasificación y Mapeo de Variables</h4>
@@ -3204,24 +3200,24 @@ print(paste("Accuracy del Modelo GBM:", round(accuracy_gbm, 4)))
             <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; border-top: 3px solid #3498db;">
                 <strong style="color: #2c3e50;">Temporales e Identificadores</strong>
                 <ul style="color: #555; font-size: 0.9em; margin-top: 8px; padding-left: 20px;">
-                    <li><code>trans_date_trans_time</code>: Fecha y hora exacta (clave para detectar patrones de horarios sospechosos).</li>
-                    <li><code>cc_num</code>, <code>trans_num</code>, <code>unix_time</code>: Identificadores únicos y tiempos Unix.</li>
+                    <li><code>trans_date_trans_time</code>: Fecha y hora exacta.</li>
+                    <li><code>cc_num</code>, <code>trans_num</code>, <code>unix_time</code>: Identificadores únicos y tiempos Unix o UTC.</li>
                 </ul>
             </div>
 
             <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; border-top: 3px solid #3498db;">
                 <strong style="color: #2c3e50;">Información de la Transacción</strong>
                 <ul style="color: #555; font-size: 0.9em; margin-top: 8px; padding-left: 20px;">
-                    <li><code>amt</code>: Monto de la transacción (variable numérica crítica).</li>
+                    <li><code>amt</code>: Monto de la transacción.</li>
                     <li><code>merchant</code>, <code>category</code>: Comercio y categoría del gasto.</li>
                 </ul>
             </div>
 
             <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; border-top: 3px solid #3498db;">
-                <strong style="color: #2c3e50;">Datos del Tarjetahabiente</strong>
+                <strong style="color: #2c3e50;">Información del cliente</strong>
                 <ul style="color: #555; font-size: 0.9em; margin-top: 8px; padding-left: 20px;">
-                    <li><code>first</code>, <code>last</code>, <code>gender</code>, <code>dob</code>: Datos personales y demográficos del cliente.</li>
-                    <li><code>job</code>: Ocupación del cliente (sirve para entender perfiles de comportamiento).</li>
+                    <li><code>first</code>, <code>last</code>, <code>gender</code>, <code>dob</code>: Nombre, apellido, género y fecha de nacimiento, respectivamente.</li>
+                    <li><code>job</code>: Ocupación del cliente.</li>
                 </ul>
             </div>
 
@@ -3235,7 +3231,7 @@ print(paste("Accuracy del Modelo GBM:", round(accuracy_gbm, 4)))
         </div>
 
         <div style="background: #eaf2f8; padding: 15px; border-radius: 8px; border-left: 4px solid #2980b9; margin-top: 20px;">
-            <strong style="color: #2471a3;">Variable Objetivo (Target):</strong> <code>is_fraud</code> (Tipo entero). Es la bandera binaria que indica si la transacción fue fraudulenta o legítima.
+            <strong style="color: #2471a3;">Variable Objetivo (Target):</strong> <code>is_fraud</code>. Es la bandera binaria que indica si la transacción fue fraudulenta o legítima.
         </div>
     </div>
     

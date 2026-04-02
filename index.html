@@ -3234,6 +3234,60 @@ print(paste("Accuracy del Modelo GBM:", round(accuracy_gbm, 4)))
             <strong style="color: #2471a3;">Variable Objetivo (Target):</strong> <code>is_fraud</code>. Es la bandera binaria que indica si la transacción fue fraudulenta o legítima.
         </div>
     </div>
+
+<div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 25px;">
+        <h3 style="color: #2c3e50; margin-top: 0; font-size: 1.4em;">Limpieza de Datos y Feature Engineering (Python)</h3>
+        <p style="color: #555; line-height: 1.6;">
+            En esta etapa se realizó el procesamiento de la información utilizando la librería Pandas en Python. El objetivo fue limpiar el ruido del set de datos y enriquecerlo mediante la creación de nuevas variables que aporten mayor poder predictivo a los modelos.
+        </p>
+
+        <div style="border-left: 3px solid #3498db; padding-left: 20px; margin-left: 10px;">
+            
+            <div style="margin-bottom: 20px; position: relative;">
+                <div style="position: absolute; left: -26px; top: 5px; width: 10px; height: 10px; background: #3498db; border-radius: 50%;"></div>
+                <strong style="color: #2980b9;">Consolidación y Ordenamiento Temporal:</strong>
+                <p style="color: #555; font-size: 0.95em; margin-top: 5px;">
+                    Como se recibieron en primera instancia dos dataset, uno de entrenamiento, otro de prueba, se unieron en un solo dataset completo y, posteriormente, dicho dataset se ordenó cronológicamente según la fecha y hora de la transacción para mantener la coherencia del tiempo en análisis posteriores.
+                </p>
+            </div>
+
+            <div style="margin-bottom: 20px; position: relative;">
+                <div style="position: absolute; left: -26px; top: 5px; width: 10px; height: 10px; background: #3498db; border-radius: 50%;"></div>
+                <strong style="color: #2980b9;">Depuración de Columnas No Relevantes:</strong>
+                <p style="color: #555; font-size: 0.95em; margin-top: 5px;">
+                    Se eliminaron variables de identificación que no aportan valor estadístico a los modelos y que podrían generar ruido o sobreajuste, tales como índices residuales, números de tarjeta, nombres, apellidos, calles específicas y números de transacción.
+                </p>
+            </div>
+
+            <div style="margin-bottom: 20px; position: relative;">
+                <div style="position: absolute; left: -26px; top: 5px; width: 10px; height: 10px; background: #3498db; border-radius: 50%;"></div>
+                <strong style="color: #2980b9;">Optimización de Tipos de Datos:</strong>
+                <p style="color: #555; font-size: 0.95em; margin-top: 5px;">
+                    Para mejorar la eficiencia en memoria, las variables de texto repetitivas (como comercio, categoría, género, ciudad, estado y ocupación) se transformaron al tipo <code>category</code>. Asimismo, las variables numéricas y fechas se forzaron a sus formatos correctos (<code>float64</code>, <code>int64</code> y <code>datetime64</code>).
+                </p>
+            </div>
+
+            <div style="margin-bottom: 5px; position: relative;">
+                <div style="position: absolute; left: -26px; top: 5px; width: 10px; height: 10px; background: #3498db; border-radius: 50%;"></div>
+                <strong style="color: #2980b9;">Creación de Nuevas Variables:</strong>
+                <p style="color: #555; font-size: 0.95em; margin-top: 5px;">
+                    Se desarrollaron dos nuevas variables altamente explicativas para el negocio:
+                </p>
+                <ul style="color: #555; font-size: 0.95em; padding-left: 20px; margin-top: 5px;">
+                    <li><strong>Distancia en Kilómetros (<code>distancia_km</code>):</strong> Calculada a través de la fórmula matemática de <em>Haversine</em>, midiendo la distancia física real entre las coordenadas del usuario (residencia) y las coordenadas del comercio que este llevó a cabo.</li>
+                    <li><strong>Edad (<code>edad</code>):</strong> Calculada restando la fecha de nacimiento (<code>dob</code>) al momento exacto en que se realizó la transacción.</li>
+                </ul>
+                <p style="color: #555; font-size: 0.95em; margin-top: 5px;">
+                    Una vez extraídas estas métricas, se procedió a eliminar las columnas originales de latitud, longitud y fecha de nacimiento para evitar redundancia (multicolinealidad).
+                </p>
+            </div>
+
+        </div>
+
+        <div style="background: #eaf2f8; padding: 15px; border-radius: 8px; border-left: 4px solid #2980b9; margin-top: 25px;">
+            <strong style="color: #2471a3;">Estado del Dataset:</strong> La base de datos ha quedado completamente limpia, optimizada en memoria y enriquecida con variables de negocio, lista para la fase de partición de datos (Data Split). El head de dicho dataset completo se muestra a continuación:
+        </div>
+    </div>
     
 </div>
 

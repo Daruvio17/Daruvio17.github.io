@@ -3296,6 +3296,44 @@ print(paste("Accuracy del Modelo GBM:", round(accuracy_gbm, 4)))
             
         </div>
     </div>
+
+    <div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 25px;">
+        <h3 style="color: #2c3e50; margin-top: 0; font-size: 1.4em;">Data Split</h3>
+        <p style="color: #555; line-height: 1.6;">
+            En problemas de detección de fraude, los patrones delictivos evolucionan rápidamente con el tiempo. Por este motivo, se descartó un muestreo aleatorio tradicional y se optó por un Split Temporal. Esto garantiza evaluar el modelo bajo condiciones reales de producción, prediciendo el futuro con datos del pasado.
+        </p>
+
+        <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 15px; margin-bottom: 25px;">
+            
+            <div style="flex: 1; min-width: 250px; background: #eaf2f8; padding: 15px; border-radius: 8px; border-top: 4px solid #2980b9;">
+                <strong style="color: #2471a3;">1. Entrenamiento (Train) - 70%</strong>
+                <p style="color: #333; font-size: 0.9em; margin-top: 5px; margin-bottom: 2px;"><strong>Registros:</strong> 1,296,675</p>
+                <p style="color: #555; font-size: 0.85em; margin-top: 0;"><em>Desde: 2019-01-01<br>Hasta: 2020-06-21</em></p>
+                <p style="color: #7f8c8d; font-size: 0.85em;">Destinado a la calibración de parámetros y aprendizaje de patrones de los modelos candidatos.</p>
+            </div>
+
+            <div style="flex: 1; min-width: 250px; background: #ebf5fb; padding: 15px; border-radius: 8px; border-top: 4px solid #3498db;">
+                <strong style="color: #2471a3;">2. Prueba (Test) - 15%</strong>
+                <p style="color: #333; font-size: 0.9em; margin-top: 5px; margin-bottom: 2px;"><strong>Registros:</strong> 277,859</p>
+                <p style="color: #555; font-size: 0.85em; margin-top: 0;"><em>Desde: 2020-06-21<br>Hasta: 2020-10-03</em></p>
+                <p style="color: #7f8c8d; font-size: 0.85em;">Utilizado para validar el rendimiento, comparar modelos y evitar el sobreajuste (Overfitting).</p>
+            </div>
+
+            <div style="flex: 1; min-width: 250px; background: #e8f4f8; padding: 15px; border-radius: 8px; border-top: 4px solid #1f618d;">
+                <strong style="color: #1f618d;">3. Fuera de Tiempo (OOT) - 15%</strong>
+                <p style="color: #333; font-size: 0.9em; margin-top: 5px; margin-bottom: 2px;"><strong>Registros:</strong> 277,860</p>
+                <p style="color: #555; font-size: 0.85em; margin-top: 0;"><em>Desde: 2020-10-03<br>Hasta: 2020-12-31</em></p>
+                <p style="color: #7f8c8d; font-size: 0.85em;">Simulación pura de producción con datos completamente inéditos y posteriores en el tiempo.</p>
+            </div>
+        </div>
+
+        <div style="background: #f4f6f7; padding: 15px; border-radius: 8px; border-left: 4px solid #bdc3c7;">
+            <strong style="color: #2c3e50;">Nota:</strong> 
+            <span style="color: #555; font-size: 0.95em;">
+                Una vez realizado el split, se procedió a eliminar la columna temporal <code>trans_date_trans_time</code> y el código postal (<code>zip</code>) de los tres datasets para evitar que los algoritmos memoricen marcas de tiempo directas o zonas excesivamente específicas que restaran capacidad de generalización al modelo.
+            </span>
+        </div>
+    </div>
     
 </div>
 

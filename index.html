@@ -3340,6 +3340,88 @@ print(paste("Accuracy del Modelo GBM:", round(accuracy_gbm, 4)))
             </span>
         </div>
     </div>
+
+    <div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 25px;">
+        <h3 style="color: #2c3e50; margin-top: 0; font-size: 1.4em;">Código de Implementación (Python)</h3>
+        <p style="color: #555; line-height: 1.6;">
+            A continuación se detalla el script utilizado para la consolidación de los datos, el <em>Feature Engineering</em> y el particionamiento temporal.
+        </p>
+
+        <div style="background: #282c34; color: #abb2bf; padding: 20px; border-radius: 8px; overflow-x: auto; box-shadow: inset 0 2px 10px rgba(0,0,0,0.2);">
+            <pre style="margin: 0; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 0.85em; line-height: 1.5;"><code># -*- coding: utf-8 -*-
+
+from google.colab import drive
+import pandas as pd
+drive.mount('/content/drive')
+
+ruta_train = '/content/drive/MyDrive/End-to-End/fraudTrain.csv'
+ruta_test = '/content/drive/MyDrive/End-to-End/fraudTest.csv'
+
+train = pd.read_csv(ruta_train)
+test = pd.read_csv(ruta_test)
+
+datos_totales = pd.concat([train, test], axis=0, ignore_index=True)
+
+datos_totales['trans_date_trans_time'] = pd.to_datetime(datos_totales['trans_date_trans_time'])
+datos_totales = datos_totales.sort_values(by='trans_date_trans_time').reset_index(drop=True)
+
+if 'Unnamed: 0' in datos_totales.columns:
+    datos_totales = datos_totales.drop(columns=['Unnamed: 0'])
+
+cols_to_drop = ['trans_num', 'cc_num', 'first', 'last', 'street', 'unix_time']
+datos_totales = datos_totales.drop(columns=cols_to_drop, errors='ignore')
+
+# Optimización de tipos de datos
+datos_totales['merchant'] = datos_totales['merchant'].astype('category')
+datos_totales['category'] = datos_totales['category'].astype('category')
+datos_totales['gender'] = datos_totales['gender'].astype('category')
+datos_totales['city'] = datos_totales['city'].astype('category')
+datos_totales['state'] = datos_totales['state'].astype('category')
+datos_totales['job'] = datos_totales['job'].astype('category')
+
+datos_totales['amt'] = datos_totales['amt'].astype('float64')
+datos_totales['city_pop'] = datos_totales['city_pop'].astype('int64')
+datos_totales['is_fraud'] = datos_totales['is_fraud'].astype('int64')
+
+datos_totales['dob'] = pd.to_datetime(datos_totales['dob'])
+
+import numpy as np
+
+# Feature Engineering: Distancia Haversine
+def haversine(lat1, lon1, lat2, lon2):
+    lat1, lon1, lat2, lon2 = map(np.radians, [lat1, lon1, lat2, lon2])
+    dlat = lat2 - lat1
+    dlon = lon2 - lon1
+    a = np.sin(dlat/2)**2 + np.cos(lat1) * np.sin(dlat/2)**2 + np.cos(lat1) * np.cos(lat2) * np.sin(dlon/2)**2
+    c = 2 * np.arcsin(np.sqrt(a))
+    return 6371 * c
+
+datos_totales['distancia_km'] = haversine(
+    datos_totales['lat'], datos_totales['long'],
+    datos_totales['merch_lat'], datos_totales['merch_long']
+)
+
+# Feature Engineering: Edad
+datos_totales['edad'] = (datos_totales['trans_date_trans_time'] - datos_totales['dob']).dt.days // 365
+
+cols_sobrantes = ['lat', 'long', 'merch_lat', 'merch_long', 'dob']
+datos_totales = datos_totales.drop(columns=cols_sobrantes)
+
+# Data Split Temporal
+total_registros = len(datos_totales)
+corte_train = int(total_registros * 0.70)
+corte_prueba = int(total_registros * 0.85)
+
+dataset_entrenamiento = datos_totales.iloc[:corte_train].copy()
+dataset_prueba = datos_totales.iloc[corte_train:corte_prueba].copy()
+dataset_OOT = datos_totales.iloc[corte_prueba:].copy()
+
+# Limpieza final post-split
+for df in [dataset_entrenamiento, dataset_prueba, dataset_OOT]:
+    df.drop(columns=['trans_date_trans_time', 'zip'], errors='ignore', inplace=True)
+</code></pre>
+        </div>
+    </div>
     
 </div>
 

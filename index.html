@@ -3423,36 +3423,39 @@ for df in [dataset_entrenamiento, dataset_prueba, dataset_OOT]:
         </div>
     </div>
 
-<h2>Diagnóstico de los datos ya estructurados</h2>
+<section id="analisis-exploratorio" class="eda-section" style="font-family: sans-serif; line-height: 1.6; color: #333;">
+    <h2>Análisis Exploratorio de Datos (EDA) y Diagnóstico</h2>
     <p>
-        Antes de proceder con el entrenamiento de los modelos candidatos (Probit, Logit, Random Forest, XGBoost y LightGBM), 
+        Antes de proceder con el entrenamiento de los modelos candidatos (Probit, Random Forest, XGBoost, etc.), 
         se realizó una auditoría de la calidad de los datos y su distribución para garantizar la robustez estadística 
-        del modelad. Se obtuvo lo siguiente:
+        del modelado. Los hallazgos clave que definieron la estrategia de preprocesamiento fueron:
     </p>
 
-    <div class="eda-item">
+    <div class="eda-item" style="margin-bottom: 2rem;">
         <h3>1. Calidad del Dato y Categorías</h3>
         <ul>
-            <li><strong>Completitud:</strong> Se verificó la ausencia total de valores nulos (0 NAs) en el conjunto de entrenamiento.</li>
-            <li><strong>Representatividad:</strong> La variable categórica <code>category</code> presenta una distribución que no presenta baja cardinalidad. Su nivel minoritario (<i>travel</i>) representa el 3.12% de las transacciones, superando el umbral crítico del 1%, por lo que no fue necesario aplicar técnicas de agrupamiento.</li>
+            <li><strong>Completitud:</strong> Se verificó la ausencia total de valores nulos (0 NAs en las 1,296,675 observaciones) en el conjunto de entrenamiento.</li>
+            <li><strong>Representatividad:</strong> La variable categórica <code>category</code> presenta una distribución saludable. Su nivel minoritario (<i>travel</i>) representa el 3.12% de las transacciones (40,507 registros), superando el umbral crítico del 1%, por lo que no fue necesario aplicar técnicas de agrupamiento.</li>
         </ul>
     </div>
 
-    <div class="eda-item">
+    <div class="eda-item" style="margin-bottom: 2rem;">
         <h3>2. Ausencia de Multicolinealidad</h3>
         <p>
-            La matriz de correlación demostró ortogonalidad entre las variables numéricas continuas (valores entre 0.00 y 0.01). 
+            La matriz de correlación demostró ortogonalidad casi perfecta entre las variables numéricas continuas (valores de 0.00 y 0.01 entre monto, población y distancia). 
             Esto es un escenario ideal para el modelo Probit, asegurando que los coeficientes estimados serán estables e interpretables, 
             y previniendo que la regularización Lasso deba eliminar variables por redundancia de información.
         </p>
-        <img src="ruta/a/tu/matriz_correlacion.png" alt="Matriz de correlación de variables numéricas" class="eda-imagen">
+        <div style="text-align: center; margin-top: 1rem;">
+            <img src="image_0841fa.png" alt="Matriz de correlación de variables numéricas" class="eda-imagen" style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 8px;">
+        </div>
     </div>
 
-    <div class="eda-item">
+    <div class="eda-item" style="margin-bottom: 2rem;">
         <h3>3. Desbalance de Clases Severo</h3>
         <p>
-            Se identificó un desbalance crítico: los casos de fraude representan únicamente el <strong>0.58%</strong> 
-            (7,506 transacciones) frente a un 99.42% de transacciones legítimas. Para evitar que el modelo asuma una postura 
+            Se identificó un desbalance crítico típico de entornos transaccionales: los casos de fraude representan únicamente el <strong>0.58%</strong> 
+            (7,506 transacciones) frente a un 99.42% de transacciones legítimas (1,289,169 registros). Para evitar que el modelo asuma una postura 
             "perezosa", se determinó:
         </p>
         <ul>
@@ -3461,19 +3464,20 @@ for df in [dataset_entrenamiento, dataset_prueba, dataset_OOT]:
         </ul>
     </div>
 
-    <div class="eda-item">
+    <div class="eda-item" style="margin-bottom: 2rem;">
         <h3>4. Análisis de Distribución y Valores Atípicos (Outliers)</h3>
         <p>El análisis visual mediante diagramas de caja (Boxplots) reveló comportamientos cruciales para el preprocesamiento:</p>
         <ul>
-            <li><strong>Asimetría extrema en el Monto (amt):</strong> Existe una alta concentración en montos bajos con valores atípicos que superan los 30,000. Dado que los modelos lineales (como el Probit) son altamente sensibles a estos valores extremos, se determinó aplicar una transformación logarítmica <code>amt_log = log(amt + 1)</code> para estabilizar la varianza y evitar sesgos en el hiperplano de decisión.</li>
-            <li><strong>Poder discriminante de la Distancia:</strong> Las distribuciones de <code>distancia_km</code> son visualmente idénticas para transacciones legítimas y fraudulentas (mediana cercana a 90-100 km). Existe una alta probabilidad de que la regularización Lasso (L1) reduzca el coeficiente de esta variable a cero durante la selección de características.</li>
+            <li><strong>Asimetría extrema en el Monto (amt):</strong> Existe una alta concentración en montos bajos con valores atípicos que se acercan a los 30,000. Dado que los modelos lineales (como el Probit) son altamente sensibles a estos valores extremos, se determinó aplicar una transformación logarítmica para estabilizar la varianza y evitar sesgos en el hiperplano de decisión.</li>
+            <li><strong>Poder discriminante de la Distancia:</strong> Las distribuciones de <code>distancia_km</code> son visualmente idénticas para transacciones legítimas y fraudulentas (mediana cercana a 90-100 km). Existe una alta probabilidad de que la regularización Lasso (L1) reduzca el coeficiente de esta variable a cero durante la selección automática de características.</li>
         </ul>
         
-        <div class="graficos-distribucion">
-            <img src="ruta/a/tu/boxplot_monto.png" alt="Distribución del monto por clase" class="eda-imagen">
-            <img src="ruta/a/tu/boxplot_distancia.png" alt="Distribución de la distancia por clase" class="eda-imagen">
+        <div class="graficos-distribucion" style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-top: 1rem;">
+            <img src="image_083dfd.png" alt="Distribución del monto por clase" class="eda-imagen" style="max-width: 48%; min-width: 300px; height: auto; border: 1px solid #ddd; border-radius: 8px;">
+            <img src="image_083e5b.png" alt="Distribución de la distancia por clase" class="eda-imagen" style="max-width: 48%; min-width: 300px; height: auto; border: 1px solid #ddd; border-radius: 8px;">
         </div>
     </div>
+</section>
     
 </div>
 

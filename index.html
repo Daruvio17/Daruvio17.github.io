@@ -3254,7 +3254,64 @@ print(paste("Accuracy del Modelo GBM:", round(accuracy_gbm, 4)))
                     Como se recibieron en primera instancia dos dataset, uno de entrenamiento, otro de prueba, se unieron en un solo dataset completo y, posteriormente, dicho dataset se ordenó cronológicamente según la fecha y hora de la transacción para mantener la coherencia del tiempo en análisis posteriores.
                 </p>
             </div>
-            
+
+
+                <div style="margin-bottom: 20px; position: relative;">
+                <div style="position: absolute; left: -26px; top: 5px; width: 10px; height: 10px; background: #3498db; border-radius: 50%;"></div>
+                 <strong style="color: #2980b9;">Conversión de variables de localización:</strong>    
+    <p style="color: #555; font-size: 0.95em; margin-top: 5px;">
+        Posteriormente, con base en las variables Lat, Long, MerchLat y MerchLong, se usaron para calcular las distancias netas entre la residencia del cliente bancario y el lugar donde efectuó la compra del artículo o servicio, usando la ley de Haversine, se obtiene la variable Distancia_km
+         </p>
+            </div>   
+
+
+            <div style="margin-bottom: 20px; position: relative;">
+                <div style="position: absolute; left: -26px; top: 5px; width: 10px; height: 10px; background: #3498db; border-radius: 50%;"></div>
+                 <strong style="color: #2980b9;">Eliminación de variables no aceptables por ética de modelos:</strong>    
+    <p style="color: #555; font-size: 0.95em; margin-top: 5px;">
+        Debido a que usar variables como Edad o Género en modelos predictivos puede ser demandable, se procedió a eliminar estas como variables predictivas.
+         </p>
+            </div>  
+
+
+
+             <div style="margin-bottom: 20px; position: relative;">
+                <div style="position: absolute; left: -26px; top: 5px; width: 10px; height: 10px; background: #3498db; border-radius: 50%;"></div>
+                 <strong style="color: #2980b9;">Revisión de cardinalidad</strong>    
+    <p style="color: #555; font-size: 0.95em; margin-top: 5px;">
+        Para las variables categóricas, se procedió a revisar la cardinalidad de sus atributos. El resultado fue el siguiente:
+         </p>
+
+                <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee; margin: 20px 0;">
+        <img src="cardinalidad_transaccion.jpg" alt="Deviance vs Tamaño" style="max-width: 80%; height: auto; border-radius: 4px;">
+    </div>
+            </div> 
+
+
+             <p style="color: #555; font-size: 0.95em; margin-top: 5px;">
+        No se tomó en cuenta la variable city, debido a que si se quisiera reducir por categorías, resultaría en la misma variable State. Respecto a la variable merchant, se decidió prescindir de esta, por temas de practicidad. Asi que se procedió a tratar la variable Job
+         </p>
+
+             <p style="color: #555; font-size: 0.95em; margin-top: 5px;">
+            Luego de una revisión exhaustiva, se clasificaron todos los diferentes trabajos en los siguientes grupos: 
+
+                <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee; margin: 20px 0;">
+        <img src="job_fraude.jpg" alt="Deviance vs Tamaño" style="max-width: 80%; height: auto; border-radius: 4px;">
+    </div>
+             </p>
+
+            <div style="margin-bottom: 20px; position: relative;">
+                <div style="position: absolute; left: -26px; top: 5px; width: 10px; height: 10px; background: #3498db; border-radius: 50%;"></div>
+                 <strong style="color: #2980b9;">Tablas de contingencia y pruebas Chi-Cuadrado de Pearson</strong>    
+    <p style="color: #555; font-size: 0.95em; margin-top: 5px;">
+        Para verificar que la construcción de cada variable categórica seguía siendo estadísticamente relevante, se procedió a hacer tablas de contingencia para cada una de ellas y hacer las pruebas Chi-Cuadrado de Pearson, para saber si había dependencia estadística estas y la variable objetivo de fraude.
+         </p>
+           <p style="color: #555; font-size: 0.95em; margin-top: 5px;">
+            Los resultados para todos los grupos fueron p-valores fue menor del nivel de significancia escogido, el cual fue del 5%. Por tanto, para todas las variables categóricas se concluye que todas tienen asociación con la variables de fraude.
+           </p>
+
+            </div> 
+
 
 
             

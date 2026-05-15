@@ -3346,6 +3346,42 @@ print(paste("Accuracy del Modelo GBM:", round(accuracy_gbm, 4)))
 
 
 
+            <div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 25px;">
+        <h3 style="color: #2c3e50; margin-top: 0; font-size: 1.4em;">Tratamiento de Asimetría y Transformación de Variables</h3>
+        <p style="color: #555; line-height: 1.6;">
+            Las variables numéricas como el monto (<code>amt</code>), la población (<code>city_pop</code>) y la <code>distancia_km</code> presentaron distribuciones con una fuerte asimetría positiva. Antes de decidirme por la transformación definitiva, realicé un análisis comparativo visual para evaluar cómo diferentes métodos normalizaban la data.
+        </p>
+
+        <div style="border-left: 3px solid #f39c12; padding-left: 20px; margin-left: 10px; margin-top: 20px;">
+            <strong style="color: #d35400;">Análisis Comparativo de Transformaciones:</strong>
+            <p style="color: #555; font-size: 0.95em; margin-top: 5px;">
+                Evalué el impacto de aplicar transformaciones Logarítmicas, Raíz Cuadrada y <strong>Yeo-Johnson</strong>. El objetivo era reducir la varianza de los errores y estabilizar la distribución para mejorar la convergencia de los modelos paramétricos.
+            </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; margin-top: 20px;">
+            <div style="text-align: center; background: #fafafa; padding: 10px; border-radius: 8px; border: 1px solid #eee;">
+                <span style="color: #7f8c8d; font-size: 0.85em; font-weight: bold; display: block; margin-bottom: 5px;">TRANSFORMACIÓN DE MONTO (AMT)</span>
+                <img src="tu_imagen_amt_transform.jpg" alt="Transformación AMT" style="max-width: 100%; height: auto; border-radius: 4px;">
+            </div>
+            <div style="text-align: center; background: #fafafa; padding: 10px; border-radius: 8px; border: 1px solid #eee;">
+                <span style="color: #7f8c8d; font-size: 0.85em; font-weight: bold; display: block; margin-bottom: 5px;">TRANSFORMACIÓN DE POBLACIÓN</span>
+                <img src="tu_imagen_pop_transform.jpg" alt="Transformación Población" style="max-width: 100%; height: auto; border-radius: 4px;">
+            </div>
+            <div style="text-align: center; background: #fafafa; padding: 10px; border-radius: 8px; border: 1px solid #eee;">
+                <span style="color: #7f8c8d; font-size: 0.85em; font-weight: bold; display: block; margin-bottom: 5px;">TRANSFORMACIÓN DE DISTANCIA</span>
+                <img src="tu_imagen_dist_transform.jpg" alt="Transformación Distancia" style="max-width: 100%; height: auto; border-radius: 4px;">
+            </div>
+        </div>
+
+        <div style="background: #fdfaf4; padding: 15px; border-radius: 8px; border-left: 4px solid #f39c12; margin-top: 20px;">
+            <strong style="color: #d35400;">Decisión Técnica:</strong> 
+            Tras observar las gráficas, seleccioné la transformación <strong>Yeo-Johnson</strong>. A diferencia de la Box-Cox tradicional, esta permite manejar valores de cero o negativos (fundamentales en el cálculo de distancias netas) y demostró ser la más robusta para llevar las distribuciones hacia una forma normal, reduciendo la influencia de los valores extremos en el modelo final.
+        </div>
+    </div>
+
+
+
             
 </div>
 </div>

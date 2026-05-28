@@ -3476,6 +3476,61 @@ print(paste("Accuracy del Modelo GBM:", round(accuracy_gbm, 4)))
 </div>
 
 
+
+
+<div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 25px;">
+    <h3 style="color: #2c3e50; margin-top: 0; font-size: 1.4em;">Tratamiento del Desbalanceo de Clases (Target Resampling)</h3>
+    <p style="color: #555; line-height: 1.6;">
+        En la detección de fraude transaccional, la asimetría entre clases representa un reto crítico para los algoritmos de aprendizaje. Al aislar la variable objetivo (<code>is_fraud</code>) en los conjuntos de datos, se confirmó que en el set de entrenamiento la clase minoritaria representaba apenas el <strong>0.58%</strong> del total (7,506 transacciones fraudulentas frente a 1,289,169 legítimas).
+    </p>
+    <p style="color: #555; line-height: 1.6;">
+        Entrenar un modelo con este nivel de desbalanceo provocaría que el algoritmo tienda a clasificar por defecto cualquier registro como legítimo, alcanzando un falso 99% de precisión general pero siendo completamente inútil para el negocio al no interceptar el fraude.
+    </p>
+
+    <div style="border-left: 3px solid #3498db; padding-left: 20px; margin-left: 10px; margin-top: 20px;">
+        <strong style="color: #2980b9;">Estrategia: Sobremuestreo Sintético Inteligente (SMOTE)</strong>
+        <p style="color: #555; font-size: 0.95em; margin-top: 5px;">
+            Para mitigar este sesgo sin duplicar registros de forma burda —lo que causaría sobreajuste inmediato—, se implementó la técnica <strong>SMOTE (Synthetic Minority Over-sampling Technique)</strong>. Este método matemático genera nuevos vectores de fraude sintéticos basándose en la distancia y relaciones espaciales con los vecinos más cercanos de la clase minoritaria.
+        </p>
+        
+        <div style="background: #fdfaf4; padding: 15px; border-radius: 8px; border-left: 4px solid #f39c12; margin: 15px 0;">
+            <strong style="color: #d35400;">Decisión Técnica de Negocio:</strong> 
+            Se parametrizó la estrategia fijando un <code>sampling_strategy=0.1</code>. Forzar un balanceo perfecto del 50/50 hubiese destruido la probabilidad <em>a priori</em> del fraude y distorsionado por completo la calibración de las probabilidades de los modelos paramétricos candidatos (Logit y Probit), elevando de forma inaceptable la tasa de falsos positivos en producción. El objetivo técnico fue estabilizar la clase minoritaria hasta que represente exactamente el <strong>10%</strong> de la clase mayoritaria.
+        </div>
+
+        <p style="color: #555; font-size: 0.95em;">
+            El impacto del remuestreo en las dimensiones del set de entrenamiento se resume a continuación:
+        </p>
+
+        <div style="display: flex; gap: 15px; flex-wrap: wrap; margin: 20px 0;">
+            <div style="flex: 1; min-width: 220px; background: #f8f9fa; padding: 15px; border-radius: 8px; border-top: 3px solid #e74c3c;">
+                <span style="color: #7f8c8d; font-size: 0.85em; font-weight: 600; display: block; margin-bottom: 5px;">DISTRIBUCIÓN ORIGINAL (ANTES)</span>
+                <div style="color: #c0392b; font-size: 1.4em; font-weight: bold;">0.58% Fraude</div>
+                <div style="color: #555; font-size: 0.9em; margin-top: 5px;">
+                    Legítimas (0): 1,289,169<br>
+                    Fraudes (1): <strong>7,506</strong>
+                </div>
+            </div>
+            
+            <div style="flex: 1; min-width: 220px; background: #f8f9fa; padding: 15px; border-radius: 8px; border-top: 3px solid #2ecc71;">
+                <span style="color: #7f8c8d; font-size: 0.85em; font-weight: 600; display: block; margin-bottom: 5px;">DISTRIBUCIÓN OPTIMIZADA (DESPUÉS)</span>
+                <div style="color: #27ae60; font-size: 1.4em; font-weight: bold;">10.0% Fraude</div>
+                <div style="color: #555; font-size: 0.9em; margin-top: 5px;">
+                    Legítimas (0): 1,289,169<br>
+                    Fraudes (1): <strong>128,916</strong> (Sintéticos)
+                </div>
+            </div>
+        </div>
+
+        <p style="color: #555; font-size: 0.95em;">
+            El set de entrenamiento final consolidó un volumen de <strong>1,418,085 registros</strong>. Esta base proporciona suficiente variabilidad y densidad estadística para que los modelos mapeen los patrones delictivos con alta precisión, preservando la coherencia en la estructura de costos de clasificación del banco.
+        </p>
+
+        <div style="background: #fafafa; padding: 10px 15px; border-radius: 6px; border-left: 3px solid #7f8c8d; margin-top: 15px; font-size: 0.85em; color: #666;">
+            <strong>Nota de Rendimiento:</strong> De acuerdo con los logs de ejecución temporal (21:43:44 a 21:43:59), el remuestreo espacial tomó únicamente 15 segundos, validando la optimización computacional del flujo de datos.
+        </div>
+    </div>
+</div>
     
 
 

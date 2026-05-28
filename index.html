@@ -3430,6 +3430,54 @@ print(paste("Accuracy del Modelo GBM:", round(accuracy_gbm, 4)))
 
 
 
+<div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 25px;">
+    <h3 style="color: #2c3e50; margin-top: 0; font-size: 1.4em;">Estrategia de Validación y Partición de Datos</h3>
+    <p style="color: #555; line-height: 1.6;">
+        En la detección de fraude transaccional, los patrones de comportamiento delictivo cambian rápidamente y están fuertemente ligados al tiempo. Por esta razón, realizar una partición aleatoria convencional (<em>Random Split</em>) introduciría un sesgo metodológico grave debido a la filtración de datos (<em>Data Leakage</em>). 
+    </p>
+    <p style="color: #555; line-height: 1.6;">
+        Para asegurar una evaluación realista y apegada al comportamiento del negocio en producción, los datos previamente ordenados cronológicamente se dividieron de forma estrictamente temporal en tres conjuntos independientes: <strong>Entrenamiento (Train)</strong>, <strong>Prueba (Test)</strong> y <strong>Fuera de Tiempo (Out-of-Time u OOT)</strong>.
+    </p>
+
+    <div style="border-left: 3px solid #3498db; padding-left: 20px; margin-left: 10px; margin-top: 20px;">
+        <div style="margin-bottom: 30px; position: relative;">
+            <div style="position: absolute; left: -26px; top: 5px; width: 10px; height: 10px; background: #3498db; border-radius: 50%;"></div>
+            <strong style="color: #2980b9;">1. Configuración del Split Cronológico</strong>
+            <p style="color: #555; font-size: 0.95em; margin-top: 5px;">
+                El universo total del proyecto cuenta con un volumen de <strong>1,852,394 registros</strong> correspondientes a los años 2019 y 2020. Las marcas de corte se definieron bajo la siguiente distribución temporal:
+            </p>
+            
+            <ul style="color: #555; font-size: 0.95em; line-height: 1.7; padding-left: 20px; margin-top: 10px;">
+                <li><strong style="color: #2c3e50;">Dataset de Entrenamiento (70%):</strong> Diseñado para el ajuste de los parámetros del modelo. Cubre desde el <strong>01 de enero de 2019</strong> hasta el <strong>21 de junio de 2020</strong> (1,296,675 registros).</li>
+                <li><strong style="color: #2c3e50;">Dataset de Prueba (15%):</strong> Utilizado para la calibración de hiperparámetros y selección inicial. Abarca desde el <strong>21 de junio de 2020</strong> hasta el <strong>03 de octubre de 2020</strong> (277,859 registros).</li>
+                <li><strong style="color: #2c3e50;">Dataset Out-of-Time (15%):</strong> El validador definitivo. Corresponde al último trimestre histórico, desde el <strong>03 de octubre de 2020</strong> hasta el <strong>31 de diciembre de 2020</strong> (277,860 registros). Al simular un escenario real de producción con datos de un futuro que el algoritmo jamás procesó en su entrenamiento, este bloque mide la robustez real de la solución antes del despliegue.</li>
+            </ul>
+
+            <div style="background: #fafafa; padding: 12px 15px; border-radius: 6px; border-left: 3px solid #7f8c8d; margin-top: 15px; font-size: 0.9em; color: #555;">
+                <strong>Nota de Control Técnico:</strong> Se implementó una instrucción de validación estructurada (<code>assert</code>) en Python para asegurar matemáticamente que la suma exacta de las tres particiones coincida al 100% con el total de la base original, garantizando un flujo libre de duplicidades o pérdidas de registros.
+            </div>
+        </div>
+
+        <div style="margin-bottom: 20px; position: relative;">
+            <div style="position: absolute; left: -26px; top: 5px; width: 10px; height: 10px; background: #3498db; border-radius: 50%;"></div>
+            <strong style="color: #2980b9;">2. Estructura Final del Dataset Preparado</strong>
+            <p style="color: #555; font-size: 0.95em; margin-top: 5px;">
+                Una vez completada la división temporal, se procedió a retirar la variable de tiempo bruto (<code>trans_date_trans_time</code>) de los conjuntos activos de modelado para mitigar riesgos de sobreajuste. 
+            </p>
+            <p style="color: #555; font-size: 0.95em;">
+                Como resultado del proceso de <em>Feature Engineering</em> y codificación de variables categóricas (como comercios, estados y ocupaciones), el set de datos final quedó estructurado de forma limpia con una dimensión de <strong>76 columnas predictoras independientes</strong>:
+            </p>
+
+            <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee; margin: 20px 0;">
+                <img src="dataset_limpio.jpeg" alt="Estructura final del dataframe de entrenamiento" style="max-width: 95%; height: auto; border-radius: 4px;">
+            </div>
+        </div> 
+    </div>
+</div>
+
+
+    
+
 
     
 </div>

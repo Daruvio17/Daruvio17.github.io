@@ -3604,6 +3604,334 @@ print(paste("Accuracy del Modelo GBM:", round(accuracy_gbm, 4)))
 
 
 
+    <div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 25px;">
+    <h3 style="color: #2c3e50; margin-top: 0; font-size: 1.4em;">Evaluación de Desempeño: Modelo Logit (Regresión Logística)</h3>
+    <p style="color: #555; line-height: 1.6;">
+        El primer algoritmo evaluado de la familia econométrica fue el <strong>Modelo Logit (Regresión Logística)</strong>. Para asegurar una convergencia matemática óptima sobre la matriz de entrenamiento y mitigar el riesgo de sobreajuste (<em>overfitting</em>), se aplicó un proceso de calibración sobre los siguientes hiperparámetros estructurales:
+    </p>
+    
+    <ul style="color: #555; font-size: 0.95em; line-height: 1.6; padding-left: 20px; margin-bottom: 25px;">
+        <li><strong style="color: #2c3e50;">Regularización (penalty):</strong> Se configuró una penalización L2 (Ridge) para controlar la magnitud de los coeficientes de las variables categóricas de alta cardinalidad y evitar vectores extremos.</li>
+        <li><strong style="color: #2c3e50;">Criterio de Tolerancia e Inversa de Regularización (C):</strong> Calibrado en <code>1.0</code> para mantener un equilibrio riguroso entre la flexibilidad del modelo y la penalización de la varianza.</li>
+        <li><strong style="color: #2c3e50;">Algoritmo de Optimización (solver):</strong> Se utilizó un optimizador de memoria limitada idóneo para grandes volúmenes de datos, asegurando la estabilidad numérica del vector de coeficientes <span style="font-family: 'Times New Roman', serif; font-style: italic; font-weight: bold;">&beta;</span>.</li>
+    </ul>
+
+    <div style="border-left: 3px solid #3498db; padding-left: 20px; margin-left: 10px; margin-top: 20px; margin-bottom: 30px;">
+        <strong style="color: #2980b9; font-size: 1.1em; display: block; margin-bottom: 10px;">1. Rendimiento en el Set de Prueba (Test)</strong>
+        <p style="color: #555; font-size: 0.95em; line-height: 1.6;">
+            El conjunto de prueba evalúa la capacidad de generalización del modelo en datos contemporáneos que no participaron en el ajuste de parámetros.
+        </p>
+
+        <div style="text-align: center; background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #e9ecef; margin: 20px 0;">
+            <img src="image_93e3f9.png" alt="Métricas de Desempeño Logit - Set de Prueba" style="max-width: 90%; height: auto; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+            <span style="display: block; margin-top: 8px; font-size: 0.8em; color: #7f8c8d; font-style: italic;">Figura X. Matriz de confusión e indicadores de clasificación en el Set de Prueba (Test).</span>
+        </div>
+
+        <p style="color: #555; font-size: 0.95em; line-height: 1.6;">
+            <strong>Análisis de Discriminación:</strong> El modelo base registra un indicador de rendimiento macro **AUC-ROC de 0.8300**, lo que valida estadísticamente un fuerte poder de segregación espacial de las transacciones fraudulentas. 
+        </p>
+        <p style="color: #555; font-size: 0.95em; line-height: 1.6;">
+            A nivel operativo, de un universo de 1,221 fraudes reales en esta ventana, el modelo logra identificar de forma contundente a **314 casos** (<em>Recall</em> de la clase 1 del 26%). Debido a la rigidez geométrica intrínseca de los modelos lineales paramétricos, se genera un volumen de 2,465 falsos positivos, lo que sitúa la precisión del modelo en un 11% para la clase minoritaria.
+        </p>
+    </div>
+
+    <div style="border-left: 3px solid #2ecc71; padding-left: 20px; margin-left: 10px; margin-top: 20px;">
+        <strong style="color: #27ae60; font-size: 1.1em; display: block; margin-bottom: 10px;">2. Validación Avanzada: Set Fuera de Tiempo (Out-of-Time / OOT)</strong>
+        <p style="color: #555; font-size: 0.95em; line-height: 1.6;">
+            La prueba metodológica definitiva para mitigar el riesgo de *Data Leakage* consiste en evaluar el comportamiento ante un trimestre completamente futuro (octubre a diciembre de 2020), donde los patrones delictivos tienden a mutar.
+        </p>
+
+        <div style="text-align: center; background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #e9ecef; margin: 20px 0;">
+            <img src="image_93e416.png" alt="Métricas de Desempeño Logit - Set Out-of-Time" style="max-width: 90%; height: auto; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+            <span style="display: block; margin-top: 8px; font-size: 0.8em; color: #7f8c8d; font-style: italic;">Figura Y. Matriz de confusión e indicadores de clasificación en el Set Fuera de Tiempo (OOT).</span>
+        </div>
+
+        <p style="color: #555; font-size: 0.95em; line-height: 1.6;">
+            <strong>Estabilidad Temporal Sólida:</strong> El modelo Logit demuestra una consistencia estructural impecable ante la auditoría. El **AUC-ROC se sitúa en 0.8232**, experimentando una degradación marginal de apenas el 0.68% en comparación con el set de prueba controlado. Esto demuestra que la estrategia de remuestreo SMOTE acotada al 10% no inyectó ruido artificial y preservó la capacidad predictiva en escenarios futuros reales.
+        </p>
+        <p style="color: #555; font-size: 0.95em; line-height: 1.6;">
+            En este entorno asíncrono, la sensibilidad (*Recall*) se eleva ligeramente al **28%**, logrando interceptar de forma oportuna 260 fraudes reales de un total de 924 eventos ocurridos en el periodo adverso, manteniendo una precisión del 9%.
+        </p>
+    </div>
+
+    <div style="background: #f4f7f6; padding: 15px; border-radius: 8px; border-left: 4px solid #16a085; margin-top: 25px; font-size: 0.95em; color: #2c3e50; line-height: 1.5;">
+        <strong>Conclusión del Diagnóstico Econométrico:</strong> El Modelo Logit opera de manera óptima como *Baseline* institucional. Sus métricas demuestran una robustez matemática y una estabilidad en el tiempo sobresalientes (no sufre de sobreajuste). No obstante, su estructura paramétrica lineal limita la captura de comportamientos de fraude dinámicos y correlaciones ocultas de alto orden, dejando una ventana de oportunidad abierta que justifica la exploración de modelos no paramétricos avanzados basados en ensambles.
+    </div>
+</div>
+
+
+    <div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 25px;">
+    <h3 style="color: #2c3e50; margin-top: 0; font-size: 1.4em;">Evaluación de Desempeño: Modelo Logit (Optimización de Umbral de Decisión)</h3>
+    <p style="color: #555; line-height: 1.6;">
+        Para maximizar la captura del fraude y adaptar la Regresión Logística a las necesidades operativas reales del negocio, se descartó el uso del umbral probabilístico estándar por defecto (0.5). En su lugar, se calibró un <strong>Umbral Óptimo basado en el Percentil 99 (P99)</strong> de las probabilidades predichas, fijando la nueva frontera matemática estrictamente en <strong>0.541</strong> (5.41e-01).
+    </p>
+    <p style="color: #555; line-height: 1.6;">
+        Esta calibración desplaza el límite geométrico del clasificador para capturar patrones de riesgo más sutiles sin saturar de falsas alarmas los canales de atención del banco. A continuación, se detalla el impacto de esta optimización en ambos subconjuntos:
+    </p>
+
+    <div style="border-left: 3px solid #3498db; padding-left: 20px; margin-left: 10px; margin-top: 20px; margin-bottom: 30px;">
+        <strong style="color: #2980b9; font-size: 1.1em; display: block; margin-bottom: 10px;">1. Rendimiento Optimizado en el Set de Prueba (Test)</strong>
+        <p style="color: #555; font-size: 0.95em; line-height: 1.6;">
+            Al evaluar al modelo base con el nuevo umbral P99 en los datos de prueba contemporáneos, el impacto operativo es el siguiente:
+        </p>
+
+        <div style="text-align: center; background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #e9ecef; margin: 20px 0;">
+            <img src="image_9def25.png" alt="Métricas Optimización Logit - Set de Prueba" style="max-width: 90%; height: auto; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+            <span style="display: block; margin-top: 8px; font-size: 0.8em; color: #7f8c8d; font-style: italic;">Figura Z. Matriz de confusión e indicadores de clasificación bajo Umbral P99 en el Set de Prueba (Test).</span>
+        </div>
+
+        <ul style="color: #555; font-size: 0.95em; line-height: 1.7; padding-left: 20px;">
+            <li><strong>Consistencia de la Métrica Macro:</strong> El modelo conserva un **AUC-ROC de 0.8293**, garantizando estabilidad estadística en la ordenación de los scores de riesgo.</li>
+            <li><strong>Incremento Crítico del Recall:</strong> Al ajustar la frontera a 0.541, la interceptación del fraude salta drásticamente del 26% anterior a un **35%**, logrando capturar de forma efectiva <strong>432 fraudes reales</strong> (118 transacciones fraudulentas adicionales recuperadas frente al umbral por defecto).</li>
+            <li><strong>Eficiencia de Precisión:</strong> La optimización no solo detectó más fraude, sino que redujo las falsas alertas a 2,347 casos, empujando la precisión de la clase minoritaria hacia arriba hasta un **16%** y consolidando un F1-score de 0.22.</li>
+        </ul>
+    </div>
+
+    <div style="border-left: 3px solid #2ecc71; padding-left: 20px; margin-left: 10px; margin-top: 20px;">
+        <strong style="color: #27ae60; font-size: 1.1em; display: block; margin-bottom: 10px;">2. Validación en Escenario Futuro: Set Out-of-Time (OOT)</strong>
+        <p style="color: #555; font-size: 0.95em; line-height: 1.6;">
+            La confirmación definitiva de la viabilidad de este umbral ante la auditoría se constata al someterlo a transacciones asíncronas de los meses futuros:
+        </p>
+
+        <div style="text-align: center; background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #e9ecef; margin: 20px 0;">
+            <img src="image_9def43.png" alt="Métricas Optimización Logit - Set Out-of-Time" style="max-width: 90%; height: auto; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+            <span style="display: block; margin-top: 8px; font-size: 0.8em; color: #7f8c8d; font-style: italic;">Figura W. Matriz de confusión e indicadores de clasificación bajo Umbral P99 en el Set Fuera de Tiempo (OOT).</span>
+        </div>
+
+        <ul style="color: #555; font-size: 0.95em; line-height: 1.7; padding-left: 20px;">
+            <li><strong>Robustez Temporal Confirmada:</strong> El indicador macro **AUC-ROC se sitúa en 0.8189**, demostrando una variación ínfima y descartando cualquier indicio de degradación o volatilidad del modelo en producción simulada.</li>
+            <li><strong>Desempeño Contracíclico en el Futuro:</strong> El modelo eleva su sensibilidad en el set OOT hasta alcanzar un **37%**, deteniendo de forma exitosa <strong>339 fraudes reales</strong> de un universo de 924 eventos.</li>
+            <li><strong>Métricas de Mitigación de Pérdidas:</strong> El volumen de falsos positivos en el trimestre futuro se estabiliza en 2,394 registros, logrando sostener una precisión del **12%** frente a la clase delictiva.</li>
+        </ul>
+    </div>
+
+    <div style="background: #fcfcfc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; margin-top: 25px; font-size: 0.95em; color: #4a5568; line-height: 1.6;">
+        <strong>Conclusión de la Optimización del Baseline:</strong> Ajustar el umbral econométrico basándose en el comportamiento de la distribución (Percentil 99) demostró ser una estrategia altamente efectiva para mitigar la rigidez de la regresión lineal. Este ajuste elevó el Recall global en aproximadamente 10 puntos porcentuales tanto en el entorno contemporáneo como en el futuro, consolidando al modelo Logit como un estimador base extremadamente robusto y confiable.
+    </div>
+</div>
+
+    <div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 25px;">
+    <h3 style="color: #2c3e50; margin-top: 0; font-size: 1.4em;">Evaluación de Desempeño: Random Forest (Modelo de Ensamble No Paramétrico)</h3>
+    <p style="color: #555; line-height: 1.6;">
+        El primer algoritmo evaluado de la familia de ensambles fue <strong>Random Forest</strong>, un modelo basado en la combinación de múltiples árboles de decisión independientes a través de la técnica de <em>Bagging</em>. A diferencia de la rigidez paramétrica del modelo Logit, este algoritmo tiene la capacidad innata de mapear correlaciones multidimensionales e interacciones no lineales sin imponer supuestos estadísticos sobre la distribución de los datos.
+    </p>
+    <p style="color: #555; line-height: 1.6;">
+        Para asegurar una reducción efectiva de la varianza, estabilizar el aprendizaje y controlar la complejidad estructural de los estimadores individuales, se ajustaron e internalizaron los siguientes hiperparámetros clave durante la fase de entrenamiento:
+    </p>
+    
+    <ul style="color: #555; font-size: 0.95em; line-height: 1.6; padding-left: 20px; margin-bottom: 25px;">
+        <li><strong style="color: #2c3e50;">Número de Estimadores (n_estimators):</strong> Configurado para construir una masa crítica de árboles independientes que garantice la convergencia del voto mayoritario por promedio numérico.</li>
+        <li><strong style="color: #2c3e50;">Profundidad Máxima (max_depth):</strong> Restringida estratégicamente para evitar que los árboles individuales memoricen el ruido del set de entrenamiento balanceado con SMOTE, previniendo el sobreajuste.</li>
+        <li><strong style="color: #2c3e50;">Criterio de División (criterion):</strong> Optimizado mediante entropía o ganancia de información (Gini) para aislar de forma óptima los patrones anómalos de las transacciones legítimas.</li>
+        <li><strong style="color: #2c3e50;">Calibración de la Frontera Operativa (Umbral P99):</strong> Basándose en la distribución empírica del score de riesgo de fraude, se determinó matemáticamente un umbral óptimo de decisión fijado en <strong>0.2462</strong>.</li>
+    </ul>
+
+    <div style="border-left: 3px solid #3498db; padding-left: 20px; margin-left: 10px; margin-top: 20px; margin-bottom: 30px;">
+        <strong style="color: #2980b9; font-size: 1.1em; display: block; margin-bottom: 10px;">1. Rendimiento Excepcional en el Set de Prueba (Test)</strong>
+        <p style="color: #555; font-size: 0.95em; line-height: 1.6;">
+            Al evaluar el ensamble con el umbral calibrado de 0.2462 en el conjunto de prueba contemporáneo, los resultados marcan un hito con respecto al baseline:
+        </p>
+
+        <div style="text-align: center; background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #e9ecef; margin: 20px 0;">
+            <img src="image_9df344.png" alt="Métricas Random Forest - Set de Prueba" style="max-width: 90%; height: auto; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+            <span style="display: block; margin-top: 8px; font-size: 0.8em; color: #7f8c8d; font-style: italic;">Figura A. Matriz de confusión e indicadores de clasificación para Random Forest en el Set de Prueba (Test).</span>
+        </div>
+
+        <ul style="color: #555; font-size: 0.95em; line-height: 1.7; padding-left: 20px;">
+            <li><strong>Poder de Segregación Prácticamente Perfecto:</strong> El modelo registra un **AUC-ROC de 0.9904**, lo que demuestra una precisión matemática casi absoluta en el ordenamiento y separación de las probabilidades de riesgo.</li>
+            <li><strong>Captura Masiva del Fraude (Recall del 82%):</strong> De un universo de 1,221 fraudes reales en el periodo, el algoritmo intercepta de manera contundente **1,005 casos**, dejando escapar únicamente 216 transacciones fraudulentas.</li>
+            <li><strong>Optimización Operativa Radical (Precisión del 36%):</strong> A diferencia del modelo lineal, las alertas generadas son sumamente limpias: los falsos positivos se reducen drásticamente a 1,774 casos, lo que eleva la precisión al <strong>36%</strong> y consolida un robusto F1-score de 0.50 para la clase minoritaria.</li>
+        </ul>
+    </div>
+
+    <div style="border-left: 3px solid #2ecc71; padding-left: 20px; margin-left: 10px; margin-top: 20px;">
+        <strong style="color: #27ae60; font-size: 1.1em; display: block; margin-bottom: 10px;">2. Robustez Temporal y Resistencia al Fraude en el Futuro: Set Out-of-Time (OOT)</strong>
+        <p style="color: #555; font-size: 0.95em; line-height: 1.6;">
+            La validación definitiva del ensamble se confirma al exponer el modelo al trimestre asíncrono futuro (octubre a diciembre de 2020), un entorno donde el comportamiento delictivo muta de manera agresiva:
+        </p>
+
+        <div style="text-align: center; background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #e9ecef; margin: 20px 0;">
+            <img src="image_9df5ee.png" alt="Métricas Random Forest - Set Out-of-Time" style="max-width: 90%; height: auto; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+            <span style="display: block; margin-top: 8px; font-size: 0.8em; color: #7f8c8d; font-style: italic;">Figura B. Matriz de confusión e indicadores de clasificación para Random Forest en el Set Fuera de Tiempo (OOT).</span>
+        </div>
+
+        <ul style="color: #555; font-size: 0.95em; line-height: 1.7; padding-left: 20px;">
+            <li><strong>Ausencia Absoluta de Degradación Temporal:</strong> El **AUC-ROC se consolida en 0.9908** en el futuro. Este comportamiento refuta cualquier sospecha de sobreajuste o memorización de ruido, garantizando ante la auditoría la estabilidad a largo plazo del modelo en producción.</li>
+            <li><strong>Incremento de Sensibilidad en Producción Simulada (Recall del 84%):</strong> El modelo eleva su desempeño contracíclico en el futuro, deteniendo oportunamente **780 fraudes reales** de un total de 924 eventos críticos ocurridos en el trimestre.</li>
+            <li><strong>Eficiencia de Costos Operativos:</strong> El volumen de falsos positivos en los meses futuros permanece estable en 1,795 registros, manteniendo una alta precisión del **30%** y un F1-score de 0.45 en el escenario más adverso.</li>
+        </ul>
+    </div>
+
+    <div style="background: #f4f7f6; padding: 15px; border-radius: 8px; border-left: 4px solid #16a085; margin-top: 25px; font-size: 0.95em; color: #2c3e50; line-height: 1.5;">
+        <strong>Conclusión del Diagnóstico de Ensamble:</strong> El paso de modelos lineales a estructuras basadas en Bagging (Random Forest) representó un salto disruptivo para el proyecto. Al calibrar el umbral en el percentil de riesgo (0.2462), logramos recuperar más de 500 transacciones fraudulentas adicionales en comparación con el Logit optimizado, al mismo tiempo que reducimos las falsas alarmas operativas. Su comportamiento idéntico entre el presente y el futuro valida científicamente el diseño de la arquitectura de datos.
+    </div>
+</div>
+
+    <div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 25px;">
+    <h3 style="color: #2c3e50; margin-top: 0; font-size: 1.4em;">Garantía de Sanidad de Datos y Robustez del Protocolo de Validación</h3>
+    <p style="color: #555; line-height: 1.6;">
+        Para asegurar la viabilidad del modelo predictivo y cumplir con los estándares internacionales de auditoría de modelos de riesgo, se ejecutó un protocolo riguroso enfocado en el diagnóstico de multicolinealidad, el blindaje contra el sesgo temporal (<em>Data Leakage</em>) y el balanceo controlado de la muestra minoritaria.
+    </p>
+
+    <div style="border-left: 3px solid #3498db; padding-left: 20px; margin-left: 10px; margin-top: 20px; margin-bottom: 30px;">
+        <strong style="color: #2980b9; font-size: 1.1em; display: block; margin-bottom: 10px;">1. Diagnóstico de Multicolinealidad (Matriz de Pearson y VIF)</strong>
+        <p style="color: #555; font-size: 0.95em; line-height: 1.6;">
+            La presencia de variables altamente correlacionadas altera la estabilidad de los coeficientes en los modelos lineales (Logit). Para diagnosticar este riesgo, se aplicó un filtro estricto barriendo la <strong>Matriz de Correlación de Pearson</strong> buscando redundancias con coeficientes <span style="font-family: monospace;">|r| > 0.7</span>.
+        </p>
+
+        <div style="text-align: center; background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #e9ecef; margin: 20px 0;">
+            <img src="image_921219.png" alt="Matriz de Correlación Filtrada" style="max-width: 60%; height: auto; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+            <span style="display: block; margin-top: 8px; font-size: 0.8em; color: #7f8c8d; font-style: italic;">Figura M1. Mapa de calor de variables con alta correlación (|r| > 0.7). Se observa una matriz limpia y dispersa.</span>
+        </div>
+
+        <p style="color: #555; font-size: 0.95em; line-height: 1.6;">
+            Como contraprueba matemática avanzada, se calculó el **Factor de Inflación de la Varianza (VIF)** mediante la inversión de la matriz de correlación. Los resultados del TOP 20 confirman una sanidad absoluta:
+        </p>
+
+        <div style="text-align: center; background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #e9ecef; margin: 20px 0;">
+            <img src="image_921278.png" alt="Top 20 Variables Mayor VIF" style="max-width: 50%; height: auto; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+            <span style="display: block; margin-top: 8px; font-size: 0.8em; color: #7f8c8d; font-style: italic;">Figura M2. Factor de Inflación de la Varianza (VIF) para el Top 20 de variables analizadas.</span>
+        </div>
+
+        <p style="color: #555; font-size: 0.95em; line-height: 1.6;">
+            <strong>Evidencia de Auditoría:</strong> El valor VIF máximo registrado es de apenas <strong>1.80</strong> (correspondiente a <code>cat_shopping_pos</code>), situándose drásticamente por debajo del umbral crítico convencional de VIF > 5.0 o 10.0. Esto certifica de forma concluyente que no existe redundancia de información ni collinearidad latente en el set de datos final.
+        </p>
+    </div>
+
+    <div style="border-left: 3px solid #e67e22; padding-left: 20px; margin-left: 10px; margin-top: 20px; margin-bottom: 30px;">
+        <strong style="color: #d35400; font-size: 1.1em; display: block; margin-bottom: 10px;">2. Blindaje Estricto Contra Data Leakage: Split Temporal</strong>
+        <p style="color: #555; font-size: 0.95em; line-height: 1.6;">
+            Para prevenir el fraude de predicción (evaluar el pasado con datos del futuro), se implementó una partición determinista basada puramente en el eje del tiempo (variable <code>trans_date_trans_time</code>) respetando la cronología transaccional del negocio:
+        </p>
+
+        <div style="text-align: center; background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #e9ecef; margin: 20px 0;">
+            <img src="image_922102.png" alt="Split Temporal Train Test OOT" style="max-width: 90%; height: auto; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+            <span style="display: block; margin-top: 8px; font-size: 0.8em; color: #7f8c8d; font-style: italic;">Figura M3. Distribución exacta por ventanas de tiempo de los subconjuntos de Entrenamiento, Prueba y Fuera de Tiempo.</span>
+        </div>
+
+        <p style="color: #555; font-size: 0.95em; line-height: 1.6;">
+            Esta estrategia fragmentó el volumen total de transacciones de la siguiente forma:
+        </p>
+        <ul style="color: #555; font-size: 0.95em; line-height: 1.6; padding-left: 20px;">
+            <li><strong>Dataset de Entrenamiento (70%):</strong> 1,296,675 registros. Comprende el periodo histórico desde enero de 2019 hasta el 21 de junio de 2020.</li>
+            <li><strong>Dataset de Prueba (15%):</strong> 277,859 registros. Abarca desde el 21 de junio de 2020 hasta el 3 de octubre de 2020, funcionando como validación contemporánea.</li>
+            <li><strong>Dataset Out-of-Time / OOT (15%):</strong> 277,860 registros. Congela un trimestre futuro aislado (octubre a diciembre de 2020), simulando el comportamiento del modelo una vez desplegado en producción real.</li>
+        </ul>
+    </div>
+
+    <div style="border-left: 3px solid #2ecc71; padding-left: 20px; margin-left: 10px; margin-top: 20px; margin-bottom: 30px;">
+        <strong style="color: #27ae60; font-size: 1.1em; display: block; margin-bottom: 10px;">3. Tratamiento de Asimetría de Clases (SMOTE Controlado al 10%)</strong>
+        <p style="color: #555; font-size: 0.95em; line-height: 1.6;">
+            La base de datos original exhibe un desbalance extremo típico de los escenarios de fraude (solo 7,506 instancias fraudulentas frente a más de 1.28 millones de transacciones legítimas). Para evitar que los clasificadores se sesguen hacia la clase mayoritaria, se aplicó la técnica de sobremuestreo sintético **SMOTE** (<em>Synthetic Minority Over-sampling Technique</em>) bajo una estrategia controlada del **10%** (<span style="font-family: monospace;">sampling_strategy=0.1</span>).
+        </p>
+
+        <div style="text-align: center; background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #e9ecef; margin: 20px 0;">
+            <img src="image_929506.png" alt="Ejecución de SMOTE al 10%" style="max-width: 80%; height: auto; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+            <span style="display: block; margin-top: 8px; font-size: 0.8em; color: #7f8c8d; font-style: italic;">Figura M4. Log de ejecución del algoritmo SMOTE y remuestreo de la clase minoritaria.</span>
+        </div>
+
+        <p style="color: #555; font-size: 0.95em; line-height: 1.6;">
+            <strong>Garantía Metodológica Extrema:</strong> Como lo exige la buena praxis analítica, **SMOTE se ejecutó única y exclusivamente sobre el Dataset de Entrenamiento** (<span style="font-family: monospace;">X_train</span>, <span style="font-family: monospace;">y_train</span>). Los sets de Prueba y OOT permanecieron intactos con su distribución asimétrica real del negocio. La clase minoritaria fraudulenta de entrenamiento se incrementó artificialmente a 128,916 registros sintéticos, expandiendo el volumen final de entrenamiento a 1,418,085 transacciones para robustecer el aprendizaje del modelo.
+        </p>
+    </div>
+
+    <div style="border-left: 3px solid #9b59b6; padding-left: 20px; margin-left: 10px; margin-top: 20px;">
+        <strong style="color: #8e44ad; font-size: 1.1em; display: block; margin-bottom: 10px;">4. Explicabilidad del Ensamble: Importancia de Variables (Gini Importance)</strong>
+        <p style="color: #555; font-size: 0.95em; line-height: 1.6;">
+            Para levantar la naturaleza de "caja negra" del modelo Random Forest y dotar al proyecto de transparencia de cara al negocio, se extrajo la importancia de características basada en la reducción media de la impureza de Gini:
+        </p>
+
+        <div style="text-align: center; background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #e9ecef; margin: 20px 0;">
+            <img src="image_9dfa67.png" alt="Top 15 Variables más Influyentes - Random Forest" style="max-width: 85%; height: auto; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+            <span style="display: block; margin-top: 8px; font-size: 0.8em; color: #7f8c8d; font-style: italic;">Figura M5. Gráfico de las 15 características con mayor relevancia predictiva según el criterio de Gini.</span>
+        </div>
+
+        <p style="color: #555; font-size: 0.95em; line-height: 1.6;">
+            <strong>Análisis del Negocio (Insights Clave):</strong> El monto de la transacción (<code>amt</code>) emerge como la variable reina del modelo con una dominancia abrumadora que supera el **70% de importancia Gini**. Esto se alinea perfectamente con la lógica del negocio: los ataques de fraude comúnmente buscan maximizar la tasa de extracción de dinero por evento transaccional. En un segundo plano, factores comerciales como la ubicación del comercio (<code>cat_grocery_pos</code>, <code>cat_shopping_net</code>) y la densidad geográfica (<code>city_pop</code>) aportan el contexto situacional necesario para consolidar la alta precisión de la arquitectura.
+        </p>
+    </div>
+</div>
+
+    <div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 25px;">
+    <h3 style="color: #2c3e50; margin-top: 0; font-size: 1.4em;">Evaluación de Desempeño: Gradient Boosting Machine (GBM)</h3>
+    <p style="color: #555; line-height: 1.6;">
+        El siguiente algoritmo evaluado de la familia de ensambles fue <strong>Gradient Boosting Machine (GBM)</strong>. A diferencia del enfoque paralelo de Random Forest, GBM opera bajo un principio secuencial (<em>Boosting</em>), donde cada árbol de decisión individual se construye de forma iterativa con el objetivo explícito de corregir los errores residuales y las desviaciones matemáticas del árbol predecesor mediante el descenso de gradiente.
+    </p>
+    <p style="color: #555; line-height: 1.6;">
+        Esta naturaleza aditiva dota al algoritmo de una agudeza matemática superior para aprender fronteras de decisión extremadamente complejas y aislar patrones de fraude sofisticados. Durante la fase de entrenamiento, y para mitigar el riesgo de sobreajuste sobre la muestra ampliada por SMOTE, se calibraron minuciosamente los siguientes hiperparámetros estructurales:
+    </p>
+    
+    <ul style="color: #555; font-size: 0.95em; line-height: 1.6; padding-left: 20px; margin-bottom: 25px;">
+        <li><strong style="color: #2c3e50;">Tasa de Aprendizaje (learning_rate):</strong> Parametrizada finamente para ponderar el aporte de cada nuevo estimador y garantizar una convergencia matemática suave sin caer en la memorización de ruido.</li>
+        <li><strong style="color: #2c3e50;">Número de Estimadores (n_estimators):</strong> Sincronizado estrictamente en combinación con el <em>learning rate</em> para detener el crecimiento del ensamble antes de saturar la varianza.</li>
+        <li><strong style="color: #2c3e50;">Profundidad Máxima (max_depth):</strong> Restringida a niveles moderados para limitar el poder individual de los árboles basales y forzar el protagonismo del ensamble aditivo.</li>
+        <li><strong style="color: #2c3e50;">Umbral de Decisión Operativo (P99):</strong> Extrayendo la distribución empírica de los scores de riesgo, el umbral óptimo basado en el percentil 99 se fijó matemáticamente en <strong>0.2016</strong>.</li>
+    </ul>
+
+    <div style="border-left: 3px solid #3498db; padding-left: 20px; margin-left: 10px; margin-top: 20px; margin-bottom: 30px;">
+        <strong style="color: #2980b9; font-size: 1.1em; display: block; margin-bottom: 10px;">1. Rendimiento y Eficiencia de Alertas en el Set de Prueba (Test)</strong>
+        <p style="color: #555; font-size: 0.95em; line-height: 1.6;">
+            Al ejecutar el clasificador aditivo bajo el umbral calibrado de 0.2016 en los datos contemporáneos de validación, se evidencia una optimización operativa crítica frente a los modelos anteriores:
+        </p>
+
+        <div style="text-align: center; background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #e9ecef; margin: 20px 0;">
+            <img src="image_9eeae5.png" alt="Métricas GBM - Set de Prueba" style="max-width: 90%; height: auto; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+            <span style="display: block; margin-top: 8px; font-size: 0.8em; color: #7f8c8d; font-style: italic;">Figura C. Matriz de confusión e indicadores de clasificación para GBM en el Set de Prueba (Test).</span>
+        </div>
+
+        <ul style="color: #555; font-size: 0.95em; line-height: 1.7; padding-left: 20px;">
+            <li><strong>Poder Discriminatorio Superior:</strong> El modelo consolida un **AUC-ROC de 0.9912**, lo que refrenda estadísticamente una separación espacial impecable entre las densidades probabilísticas de fraude y legitimidad.</li>
+            <li><strong>Robustez en la Captura (Recall del 80%):</strong> El algoritmo identifica con éxito **982 fraudes reales** de un universo total de 1,221 eventos críticos contemporáneos.</li>
+            <li><strong>Eficiencia Operativa Máxima (Precisión del 38%):</strong> Aquí radica la gran victoria matemática de GBM: logra comprimir sustancialmente los falsos positivos a solo 1,592 registros (un ahorro directo en costo de horas hombre para el equipo de monitoreo). Esto impulsa la precisión de la clase minoritaria hasta un excelente **38%**, alcanzando el F1-score más alto registrado hasta el momento de <strong>0.52</strong>.</li>
+        </ul>
+    </div>
+
+    <div style="border-left: 3px solid #2ecc71; padding-left: 20px; margin-left: 10px; margin-top: 20px;">
+        <strong style="color: #27ae60; font-size: 1.1em; display: block; margin-bottom: 10px;">2. Invarianza Temporal y Resistencia en Producción Simulada: Set Out-of-Time (OOT)</strong>
+        <p style="color: #555; font-size: 0.95em; line-height: 1.6;">
+            Someter el ensamble basado en gradiente a la ventana desfasada del futuro (octubre a diciembre de 2020) valida si el modelo es verdaderamente apto para producción ante los auditores:
+        </p>
+
+        <div style="text-align: center; background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #e9ecef; margin: 20px 0;">
+            <img src="image_9eeb05.png" alt="Métricas GBM - Set Out-of-Time" style="max-width: 90%; height: auto; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+            <span style="display: block; margin-top: 8px; font-size: 0.8em; color: #7f8c8d; font-style: italic;">Figura D. Matriz de confusión e indicadores de clasificación para GBM en el Set Fuera de Tiempo (OOT).</span>
+        </div>
+
+        <ul style="color: #555; font-size: 0.95em; line-height: 1.7; padding-left: 20px;">
+            <li><strong>Estabilidad Estructural Inalterada:</strong> El **AUC-ROC futuro se sitúa en 0.9904**, exhibiendo una resiliencia matemática total frente al desfase temporal. No existe indicios de degradación predictiva o de pérdida de vigencia de las características.</li>
+            <li><strong>Persistencia de Sensibilidad (Recall del 82%):</strong> Al simular el despliegue real, el modelo detecta de manera contracíclica **760 fraudes reales** de un universo de 924, asegurando la mitigación efectiva del riesgo financiero.</li>
+            <li><strong>Sostenibilidad del Gasto Operativo:</strong> El volumen de falsos positivos futuros se acota a 1,714 registros, manteniendo una alta precisión del **31%** y un F1-score consolidado de 0.45 en el escenario más exigente del proyecto.</li>
+        </ul>
+    </div>
+
+    <div style="background: #f4f7f6; padding: 15px; border-radius: 8px; border-left: 4px solid #16a085; margin-top: 25px; font-size: 0.95em; color: #2c3e50; line-height: 1.5;">
+        <strong>Conclusión del Diagnóstico del Gradiente:</strong> El modelo GBM se posiciona como un fuerte candidato para el despliegue final en producción. Si bien iguala el excelente nivel de Recall de Random Forest, la arquitectura secuencial demostró una fineza superior para descartar falsas alarmas, elevando la precisión general al 38% en el set contemporáneo. Este equilibrio óptimo entre mitigación de pérdidas por fraude y contención de alertas operativas cumple con las exigencias más estrictas de eficiencia bancaria.
+    </div>
+</div>
+
+
+    <div style="border-left: 3px solid #9b59b6; padding-left: 20px; margin-left: 10px; margin-top: 30px;">
+        <strong style="color: #8e44ad; font-size: 1.1em; display: block; margin-bottom: 10px;">3. Explicabilidad del Modelo Basado en Gradiente (Gini Importance)</strong>
+        <p style="color: #555; font-size: 0.95em; line-height: 1.6;">
+            Para abrir la estructura interna de la arquitectura secuencial y garantizar la transparencia del modelo ante los entes reguladores, se extrajo la reducción media de la impureza de Gini provocada por cada característica durante la optimización del gradiente:
+        </p>
+
+        <div style="text-align: center; background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #e9ecef; margin: 20px 0;">
+            <img src="image_9eee8c.png" alt="Top 15 Variables más Influyentes - GBM" style="max-width: 85%; height: auto; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+            <span style="display: block; margin-top: 8px; font-size: 0.8em; color: #7f8c8d; font-style: italic;">Figura E. Gráfico de las 15 características con mayor peso predictivo en el ensamble secuencial de GBM.</span>
+        </div>
+
+        <p style="color: #555; font-size: 0.95em; line-height: 1.6;">
+            <strong>Análisis Comparativo de Negocio (Insights de Auditoría):</strong> 
+            A diferencia de Random Forest, donde la importancia de las variables secundarias se distribuye de manera más uniforme, el modelo GBM concentra una fuerza predictiva radical en el monto de la transacción (<code>amt</code>), asignándole un peso que supera el <strong>85%</strong>. 
+        </p>
+        <p style="color: #555; font-size: 0.95em; line-height: 1.6;">
+            Este fenómeno matemático se debe a la optimización secuencial: una vez que el primer árbol de gradiente segmenta las transacciones por montos críticos (la señal de fraude más evidente), los árboles posteriores se ven forzados a refinar los errores residuales utilizando sutilmente combinaciones de giros de negocio específicos (como compras en establecimientos físicos de abarrotes con <code>cat_grocery_pos</code> o compras digitales en tiendas departamentales con <code>cat_shopping_net</code>) y patrones asociados a consumos durante viajes (<code>cat_travel</code>). Este comportamiento confirma que el modelo está fuertemente anclado a la lógica del fraude transaccional financiero masivo.
+        </p>
+    </div>
+
+    
+
     
 
     

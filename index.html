@@ -3932,6 +3932,124 @@ print(paste("Accuracy del Modelo GBM:", round(accuracy_gbm, 4)))
 
     
 
+
+    <div style="margin-top: 40px; padding: 20px; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px;">
+        <h2 style="color: #1e3a8a; font-size: 1.4em; border-bottom: 2px solid #3b82f6; padding-bottom: 8px; margin-top: 0;">
+            Modelo Avanzado de Ensamble: Extreme Gradient Boosting (XGBoost)
+        </h2>
+        <p style="color: #334155; font-size: 0.95em; line-height: 1.6;">
+            Para superar las limitaciones estructurales del algoritmo de gradiente clásico, se implementó <strong>XGBoost</strong>. Este modelo destaca por incorporar regularización formal <span style="font-family: 'Times New Roman', serif; font-style: italic;">L₁ (α)</span> y <span style="font-family: 'Times New Roman', serif; font-style: italic;">L₂ (λ)</span> directamente en su función objetivo lineal/secuencial, lo que penaliza de manera estricta la complejidad de las hojas y controla eficientemente los riesgos de sobreajuste (overfitting).
+        </p>
+
+        <div style="border-left: 3px solid #3b82f6; padding-left: 20px; margin-left: 10px; margin-top: 25px;">
+            <strong style="color: #1d4ed8; font-size: 1.1em; display: block; margin-bottom: 10px;">1. Evaluación en el Set de Prueba Controles (Test Set)</strong>
+            <p style="color: #555; font-size: 0.95em; line-height: 1.6;">
+                La evaluación del modelo entrenado sobre la partición de prueba independiente (bajo un umbral predictivo optimizado en el percentil 99 de <strong>0.7711</strong>) arrojó la siguiente matriz de confusión y reporte de clasificación:
+            </p>
+
+            <div style="text-align: center; background: #fafafa; padding: 12px; border: 1px solid #eaeaea; border-radius: 6px; margin: 15px 0;">
+                <img src="image_9f5768.png" alt="Métricas Set de Prueba - XGBoost" style="max-width: 75%; height: auto; border-radius: 4px;">
+                <span style="display: block; margin-top: 6px; font-size: 0.8em; color: #718096; font-style: italic;">Figura F. Desempeño predictivo y matriz de confusión de XGBoost en el set de prueba.</span>
+            </div>
+
+            <p style="color: #334155; font-size: 0.95em; line-height: 1.6;">
+                <strong>Métricas Clave de Negocio (Test):</strong>
+            </p>
+            <ul style="color: #334155; font-size: 0.95em; line-height: 1.6; padding-left: 20px;">
+                <li><strong>Área Bajo la Curva (AUC-ROC):</strong> Alcanza un destacado <strong>0.9903</strong>, demostrando un poder de separación de clases casi perfecto entre transacciones legítimas y fraudulentas.</li>
+                <li><strong>Sensibilidad (Recall) para la clase de Fraude (1):</strong> Registra un <strong>77%</strong>, lo que significa que el algoritmo intercepta proactivamente a 946 transacciones criminales de las 1,221 presentes, dejando pasar únicamente 275 falsos negativos.</li>
+                <li><strong>Precisión para la clase de Fraude (1):</strong> Se sitúa en un <strong>34%</strong> (946 verdaderos positivos frente a 1,833 falsos positivos). Esto representa una notable optimización en la eficiencia de las alertas de fraude para los analistas de riesgo si se compara con los modelos econométricos base.</li>
+                <li><strong>F1-Score (Fraude):</strong> Se consolida en <strong>0.47</strong> bajo una exactitud (Accuracy) global del 99%.</li>
+            </ul>
+        </div>
+
+        <div style="border-left: 3px solid #e2e8f0; padding-left: 20px; margin-left: 10px; margin-top: 30px;">
+            <strong style="color: #334155; font-size: 1.1em; display: block; margin-bottom: 10px;">2. Consistencia Temporal en Validación Fuera de Tiempo (Out-Of-Time - OOT)</strong>
+            <p style="color: #555; font-size: 0.95em; line-height: 1.6;">
+                Para certificar que la estructura matemática del ensamble conserva su robustez y no se degrada ante las dinámicas cambiantes y patrones macroeconómicos evolutivos del fraude, se estresó el modelo utilizando la base de datos temporalmente desplazada (OOT):
+            </p>
+
+            <div style="text-align: center; background: #fafafa; padding: 12px; border: 1px solid #eaeaea; border-radius: 6px; margin: 15px 0;">
+                <img src="image_9f5786.png" alt="Métricas Set Out-Of-Time - XGBoost" style="max-width: 75%; height: auto; border-radius: 4px;">
+                <span style="display: block; margin-top: 6px; font-size: 0.8em; color: #718096; font-style: italic;">Figura G. Rendimiento y estabilidad de XGBoost en la ventana temporal Out-Of-Time.</span>
+            </div>
+
+            <p style="color: #334155; font-size: 0.95em; line-height: 1.6;">
+                <strong>Análisis de Estabilidad Temporal:</strong>
+            </p>
+            <ul style="color: #334155; font-size: 0.95em; line-height: 1.6; padding-left: 20px;">
+                <li><strong>Comportamiento del AUC-ROC:</strong> Incrementa sutilmente a un admirable <strong>0.9913</strong> en el entorno OOT, confirmando que las fronteras de decisión regularizadas del modelo no sufren por desfase o envejecimiento de los datos.</li>
+                <li><strong>Resiliencia de la Sensibilidad (Recall):</strong> El Recall de fraude sube al <strong>81%</strong>, logrando mitigar el impacto criminal al capturar de forma efectiva 750 transacciones fraudulentas y reduciendo los escapes críticos a tan solo 174 casos.</li>
+                <li><strong>Eficiencia Operativa (Precisión):</strong> Mantiene una tasa del <strong>29%</strong> en la detección de fraudes reales dentro de la malla total de alertas generadas, lo cual es altamente competitivo y viable para las capacidades del centro de monitoreo operativo.</li>
+                <li><strong>F1-Score Establecido:</strong> Se sitúa en <strong>0.42</strong>, demostrando que XGBoost es un candidato líder para producción gracias a su balance y resistencia sistémica al cambio de distribución temporal.</li>
+            </ul>
+        </div>
+    </div>
+
+
+
+<div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 25px;">
+    <h3 style="color: #2c3e50; margin-top: 0; font-size: 1.4em;">Evaluación de Desempeño: LightGBM (Light Gradient Boosting Machine)</h3>
+    <p style="color: #555; line-height: 1.6;">
+        El último modelo evaluado en la arquitectura de ensambles basados en gradiente fue <strong>LightGBM</strong>. Desarrollado por Microsoft, este algoritmo fue diseñado específicamente para maximizar la velocidad de cómputo y la eficiencia en el uso de memoria sobre conjuntos de datos masivos. Su gran ventaja matemática radica en dos técnicas: la división de árboles por hojas (<em>leaf-wise growth</em>) en lugar de niveles (<em>depth-wise</em>), y el mapeo de variables continuas en contenedores discretos (<em>histogram-based decision</em>).
+    </p>
+    <p style="color: #555; line-height: 1.6;">
+        Para regularizar el crecimiento acelerado de las hojas y mitigar cualquier tendencia al sobreajuste frente a la muestra de entrenamiento balanceada con SMOTE, se calibraron y optimizaron los siguientes hiperparámetros de control:
+    </p>
+    
+    <ul style="color: #555; font-size: 0.95em; line-height: 1.6; padding-left: 20px; margin-bottom: 25px;">
+        <li><strong style="color: #2c3e50;">Número de Hojas Máximas (num_leaves):</strong> El parámetro principal para controlar la complejidad del árbol leaf-wise; se acotó estratégicamente para evitar sobreajuste estructural.</li>
+        <li><strong style="color: #2c3e50;">Tasa de Aprendizaje y Estimadores (learning_rate / n_estimators):</strong> Sincronizados para asegurar una convergencia rápida y estable sobre el gradiente de pérdida.</li>
+        <li><strong style="color: #2c3e50;">Mínimo de Datos en una Hoja (min_data_in_leaf):</strong> Configurado para prevenir que el algoritmo aísle pequeños grupos de registros sintéticos ruidosos generados por SMOTE.</li>
+        <li><strong style="color: #2c3e50;">Umbral Operativo (P99):</strong> Basado en el percentil 99 de la distribución de scores, se fijó matemáticamente en un óptimo de <strong>0.1349</strong>.</li>
+    </ul>
+
+    <div style="border-left: 3px solid #3498db; padding-left: 20px; margin-left: 10px; margin-top: 20px; margin-bottom: 30px;">
+        <strong style="color: #2980b9; font-size: 1.1em; display: block; margin-bottom: 10px;">1. Rendimiento de Alta Velocidad en el Set de Prueba (Test)</strong>
+        <p style="color: #555; font-size: 0.95em; line-height: 1.6;">
+            Al ejecutar el clasificador bajo el umbral óptimo de 0.1349 en los datos contemporáneos de validación, LightGBM confirma una precisión y capacidad predictiva al nivel de los mejores ensambles regularizados:
+        </p>
+
+        <div style="text-align: center; background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #e9ecef; margin: 20px 0;">
+            <img src="image_9fbce0.png" alt="Métricas LightGBM - Set de Prueba" style="max-width: 90%; height: auto; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+            <span style="display: block; margin-top: 8px; font-size: 0.8em; color: #7f8c8d; font-style: italic;">Figura I. Matriz de confusión e indicadores de clasificación para LightGBM en el Set de Prueba (Test).</span>
+        </div>
+
+        <ul style="color: #555; font-size: 0.95em; line-height: 1.7; padding-left: 20px;">
+            <li><strong>Poder Discriminatorio Superior:</strong> El modelo registra un **AUC-ROC de 0.9904**, refrendando una separación casi perfecta en la asignación de scores de riesgo.</li>
+            <li><strong>Alta Sensibilidad Operativa (Recall del 79%):</strong> Captura con éxito de forma automatizada **964 fraudes reales** de los 1,221 presentes en la ventana contemporánea.</li>
+            <li><strong>Eficiencia en la Malla de Alertas (Precisión del 37%):</strong> Al comprimir los falsos positivos a solo 1,643 registros, el modelo asegura un uso sumamente eficiente del tiempo del equipo de monitoreo, consolidando un destacado F1-score de <strong>0.51</strong> para la clase minoritaria.</li>
+        </ul>
+    </div>
+
+    <div style="border-left: 3px solid #2ecc71; padding-left: 20px; margin-left: 10px; margin-top: 20px;">
+        <strong style="color: #27ae60; font-size: 1.1em; display: block; margin-bottom: 10px;">2. Consistencia y Resiliencia en Escenario Futuro: Set Out-of-Time (OOT)</strong>
+        <p style="color: #555; font-size: 0.95em; line-height: 1.6;">
+            La prueba de fuego metodológica ante la auditoría ratifica la robustez temporal de la arquitectura acelerada por histogramas al exponerla al trimestre desfasado del futuro:
+        </p>
+
+        <div style="text-align: center; background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #e9ecef; margin: 20px 0;">
+            <img src="image_9fbcff.png" alt="Métricas LightGBM - Set Out-of-Time" style="max-width: 90%; height: auto; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+            <span style="display: block; margin-top: 8px; font-size: 0.8em; color: #7f8c8d; font-style: italic;">Figura J. Matriz de confusión e indicadores de clasificación para LightGBM en el Set Fuera de Tiempo (OOT).</span>
+        </div>
+
+        <ul style="color: #555; font-size: 0.95em; line-height: 1.7; padding-left: 20px;">
+            <li><strong>Estabilidad Estructural Inalterada:</strong> El **AUC-ROC futuro se consolida en un sobresaliente 0.9912**, experimentando incluso una ligera mejora matemática que descarta por completo cualquier riesgo de sobreajuste o degradación temporal.</li>
+            <li><strong>Interceptación Sólida en Producción Simulada (Recall del 81%):</strong> En la ventana futura, el modelo intercepta de forma oportuna **750 fraudes reales** de un total de 924 eventos críticos ocurridos.</li>
+            <li><strong>Sostenibilidad Operativa del Centro de Monitoreo:</strong> Acota las falsas alarmas futuras a 1,674 registros, lo que le permite sostener una precisión del **31%** y un F1-score de 0.45 en el escenario más adverso y desfasado en el tiempo.</li>
+        </ul>
+    </div>
+
+    <div style="background: #f4f7f6; padding: 15px; border-radius: 8px; border-left: 4px solid #16a085; margin-top: 25px; font-size: 0.95em; color: #2c3e50; line-height: 1.5;">
+        <strong>Conclusión del Diagnóstico de LightGBM:</strong> LightGBM iguala los altísimos niveles de precisión y sensibilidad alcanzados por XGBoost y Random Forest, pero con una velocidad de convergencia computacional sustancialmente mayor. Su capacidad para mantener métricas impecables y sin degradación en el set futuro (OOT) bajo un umbral de 0.1349 confirma que la discretización por histogramas dota al modelo de una excelente capacidad de generalización, posicionándolo como un serio contendiente para el despliegue final en producción.
+    </div>
+</div>
+
+    
+    
+
+
+    
     
 
     

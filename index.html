@@ -3534,6 +3534,78 @@ print(paste("Accuracy del Modelo GBM:", round(accuracy_gbm, 4)))
     
 
 
+<div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 25px;">
+    <h3 style="color: #2c3e50; margin-top: 0; font-size: 1.4em;">Modelos Candidatos y Sustento Matemático</h3>
+    <p style="color: #555; line-height: 1.6;">
+        Con el set de datos balanceado y libre de multicolinealidad, se definieron los modelos candidatos para la detección de fraude. El enfoque metodológico divide las soluciones en dos familias con filosofías matemáticas distintas: <strong>Modelos Econométricos de Respuesta Binaria</strong> (que aportan alta interpretabilidad y modelan una variable latente) y <strong>Modelos de Ensamble Basados en Árboles</strong> (diseñados para maximizar el poder predictivo mediante el mapeo de relaciones no lineales complejas).
+    </p>
+
+    <div style="border-left: 3px solid #3498db; padding-left: 20px; margin-left: 10px; margin-top: 20px;">
+        
+        <div style="margin-bottom: 30px; position: relative;">
+            <div style="position: absolute; left: -26px; top: 5px; width: 10px; height: 10px; background: #3498db; border-radius: 50%;"></div>
+            <strong style="color: #2980b9; font-size: 1.1em; display: block; margin-bottom: 10px;">1. Modelos Econométricos (Modelos de Respuesta Binaria)</strong>
+            <p style="color: #555; font-size: 0.95em; line-height: 1.6;">
+                Estos modelos asumen la existencia de una variable latente no observable <em>y*</em> que determina la ocurrencia del fraude. Lo que se registra en la operación bancaria es una bandera binaria: el fraude se materializa (<em>y = 1</em>) únicamente si dicha variable latente supera un determinado umbral crítico.
+            </p>
+            
+            <ul style="color: #555; font-size: 0.95em; line-height: 1.7; padding-left: 20px;">
+                <li style="margin-bottom: 15px;">
+                    <strong style="color: #2c3e50;">Modelo Probit:</strong> Utiliza la función de distribución acumulada (CDF) de la normal estándar &Phi; para mapear de forma continua la combinación lineal de las variables explicativas a un rango de probabilidad entre 0 y 1.
+                    <div style="text-align: center; margin: 15px 0; font-family: 'Times New Roman', Times, serif; font-size: 1.25em; color: #2c3e50; background: #fafafa; padding: 10px; border-radius: 6px;">
+                        P(y = 1 | X) = &Phi;(X&beta;) = <span style="font-size: 1.3em; vertical-align: middle;">&sub;&sub;&int;</span><sub><sub>-&infin;</sub></sub><sup><sup>X&beta;</sup></sup> <span style="border-bottom: 1px solid #2c3e50; padding-bottom: 2px;">&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;</span><br>&radic;<span style="border-top: 1px solid #2c3e50;">2&pi;</span> e<sup>-z<sup>2</sup>/2</sup> dz
+                    </div>
+                </li>
+                <li style="margin-bottom: 15px;">
+                    <strong style="color: #2c3e50;">Modelo Logit:</strong> Utiliza la función logística (sigmoide). A diferencia del Probit, la distribución logística posee colas más pesadas, lo que estadísticamente le permite asimilar de mejor manera la presencia de eventos extremos y anomalías en los datos, un comportamiento sumamente robusto para entornos financieros reales.
+                    <div style="text-align: center; margin: 15px 0; font-family: 'Times New Roman', Times, serif; font-size: 1.25em; color: #2c3e50; background: #fafafa; padding: 10px; border-radius: 6px;">
+                        P(y = 1 | X) = &Lambda;(X&beta;) = <span style="display: inline-block; vertical-align: middle; text-align: center;"><span style="border-bottom: 1px solid #2c3e50; display: block; padding: 2px;">e<sup>X&beta;</sup></span><span style="display: block; padding: 2px;">1 + e<sup>X&beta;</sup></span></span> = <span style="display: inline-block; vertical-align: middle; text-align: center;"><span style="border-bottom: 1px solid #2c3e50; display: block; padding: 2px;">1</span><span style="display: block; padding: 2px;">1 + e<sup>-X&beta;</sup></span></span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div style="margin-bottom: 20px; position: relative;">
+            <div style="position: absolute; left: -26px; top: 5px; width: 10px; height: 10px; background: #3498db; border-radius: 50%;"></div>
+            <strong style="color: #2980b9; font-size: 1.1em; display: block; margin-bottom: 10px;">2. Modelos de Ensamble (Árboles de Decisión)</strong>
+            <p style="color: #555; font-size: 0.95em; line-height: 1.6;">
+                A diferencia de los modelos paramétricos tradicionales, los algoritmos de ensamble no imponen una forma funcional rígida sobre la data. Construyen fronteras de decisión dinámicas y mapean interacciones multidimensionales de forma nativa.
+            </p>
+
+            <ul style="color: #555; font-size: 0.95em; line-height: 1.7; padding-left: 20px;">
+                <li style="margin-bottom: 15px;">
+                    <strong style="color: #2c3e50;">Random Forest:</strong> Algoritmo de ensamble tipo <em>Bagging</em> que construye múltiples árboles de decisión independientes durante el entrenamiento. La predicción final es el promedio (o voto mayoritario) de todos los estimadores individuales, lo que reduce la varianza y mitiga el sobreajuste:
+                    <div style="text-align: center; margin: 12px 0; font-family: 'Times New Roman', Times, serif; font-size: 1.2em; color: #2c3e50; background: #fafafa; padding: 8px; border-radius: 6px;">
+                        &ycirc; = <span style="display: inline-block; vertical-align: middle; text-align: center;"><span style="border-bottom: 1px solid #2c3e50; display: block; padding: 2px;">1</span><span style="display: block; padding: 2px;">B</span></span> <span style="font-size: 1.4em; vertical-align: middle;">&Sigma;</span><sub><sub>b=1</sub></sub><sup><sup>B</sup></sup> T<sub>b</sub>(x)
+                    </div>
+                </li>
+                <li style="margin-bottom: 15px;">
+                    <strong style="color: #2c3e50;">GBM (Gradient Boosting Machine):</strong> Enfoque secuencial tipo <em>Boosting</em> donde cada nuevo árbol se entrena específicamente para corregir los errores residuales del árbol predecesor, optimizando una función de pérdida diferenciable mediante el descenso de gradiente:
+                    <div style="text-align: center; margin: 12px 0; font-family: 'Times New Roman', Times, serif; font-size: 1.2em; color: #2c3e50; background: #fafafa; padding: 8px; border-radius: 6px;">
+                        F<sub>m</sub>(x) = F<sub>m-1</sub>(x) + &gamma;<sub>m</sub> h<sub>m</sub>(x)
+                    </div>
+                </li>
+                <li style="margin-bottom: 15px;">
+                    <strong style="color: #2c3e50;">XGBoost (Extreme Gradient Boosting):</strong> Una evolución altamente eficiente de GBM. Incorpora regularización avanzada L1 (&alpha;) y L2 (&lambda;) directamente en su función objetivo, penalizando la complejidad estructural de los árboles para prevenir el sobreajuste y estabilizar los coeficientes:
+                    <div style="text-align: center; margin: 12px 0; font-family: 'Times New Roman', Times, serif; font-size: 1.2em; color: #2c3e50; background: #fafafa; padding: 8px; border-radius: 6px;">
+                        <em>L</em>(&phi;) = <span style="font-size: 1.2em; vertical-align: middle;">&Sigma;</span><sub><sub>i</sub></sub> <em>l</em>(&ycirc;<sub>i</sub>, y<sub>i</sub>) + <span style="font-size: 1.2em; vertical-align: middle;">&Sigma;</span><sub><sub>k</sub></sub> &Omega;(f<sub>k</sub>)
+                    </div>
+                </li>
+                <li style="margin-bottom: 15px;">
+                    <strong style="color: #2c3e50;">LightGBM (Light Gradient Boosting Machine):</strong> Desarrollado por Microsoft, optimiza la velocidad en infraestructuras masivas. Utiliza la técnica <em>Gradient-based One-Side Sampling</em> (GOSS) y hace crecer los árboles por hojas (<em>leaf-wise</em>) en lugar de por niveles (<em>depth-wise</em>), acelerando la convergencia computacional de forma drástica.
+                </li>
+                <li style="margin-bottom: 5px;">
+                    <strong style="color: #2c3e50;">CatBoost (Categorical Boosting):</strong> Diseñado de forma especializada para manejar variables categóricas de manera nativa mediante la técnica <em>Ordered Boosting</em>. Reduce el sesgo de predicción (<em>target leakage</em>) inherente a otros algoritmos de boosting tradicionales al procesar de forma inteligente los encodings de las categorías.
+                </li>
+            </ul>
+        </div> 
+    </div>
+</div>
+
+
+
+    
+
     
 </div>
 

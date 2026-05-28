@@ -3385,6 +3385,53 @@ print(paste("Accuracy del Modelo GBM:", round(accuracy_gbm, 4)))
             
 </div>
 </div>
+
+<div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 25px;">
+    <h3 style="color: #2c3e50; margin-top: 0; font-size: 1.4em;">Diagnóstico de Multicolinealidad</h3>
+    <p style="color: #555; line-height: 1.6;">
+        Para garantizar la estabilidad de los modelos paramétricos candidatos (como Logit y Probit), es indispensable evaluar si existe redundancia o correlación extrema entre las variables predictoras. La presencia de multicolinealidad infla la varianza de los coeficientes estimados, haciendo que el modelo sea inestable y complejo de interpretar en términos de negocio.
+    </p>
+
+    <div style="border-left: 3px solid #3498db; padding-left: 20px; margin-left: 10px; margin-top: 20px;">
+        <div style="margin-bottom: 30px; position: relative;">
+            <div style="position: absolute; left: -26px; top: 5px; width: 10px; height: 10px; background: #3498db; border-radius: 50%;"></div>
+            <strong style="color: #2980b9;">1. Análisis de Correlación de Pearson</strong>
+            <p style="color: #555; font-size: 0.95em; margin-top: 5px;">
+                Como primer filtro, se construyó una matriz de correlación aislando las variables explicativas (excluyendo identificadores temporales y la variable objetivo <code>is_fraud</code>). Para hacer el análisis eficiente y detectar solo relaciones críticas, se programó un mapa de calor que filtra y muestra únicamente aquellas correlaciones absolutas superiores a 0.7 (|r| > 0.7).
+            </p>
+            
+
+            <p style="color: #555; font-size: 0.95em; margin-top: 5px;">
+                <strong>Resultado del Heatmap:</strong> Al aplicar este umbral estricto, la matriz quedó prácticamente vacía en su zona de interacción lineal. Solo se aprecia la diagonal principal (la correlación de cada variable consigo misma). Esto es una excelente señal inicial: ninguna variable predictora presenta una relación lineal directa y preocupante con otra.
+            </p>
+        </div>
+
+        <div style="margin-bottom: 20px; position: relative;">
+            <div style="position: absolute; left: -26px; top: 5px; width: 10px; height: 10px; background: #3498db; border-radius: 50%;"></div>
+            <strong style="color: #2980b9;">2. Factor de Inflación de la Varianza (VIF)</strong>
+            <p style="color: #555; font-size: 0.95em; margin-top: 5px;">
+                Aunque la matriz de Pearson no detectó correlaciones bivariadas altas, la multicolinealidad también puede ser multidimensional (una variable explicada por la combinación de varias otras). Para descartar esto a nivel de auditoría, se calculó el Factor de Inflación de la Varianza (VIF) invirtiendo la matriz de correlación mediante álgebra lineal (<code>np.linalg.pinv</code>).
+            </p>
+            <p style="color: #555; font-size: 0.95em;">
+                La regla de oro en estadística dicta que valores de VIF superiores a 5 o 10 indican problemas severos de multicolinealidad. Los resultados para nuestro Top 20 de variables con mayor VIF fueron los siguientes:
+            </p>
+
+            <div style="text-align: center; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee; margin: 20px 0;">
+                <img src="vif_fraude.jpeg" alt="Top 20 Variables con Mayor VIF" style="max-width: 60%; height: auto; border-radius: 4px;">
+            </div>
+        </div> 
+    </div>
+
+    <div style="background: #eaf2f8; padding: 15px; border-radius: 8px; border-left: 4px solid #2980b9; margin-top: 20px;">
+        <strong style="color: #2471a3;">Conclusión del análisis VIF:</strong> 
+        El resultado es impecable para el proyecto. La variable con el VIF más alto es <code>cat_shopping_pos</code> con apenas 1.80, seguida por el estado de Nueva York con 1.79. Al estar todos los indicadores muy por debajo del umbral crítico de 5, podemos confirmar técnicamente que <strong>no existe riesgo de multicolinealidad</strong> en el set de datos. El set de predictores está limpio y es completamente seguro para la fase de modelado.
+    </div>
+</div>
+
+
+
+
+    
 </div>
 
 
